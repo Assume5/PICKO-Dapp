@@ -1,0 +1,20 @@
+// Font Family
+$primaryFont: 'Roboto', sans-serif;
+
+// Colors
+
+// Media query breakpoints
+$breakpoints: (
+  "xsm": 400px,
+  "sm": 576px,
+  "md": 768px,
+  "lg": 992px,
+  "xl": 1200px,
+  "xxl": 1400px,
+  "xxxl": 1600px,
+  "xxxxl": 1900px,
+);
+
+// Spacing
+$spacing: 50px;
+$spacingMobile: 25px;
