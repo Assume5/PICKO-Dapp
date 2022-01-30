@@ -17,7 +17,6 @@
 ## Using Ganache and Metamask
 ##### Open Ganache and click NEW WORKSPACE.
     WORKSPACE NAME: PICKO
-##### Below the tool, copy MNEMONIC
 ##### Open Metamask chrome extension and add new network
     Network Name: Localhost 7545
     New RPC URL: http://localhost:7545
