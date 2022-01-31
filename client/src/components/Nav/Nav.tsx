@@ -50,6 +50,15 @@ export const Nav: React.FC<Props> = ({ user, setUser }) => {
     };
     checkLogin();
   }, [setUser]);
+
+  useEffect(() => { //detect account change
+    window.ethereum.on('accountsChanged', () => {
+      if(user && user.login) {
+        logout(setUser);
+      }
+    })
+  })
+
   return (
     <div className="header">
       <div className="logo">
