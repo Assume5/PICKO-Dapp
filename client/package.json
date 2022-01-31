@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
+    "@fortawesome/free-brands-svg-icons": "^5.15.4",
+    "@fortawesome/free-solid-svg-icons": "^5.15.4",
+    "@fortawesome/react-fontawesome": "^0.1.17",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
@@ -29,7 +33,7 @@
     "eject": "react-scripts eject",
     "build-css": "node-sass --output-style compressed  src/styles/ -o src/dist/",
     "watch-css": "node-sass -w --output-style compressed  src/styles/ -o src/dist/",
-    "dev": "npm run build-css && npm run watch-css"
+    "dev": "npm run build-css && npm run build-css -- -w"
   },
   "eslintConfig": {
     "extends": [

@@ -4,5 +4,8 @@
 
 @import 'global/variables';
 @import 'global/mixin';
+@import 'global/global';
 
 //components
+@import './components/nav';
+@import './components/footer';

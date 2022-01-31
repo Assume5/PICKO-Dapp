@@ -2,6 +2,10 @@
 $primaryFont: 'Roboto', sans-serif;
 
 // Colors
+$black: #000;
+$grey: grey;
+$error: red;
+$white: white;
 
 // Media query breakpoints
 $breakpoints: (
@@ -18,3 +22,10 @@ $breakpoints: (
 // Spacing
 $spacing: 50px;
 $spacingMobile: 25px;
+
+$padding1: 4px;
+$padding2: 8px;
+$padding3: 16px;
+$padding4: 32px;
+$padding5: 64px;
+$padding6: 128px;

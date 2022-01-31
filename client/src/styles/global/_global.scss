@@ -1,0 +1,25 @@
+.error-metamask {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  color: $error;
+}
+
+button {
+  background-color: $black;
+  color: $white;
+  text-align: center;
+  padding: $padding3 $padding4;
+  cursor: pointer;
+  border: unset;
+  transition: background-color 0.3s ease-out, color 0.3s ease-out;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: $white;
+    color: $black;
+  }
+}

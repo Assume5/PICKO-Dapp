@@ -1,5 +1,5 @@
 // Min-width
-@mixin breakpoint-min( $breakpoint ) {
+@mixin breakpoint-min($breakpoint) {
     // If the key exists in the map
     @if map-has-key($breakpoints, $breakpoint) {
         // Prints a media query based on the value
@@ -16,7 +16,7 @@
 }
 
 // Max-width
-@mixin breakpoint-max( $breakpoint ) {
+@mixin breakpoint-max($breakpoint) {
     // If the key exists in the map
     @if map-has-key($breakpoints, $breakpoint) {
         // Prints a media query based on the value
@@ -33,7 +33,7 @@
 }
 
 // Between widths
-@mixin breakpoint-between( $breakpoint-min, $breakpoint-max ) {
+@mixin breakpoint-between($breakpoint-min, $breakpoint-max) {
     // If the key exists in the map
     @if map-has-key($breakpoints, $breakpoint-min) and map-has-key($breakpoints, $breakpoint-max) {
         // Prints a media query based on the value

@@ -1,0 +1,85 @@
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  padding: $padding5;
+  background-color: $black;
+
+  p {
+    color: $white;
+  }
+
+  &-col {
+    width: 33%;
+
+    .title {
+      padding-bottom: $padding3;
+      display: inline-block;
+    }
+
+    .title::after {
+      content: '';
+      border-bottom: 3px solid $white;
+      width: 26px;
+      display: block;
+      margin-top: $padding3;
+    }
+
+    .footer-link {
+      padding-bottom: $padding3;
+
+      a {
+        color: $white;
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+
+        &::after {
+          content: '';
+          position: absolute;
+          width: 0%;
+          height: 3px;
+          bottom: -5px;
+          right: 0;
+          background-color: $white;
+          transition: width 0.3s ease-out;
+        }
+
+        &:hover {
+          &::after {
+            width: 100%;
+            left: 0;
+            right: auto;
+          }
+        }
+      }
+    }
+
+    .social {
+      .title {
+        display: block;
+      }
+
+      .footer-link {
+        display: inline-block;
+        margin-right: $padding3;
+      }
+    }
+    
+    .newsletter {
+        width: 70%;
+
+        button {
+            padding: $padding3;
+            border: 1px solid $white;
+            border-radius: 0px;
+        }
+
+        input {
+            padding: $padding3;
+            width: 60%;
+            background-color: transparent;
+            border: 1px solid $white;
+        }
+    }
+  }
+}
