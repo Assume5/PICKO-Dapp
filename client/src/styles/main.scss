@@ -7,5 +7,10 @@
 @import 'global/global';
 
 //components
-@import './components/nav';
 @import './components/footer';
+@import './components/home_hero';
+@import './components/nav';
+@import './components/services_promo';
+
+//pages
+@import './pages/home';

@@ -2,16 +2,21 @@ import React, { useEffect, useState } from 'react';
 import Web3 from 'web3';
 import SimpleStorageContract from './contracts/SimpleStorage.json';
 import { Abi, Contract, User } from './types/index';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './dist/main.css';
+
 //components
 import { Nav } from './components/Nav/Nav';
-import { Footer } from './components/Footer/Footer'
+import { Footer } from './components/Footer/Footer';
+
+//pages
+import { Home } from './pages/Home/Home';
 declare var window: any;
 
 const App: React.FC = () => {
   const [contract, setContract] = useState<Contract | null>(null);
   const [metamask, setMetamask] = useState(false);
-  const [user, setUser] = useState<User>(null);
+  const [user, setUser] = useState<User>({ login: false });
 
   useEffect(() => {
     const checkMetaMask = async () => {
@@ -41,6 +46,12 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <Nav user={user} setUser={setUser} />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          {/* <Route path="/*" element={Home} /> */}
+        </Routes>
+      </BrowserRouter>
       <Footer />
     </div>
   );

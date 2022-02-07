@@ -1,0 +1,31 @@
+.services-promo {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: $padding5 $padding4;
+
+    .item {
+        flex: 0 1 auto;
+        cursor: pointer;
+        
+        &:hover {
+            svg {
+                padding-left: $padding3;
+            }
+        }
+
+        p {
+            font-weight: bold;
+        }
+
+        svg {
+            padding-left: $padding2;
+            transition: padding-left .3s ease-out;
+        }
+
+        img {
+            width: 200px;
+            height: 200px;
+        }
+    }
+}

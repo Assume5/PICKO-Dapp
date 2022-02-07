@@ -1,0 +1,41 @@
+.home-hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  background-image: url('../../public/imgs/home-hero.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: $white;
+  flex-direction: column;
+
+  .address-input {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+    margin: 0px $padding3;
+
+    @include breakpoint-max("sm") {
+      width: 90%;
+    }
+
+    input {
+      padding: $padding3;
+      padding-right: $padding4;
+      background-color: $white;
+      border: 1px solid $white;
+      width: 100%;
+    }
+
+    svg {
+      font-size: 25px;
+      position: absolute;
+      right: 10px;
+      color: $black !important;
+      cursor: pointer;
+    }
+  }
+}
