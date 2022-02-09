@@ -1,0 +1,153 @@
+.restaurant-hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  position: relative;
+
+  .overlay {
+    position: absolute;
+    background-color: $black;
+    opacity: 0.4;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  &.image {
+    .background-img {
+      width: 100vw;
+      height: 100vh;
+      background-size: cover;
+      background-position: center;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &.video {
+    .video-frame {
+      width: 100vw;
+      background-color: $black;
+      position: relative;
+      top: 0;
+      right: 0;
+      height: calc(100vw / 1.77777778);
+
+      iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+    }
+
+    .scroll-mouse {
+      bottom: calc(20% - 50px)
+    }
+  }
+
+  &.carousel {
+    display: block;
+
+    .carousel-container {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+
+      .carousel-prev,
+      .carousel-next {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 50%;
+        left: 20px;
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        margin-top: -25px;
+        border-radius: 100%;
+        background: $black;
+        z-index: 50;
+        cursor: pointer;
+
+        svg {
+          color: $aqua;
+        }
+      }
+
+      .carousel-next {
+        right: 20px;
+        left: unset;
+      }
+
+      .carousel-item {
+        width: 0;
+        height: 0;
+        opacity: 0;
+        transition: transform 1s ease-out;
+
+        &.active {
+          width: 100%;
+          height: 100%;
+          opacity: 1;
+          transform: scale(1.1);
+        }
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+
+  .scroll-mouse {
+    @keyframes scroll {
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(10px);
+        opacity: 0;
+      }
+    }
+
+    width: 20px;
+    height: 30px;
+    border-radius: 6px;
+    padding: 0 6px;
+    border: 2px solid $white;
+    box-sizing: border-box;
+    position: absolute;
+    z-index: 10;
+    left: 50%;
+    bottom: 20px;
+    cursor: pointer;
+
+    .scroller {
+      position: relative;
+      left: 50%;
+      top: 6px;
+      margin-left: -2px;
+      width: 4px;
+      height: 4px;
+      background: $aqua;
+      border-radius: 4px;
+      animation: scroll 1.5s infinite;
+    }
+  }
+}

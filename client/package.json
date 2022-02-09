@@ -35,7 +35,7 @@
     "eject": "react-scripts eject",
     "build-css": "node-sass --output-style compressed  src/styles/ -o src/dist/",
     "watch-css": "node-sass -w --output-style compressed  src/styles/ -o src/dist/",
-    "dev": "npm run build-css && npm run build-css -- -w"
+    "dev": "npm run build-css && npm run build-css -- -watch -recursive"
   },
   "eslintConfig": {
     "extends": [

@@ -4,8 +4,6 @@ import { User } from '../../types/index';
 import Web3 from 'web3';
 declare var window: any;
 
-console.log(process.env.TEST)
-
 interface Props {
     user: User;
     setUser: React.Dispatch<React.SetStateAction<User>>;
@@ -60,7 +58,7 @@ export const Nav: React.FC<Props> = ({ user, setUser }) => {
 
     return (
         <div className="header">
-            <div className="logo">
+            <div className="logo" onClick={()=>window.location="/"}>
                 <img src={"/imgs/PICKO-logo.png"} alt="logo" />
             </div>
             <div className="content">

@@ -11,6 +11,7 @@ import { Footer } from './components/Footer/Footer';
 
 //pages
 import { Home } from './pages/Home/Home';
+import { Restaurant } from './pages/Restaurant/Restaurant';
 declare var window: any;
 
 const App: React.FC = () => {
@@ -49,7 +50,7 @@ const App: React.FC = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          {/* <Route path="/*" element={Home} /> */}
+          <Route path="/restaurant*" element={<Restaurant />} />
         </Routes>
       </BrowserRouter>
       <Footer />
