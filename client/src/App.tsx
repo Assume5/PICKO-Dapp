@@ -38,12 +38,13 @@ const App: React.FC = () => {
         );
 
         setContract(contract);
+      } else {
+        alert('Please install Metamask');
       }
     };
     checkMetaMask();
     initContract();
   }, []);
-  if (!metamask) return <div className="error-metamask">Please install MetaMask</div>;
   return (
     <div className="App">
       <Nav user={user} setUser={setUser} />

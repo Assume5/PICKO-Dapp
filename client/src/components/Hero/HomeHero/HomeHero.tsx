@@ -9,6 +9,7 @@ export const HomeHero = () => {
         <input type="text" placeholder="Address" />
         <FontAwesomeIcon icon={faArrowCircleRight} />
       </div>
+      <div className='overlay'></div>
     </div>
   );
 };

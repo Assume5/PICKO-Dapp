@@ -10,3 +10,10 @@ export type HeroType = {
   images?: string;
   videoUrl?: string;
 } | null;
+
+export type Social = {
+  hasSocialMedia: boolean;
+  twitter?: string;
+  facebook?: string;
+  instagram?: string;
+}

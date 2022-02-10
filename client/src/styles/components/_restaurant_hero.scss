@@ -50,7 +50,7 @@
     }
 
     .scroll-mouse {
-      bottom: calc(20% - 50px)
+      bottom: calc(20% - 50px);
     }
   }
 
@@ -148,6 +148,32 @@
       background: $aqua;
       border-radius: 4px;
       animation: scroll 1.5s infinite;
+    }
+  }
+
+  .social-media {
+    position: absolute;
+    top: 15%;
+    right: 30px;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    flex-direction: column;
+
+    .social-icon {
+      padding: $padding2;
+      border: 1px solid $white;
+
+      svg {
+        color: $white;
+        font-size: 25px;
+        transition: color .3s ease-out;
+
+        &:hover {
+          color: $aqua;
+        }
+      }
     }
   }
 }
