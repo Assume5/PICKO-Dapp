@@ -1,5 +1,5 @@
 import React from 'react';
-import { HeroType, Social } from '../../../types/index';
+import { HeroType, Social } from '../../../../types/index';
 import { HeroCarouselType } from './HeroCarouselType/HeroCarouselType';
 import { HeroImageType } from './HeroImageType/HeroImageType';
 import { HeroVideoType } from './HeroVideoType/HeroVideoType';

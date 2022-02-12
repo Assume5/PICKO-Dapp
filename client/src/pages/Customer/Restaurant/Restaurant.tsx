@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { RestaurantHero } from '../../components/Hero/RestaurantHero/RestaurantHero';
-import { HeroType, Social } from '../../types/index';
-import { SocialMedia } from '../../components/SoicalMedia/SocialMedia';
+import { RestaurantHero } from '../../../components/Customer/Hero/RestaurantHero/RestaurantHero';
+import { HeroType, Social } from '../../../types/index';
+import { SocialMedia } from '../../../components/Customer/SoicalMedia/SocialMedia';
 
 export const Restaurant = () => {
   const [hero, setHero] = useState<HeroType>(null);

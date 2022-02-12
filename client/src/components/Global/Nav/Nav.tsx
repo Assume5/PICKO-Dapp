@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 // import {logo} from '../../../public/imgs/PICKO-logo.png'
-import { User } from '../../types/index';
+import { User } from '../../../types/index';
 import Web3 from 'web3';
 declare var window: any;
 

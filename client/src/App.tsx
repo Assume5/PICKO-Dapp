@@ -2,16 +2,14 @@ import React, { useEffect, useState } from 'react';
 import Web3 from 'web3';
 import SimpleStorageContract from './contracts/SimpleStorage.json';
 import { Abi, Contract, User } from './types/index';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './dist/main.css';
 
 //components
-import { Nav } from './components/Nav/Nav';
-import { Footer } from './components/Footer/Footer';
+import { Nav } from './components/Global/Nav/Nav';
+import { Footer } from './components/Global/Footer/Footer';
 
-//pages
-import { Home } from './pages/Home/Home';
-import { Restaurant } from './pages/Restaurant/Restaurant';
+import Customer from './pages/Customer/index'
+
 declare var window: any;
 
 const App: React.FC = () => {
@@ -48,12 +46,7 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <Nav user={user} setUser={setUser} />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/restaurant*" element={<Restaurant />} />
-        </Routes>
-      </BrowserRouter>
+      <Customer contract={contract} />
       <Footer />
     </div>
   );

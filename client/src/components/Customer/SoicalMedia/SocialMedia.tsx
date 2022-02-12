@@ -1,5 +1,5 @@
 import React from 'react';
-import { Social } from '../../types';
+import { Social } from '../../../types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookSquare, faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
 
