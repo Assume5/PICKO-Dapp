@@ -67,6 +67,15 @@ export const HeroCarouselType: React.FC<Props> = ({ images }) => {
     initSlides();
   }, [images]);
 
+  useEffect(() => {
+    const nextButton = document.querySelector('.carousel-next');
+    if (nextButton && nextButton instanceof HTMLElement) {
+      setInterval(() => {
+        nextButton.click();
+      }, 5000);
+    }
+  }, []);
+
   return (
     <div className="carousel-container" ref={slider}>
       <div className="carousel-prev" onClick={() => prevSlides(slideIndex, setSlideIndex, slides)}>

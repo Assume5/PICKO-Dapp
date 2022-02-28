@@ -1,0 +1,54 @@
+.restaurant-detail {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin: $spacing 0px;
+  color: $white;
+
+  .container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    border: 2px solid $white;
+    border-radius: 15px;
+    padding: $padding4;
+
+    p {
+      font-size: 18px;
+    }
+
+    span {
+        font-weight: bold;
+    }
+
+    .name {
+      padding: 0px $padding3;
+
+      h2 {
+        font-size: 32px;
+      }
+    }
+
+    .description {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+
+      p {
+        padding: 0px $padding3;
+      }
+    }
+
+    .info {
+      display: flex;
+      flex-wrap: wrap;
+      padding-bottom: $padding3;
+
+      p {
+        padding: 0px $padding3;
+      }
+    }
+  }
+}

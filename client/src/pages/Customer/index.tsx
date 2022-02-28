@@ -15,7 +15,7 @@ const Customer: React.FC<Props> = ({ contract }) => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/restaurant*" element={<Restaurant />} />
+        <Route path="/restaurant/*" element={<Restaurant />} />
       </Routes>
     </BrowserRouter>
   );

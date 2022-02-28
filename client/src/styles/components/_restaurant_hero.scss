@@ -115,16 +115,6 @@
   }
 
   .scroll-mouse {
-    @keyframes scroll {
-      0% {
-        transform: translateY(0);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(10px);
-        opacity: 0;
-      }
-    }
 
     width: 20px;
     height: 30px;
@@ -147,7 +137,7 @@
       height: 4px;
       background: $aqua;
       border-radius: 4px;
-      animation: scroll 1.5s infinite;
+      animation: scrollY 1.5s infinite;
     }
   }
 

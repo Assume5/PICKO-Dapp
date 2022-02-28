@@ -1,15 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
 
 // global
-
 @import 'global/variables';
 @import 'global/mixin';
+@import 'global/animation';
 @import 'global/global';
 
 //components
 @import './components/footer';
 @import './components/home_hero';
+@import './components/menu';
 @import './components/nav';
+@import './components/restaruant_detail';
 @import './components/restaurant_hero';
 @import './components/services_promo';
 

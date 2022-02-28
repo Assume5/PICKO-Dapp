@@ -11,6 +11,9 @@ interface Props {
 }
 
 export const RestaurantHero: React.FC<Props> = ({ hero, social }) => {
+  const scroll = () => {
+    
+  }
   if (hero) {
     return (
       <div className={`restaurant-hero ${hero && hero.type}`}>

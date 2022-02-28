@@ -1,3 +1,6 @@
+import { MenuChoice } from './componentsPart';
+import { MenuDict } from './index';
+
 export type User = {
   login: boolean;
   name?: string;
@@ -16,4 +19,21 @@ export type Social = {
   twitter?: string;
   facebook?: string;
   instagram?: string;
-}
+};
+
+export type MenuType = {
+  type: string; // filter or allInOne
+  menu: MenuDict;
+  allInOneImage?: {
+    [key:string]: String;
+  };
+} | null;
+
+export type RestaurantDetailType = {
+  deliveryFee: number;
+  minToDeliver: string;
+  restaurantName: string;
+  distance: number;
+  category: string;
+  openTime: string;
+} | null;

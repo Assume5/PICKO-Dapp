@@ -1,0 +1,342 @@
+.menu {
+  padding: $spacing 0px;
+
+  .menu-container {
+    margin: $spacing 0px;
+    padding: $padding5 $padding4;
+    width: 100%;
+    max-width: 60%;
+    background-color: $mineShaft;
+    color: $white;
+
+    .menu-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+
+      .menu-item {
+        width: calc(50% - 10px);
+        display: flex;
+        padding: $padding3 0px;
+        border: 1px solid $grey;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: transform 0.3s ease-out;
+
+        &:hover {
+          transform: scale(1.01);
+        }
+
+        .item-image {
+          img {
+            width: 100%;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            padding: 0px $padding2;
+            object-fit: cover;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+          }
+        }
+
+        .item-text {
+          padding: 0px $padding3;
+          display: flex;
+          flex-direction: column;
+
+          h4 {
+            margin: 0;
+          }
+
+          .heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          }
+
+          .desc {
+            p {
+              display: -webkit-box;
+              -webkit-line-clamp: 2;
+              -webkit-box-orient: vertical;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
+
+          .price {
+            p {
+              display: block;
+              margin-top: 0px;
+              font-weight: bold;
+              font-style: italic;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .menu-filter-type {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    .filter {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+
+      .scroll-text {
+        width: 100%;
+        text-align: center;
+        color: $white;
+        display: none;
+
+        &.overflow {
+          display: block;
+        }
+
+        .scroller {
+          position: relative;
+          left: 50%;
+          top: -6px;
+          margin-left: -20px;
+          width: 6px;
+          height: 6px;
+          background: cyan;
+          border-radius: 4px;
+          animation: scrollX 1.5s infinite;
+        }
+      }
+
+      &-container {
+        background-color: $mineShaft;
+        padding: $padding3 $padding4;
+        display: inline-flex;
+        max-width: 50%;
+        overflow-x: auto;
+
+        &.overflow {
+          cursor: grabbing;
+        }
+
+        &::-webkit-scrollbar {
+          width: 0; /* Remove scrollbar space */
+          background: transparent; /* Optional: just make scrollbar invisible */
+          height: 0;
+        }
+      }
+
+      &-item {
+        padding: 0px $padding4;
+        flex: 1 0 auto;
+
+        &.active {
+          font-weight: bold;
+
+          p {
+            &::after {
+              width: 100%;
+            }
+          }
+        }
+
+        p {
+          color: $white;
+          text-decoration: none;
+          position: relative;
+          cursor: pointer;
+
+          &::after {
+            content: '';
+            position: absolute;
+            width: 0%;
+            height: 3px;
+            bottom: -5px;
+            right: 0;
+            background-color: $white;
+            transition: width 0.3s ease-out;
+          }
+
+          &:hover {
+            &::after {
+              width: 100%;
+              left: 0;
+              right: auto;
+            }
+          }
+        }
+      }
+    }
+
+    .menu-container {
+      .menu-items {
+        display: none;
+
+        &.active {
+          opacity: 1;
+          display: flex;
+          animation: fadeIn 0.5s linear;
+        }
+      }
+    }
+  }
+
+  .menu-aio-type {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+
+    .menu-category-hero {
+      width: 100%;
+      max-width: 60%;
+      min-height: 20vw;
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      margin: $spacing 0px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+
+      .overlay {
+        position: absolute;
+        background-color: $black;
+        opacity: 0.3;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      .border {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+
+        &::before {
+          content: '';
+          position: absolute;
+          display: block;
+          width: 40px;
+          height: 40px;
+          z-index: 20;
+          border-left: 1px solid $aqua;
+          border-bottom: 1px solid $aqua;
+          bottom: 30px;
+          left: 30px;
+        }
+
+        &::after {
+          content: '';
+          position: absolute;
+          display: block;
+          width: 40px;
+          height: 40px;
+          z-index: 20;
+          border-right: 1px solid $aqua;
+          border-top: 1px solid $aqua;
+          top: 30px;
+          right: 30px;
+        }
+      }
+
+      h2 {
+        color: $white;
+        z-index: 10;
+        font-style: italic;
+      }
+    }
+
+    .menu-category-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .menu-container {
+      max-width: 60%;
+    }
+
+    .menu-sidebar {
+      position: fixed;
+      z-index: 10;
+      width: 10px;
+      top: 0;
+      right: 50px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .sidebar-item {
+        float: left;
+        width: 7px;
+        height: 7px;
+        background-color: $white;
+        border-radius: 50%;
+        position: relative;
+        margin: $padding2 0px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-out, opacity 0.3s ease-out;
+        opacity: 0;
+
+        &.active {
+          background-color: $aqua;
+        }
+
+        &.at-position {
+          opacity: 1;
+        }
+
+        &:hover {
+          p {
+            opacity: 1;
+          }
+        }
+
+        p {
+          padding: $padding3 $padding2;
+          background-color: $mineShaft;
+          color: $white;
+          text-align: center;
+          position: absolute;
+          right: 15px;
+          top: -40px;
+          opacity: 0;
+          transition: opacity 0.3s ease-out;
+          margin-right: 20px;
+          min-width: 150px;
+          pointer-events: none;
+        }
+      }
+    }
+  }
+  .menu-modal {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: $mineShaftBackground;
+    z-index: 9999;
+
+    svg {
+      font-size: 30px;
+      position: absolute;
+      top: 50px;
+      right: 60px;
+    }
+  }
+}
