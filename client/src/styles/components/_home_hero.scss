@@ -33,8 +33,18 @@
     margin: 0px $padding3;
     z-index: 1;
 
-    @include breakpoint-max("sm") {
+    @include breakpoint-max('sm') {
       width: 90%;
+    }
+
+    &.loading {
+      .submit-button {
+        display: none;
+      }
+
+      .loading-icon {
+        display: block;
+      }
     }
 
     input {
@@ -51,6 +61,33 @@
       right: 10px;
       color: $black !important;
       cursor: pointer;
+    }
+
+    .loading-icon {
+      display: none;
+    }
+  }
+
+  .search-result {
+    width: 100%;
+    max-width: 500px;
+    background-color: $white;
+    z-index: 1;
+    margin-top: $padding2;
+    position: absolute;
+    top: calc(50% + 65px);
+    max-height: 300px;
+    overflow-y: auto;
+
+    p {
+      color: $black;
+      padding: 0px $padding3;
+      cursor: pointer;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
   }
 }
