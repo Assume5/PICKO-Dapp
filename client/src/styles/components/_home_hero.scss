@@ -75,9 +75,24 @@
     z-index: 1;
     margin-top: $padding2;
     position: absolute;
-    top: calc(50% + 65px);
+    top: calc(50% + 80px);
     max-height: 300px;
     overflow-y: auto;
+    overflow: hidden;
+
+    &-item {
+      cursor: pointer;
+      padding: $padding3 0px;
+      transition: background-color .3s ease-out, color .3s ease-out;
+
+      &:hover {
+        background-color: $gray;
+
+        p {
+          color: $white;
+        }
+      }
+    }
 
     p {
       color: $black;
@@ -88,6 +103,14 @@
       -webkit-box-orient: vertical;
       overflow: hidden;
       text-overflow: ellipsis;
+      margin: 0;
     }
+  }
+
+  .error-message {
+    color: $error;
+    position: absolute;
+    z-index: 1;
+    top: calc(50% + 45px);
   }
 }
