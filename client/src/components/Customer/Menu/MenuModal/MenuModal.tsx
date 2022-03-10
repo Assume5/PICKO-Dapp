@@ -21,6 +21,11 @@ export const MenuModal: React.FC<Props> = ({ showModal, setShowModal, menuItem, 
         <div className="modal-inner">
           <h2>{menuName}</h2>
           <img src={menuItem.image} alt="" />
+          {menuItem.choices.choice &&
+            Object.keys(menuItem.choices.choice).map((key) => {
+              const menuChoice = menuItem.choices['choice'][key]
+              console.log(menuChoice);
+            })}
         </div>
       </div>
     );
