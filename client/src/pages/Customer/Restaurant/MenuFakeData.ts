@@ -1,4 +1,4 @@
-import { HeroType, Social, MenuType, MenuDict, MenuChoice } from '../../../types/index';
+import { MenuDict, MenuChoice } from '../../../types/index';
 const textHolder =
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco';
 

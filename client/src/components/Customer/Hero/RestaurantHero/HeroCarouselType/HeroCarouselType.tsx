@@ -70,11 +70,13 @@ export const HeroCarouselType: React.FC<Props> = ({ images }) => {
   useEffect(() => {
     const nextButton = document.querySelector('.carousel-next');
     if (nextButton && nextButton instanceof HTMLElement) {
-      setInterval(() => {
+      const nextSlide = setTimeout(() => {
         nextButton.click();
       }, 5000);
+
+      return () => clearTimeout(nextSlide);
     }
-  }, []);
+  }, [slideIndex]);
 
   return (
     <div className="carousel-container" ref={slider}>

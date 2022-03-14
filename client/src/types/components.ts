@@ -1,4 +1,3 @@
-import { MenuChoice } from './componentsPart';
 import { MenuDict } from './index';
 
 export type User = {
@@ -25,7 +24,7 @@ export type MenuType = {
   type: string; // filter or allInOne
   menu: MenuDict;
   allInOneImage?: {
-    [key:string]: String;
+    [key: string]: String;
   };
 } | null;
 
@@ -37,3 +36,15 @@ export type RestaurantDetailType = {
   category: string;
   openTime: string;
 } | null;
+
+export type Restaurant = {
+  [key: string]: {
+    address: string;
+    fee: number;
+    time: string;
+    category: string;
+    id: number;
+    reviewCount: number;
+    image: string;
+  };
+};

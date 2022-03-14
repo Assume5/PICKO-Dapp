@@ -1,0 +1,191 @@
+.eat-hero {
+  background-color: $mineShaft;
+  padding: $padding5 $padding6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .top-restaurants {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: $padding4;
+
+    .image-container {
+      width: 80%;
+
+      overflow: hidden;
+
+      height: auto;
+
+      .carousel-item {
+        display: none;
+        position: relative;
+        cursor: pointer;
+
+        &.active {
+          display: block;
+          animation: fadeInLeftEatHero 1.5s;
+        }
+
+        .overlay {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+          background-color: $mineShaft;
+          opacity: 0.3;
+        }
+
+        .overlay-text {
+          color: white;
+          position: absolute;
+          left: 50px;
+          bottom: 50px;
+          z-index: 1;
+
+          p {
+            font-size: 18px;
+            font-style: italic;
+            font-weight: bold;
+          }
+        }
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        max-width: 1300px;
+        max-height: 700px;
+        border-radius: 25px;
+        object-fit: cover;
+      }
+    }
+
+    .slider-lists {
+      width: 20%;
+
+      .slider-list {
+        height: 12.5vh;
+        margin: $padding3 0px;
+        padding: $padding2 $padding3;
+        border-radius: 15px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        background-color: transparent;
+        transition: background-color 0.3s ease-out;
+        overflow: hidden;
+        position: relative;
+
+        &:hover {
+          background-color: $gray;
+        }
+
+        &.active {
+          background-color: $gray;
+
+          .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: $white;
+            opacity: 0.1;
+            width: 100%;
+            height: 100%;
+            transition: width 5s cubic-bezier(0, 0, 0, 0);
+          }
+        }
+
+        .overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          background-color: $white;
+          opacity: 0.1;
+          width: 0%;
+          height: 100%;
+        }
+
+        p {
+          padding: 0px $padding2;
+          color: $white;
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        img {
+          width: 50%;
+          height: auto;
+          object-fit: cover;
+          border-radius: 10px;
+        }
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  .current-location {
+    background-color: $gray;
+    padding: $padding3 $padding4;
+    color: white;
+    display: inline-block;
+    border-radius: 100px;
+    transition: background-color 0.5s ease-in-out;
+    cursor: pointer;
+
+    &:hover {
+      background-color: $white;
+      color: $black;
+    }
+
+    svg {
+      padding-right: $padding3;
+    }
+  }
+
+  .eat-hero-modal {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    background-color: $mineShaftBackground;
+    z-index: 10000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease-out;
+    color: white;
+
+    &.modal-up {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .close-modal {
+        position: absolute;
+        top: 50px;
+        right: 50px;
+
+        svg {
+            font-size: 40px;
+            cursor: pointer;
+            color: $white;
+        }
+    }
+  }
+}
