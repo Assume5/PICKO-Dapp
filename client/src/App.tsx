@@ -8,7 +8,7 @@ import './dist/main.css';
 import { Nav } from './components/Global/Nav/Nav';
 import { Footer } from './components/Global/Footer/Footer';
 
-import Customer from './pages/Customer/index'
+import Customer from './pages/Customer/index';
 
 declare var window: any;
 

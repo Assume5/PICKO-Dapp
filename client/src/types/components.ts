@@ -46,5 +46,6 @@ export type Restaurant = {
     id: number;
     reviewCount: number;
     image: string;
+    mile: number;
   };
 };

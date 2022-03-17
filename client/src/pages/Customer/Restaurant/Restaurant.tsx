@@ -13,18 +13,18 @@ export const Restaurant = () => {
 
   useEffect(() => {
     //get hero
-    const getHeroType = async () => {
-      setHero({
-        type: 'image',
-        image: '/imgs/restaurant-hero-holder.jpg',
-      });
-    };
     // const getHeroType = async () => {
     //   setHero({
-    //     type: 'video',
-    //     videoUrl: 'https://www.youtube.com/watch?v=xPPLbEFbCAo',
+    //     type: 'image',
+    //     image: '/imgs/restaurant-hero-holder.jpg',
     //   });
     // };
+    const getHeroType = async () => {
+      setHero({
+        type: 'video',
+        videoUrl: 'https://www.youtube.com/watch?v=xPPLbEFbCAo',
+      });
+    };
     // const getHeroType = async () => {
     //   setHero({
     //     type: 'carousel',

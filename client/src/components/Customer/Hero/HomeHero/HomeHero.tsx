@@ -7,7 +7,7 @@ export const HomeHero = () => {
   const [changeSuccess, setChangeSuccess] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
-    if (changeSuccess || getCookie("address_details")) {
+    if (changeSuccess) {
       navigate('/eat');
     }
   }, [changeSuccess, navigate]);

@@ -75,7 +75,7 @@ export const MenuFilterType: React.FC<Props> = ({ menu, globalChoices }) => {
         container?.addEventListener('mouseleave', stopDragging, false);
       }
     }
-  }, [filterContainer.current]);
+  }, [activeFilter, filterContainer.current]);
 
   const onFilterClick = (category: string) => {
     setActiveFilter(category);

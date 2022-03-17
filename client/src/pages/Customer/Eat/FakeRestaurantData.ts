@@ -11,6 +11,7 @@ export const restaurants: Restaurant = {
     id: 1,
     reviewCount: 0,
     image: '/imgs/restaurant-hero-holder.jpg',
+    mile: 1.5,
   },
   'India Taste': {
     address: '12345 Sheridan Drive',
@@ -20,6 +21,7 @@ export const restaurants: Restaurant = {
     id: 2,
     reviewCount: 0,
     image: '/imgs/restaurant-hero-holder-2.jpg',
+    mile: 1.1,
   },
   MDonald: {
     address: '1233 Sheridan Drive',
@@ -29,6 +31,7 @@ export const restaurants: Restaurant = {
     id: 3,
     reviewCount: 0,
     image: '/imgs/restaurant-hero-holder-3.jpg',
+    mile: 1.2,
   },
   'Taco Dell': {
     address: '12234 Sheridan Drive',
@@ -38,6 +41,7 @@ export const restaurants: Restaurant = {
     id: 4,
     reviewCount: 0,
     image: '/imgs/restaurant-hero-holder.jpg',
+    mile: 1.3,
   },
   Starb: {
     address: '123445 Sheridan Drive',
@@ -47,6 +51,27 @@ export const restaurants: Restaurant = {
     id: 5,
     reviewCount: 0,
     image: '/imgs/restaurant-hero-holder-2.jpg',
+    mile: 1.4,
+  },
+  'Test 1': {
+    address: '123445 Sheridan Drive',
+    fee: 1,
+    time: '15-20 min',
+    category: 'Test Category',
+    id: 6,
+    reviewCount: 0,
+    image: '/imgs/restaurant-hero-holder-2.jpg',
+    mile: 1.5,
+  },
+  'Test 2': {
+    address: '123445 Sheridan Drive',
+    fee: 1,
+    time: '15-20 min',
+    category: 'Test Category 2',
+    id: 7,
+    reviewCount: 0,
+    image: '/imgs/restaurant-hero-holder-2.jpg',
+    mile: 1.6,
   },
 };
 
@@ -59,6 +84,7 @@ export const topRestaurants: Restaurant = {
     id: 1,
     reviewCount: 0,
     image: '/imgs/restaurant-hero-holder.jpg',
+    mile: 1.1,
   },
   'India Taste': {
     address: '12345 Sheridan Drive',
@@ -68,6 +94,7 @@ export const topRestaurants: Restaurant = {
     id: 2,
     reviewCount: 0,
     image: '/imgs/restaurant-hero-holder-2.jpg',
+    mile: 1.2,
   },
   MDonald: {
     address: '1233 Sheridan Drive',
@@ -77,6 +104,7 @@ export const topRestaurants: Restaurant = {
     id: 3,
     reviewCount: 0,
     image: '/imgs/restaurant-hero-holder-3.jpg',
+    mile: 1.3,
   },
   'Taco Dell': {
     address: '12234 Sheridan Drive',
@@ -86,6 +114,7 @@ export const topRestaurants: Restaurant = {
     id: 4,
     reviewCount: 0,
     image: '/imgs/restaurant-hero-holder.jpg',
+    mile: 1.4,
   },
   'China India America Random Taste': {
     address: '123445 Sheridan Drive',
@@ -95,5 +124,6 @@ export const topRestaurants: Restaurant = {
     id: 5,
     reviewCount: 0,
     image: '/imgs/restaurant-hero-holder-2.jpg',
+    mile: 1.5,
   },
 };

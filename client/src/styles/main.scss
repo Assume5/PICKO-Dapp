@@ -8,15 +8,18 @@
 
 //components
 @import './components/_address_search';
+@import './components/category_filter';
 @import './components/eat_hero';
 @import './components/footer';
 @import './components/home_hero';
 @import './components/menu';
 @import './components/nav';
-@import './components/restaruant_detail';
+@import './components/restaurant_detail';
 @import './components/restaurant_hero';
+@import './components/restaurant_list';
 @import './components/services_promo';
 
 //pages
+@import './pages/eat';
 @import './pages/home';
 @import './pages/restaurant';

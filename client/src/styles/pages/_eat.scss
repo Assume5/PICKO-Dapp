@@ -1,0 +1,15 @@
+.start-eating {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: $mineShaft;
+
+  .eat-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 60%;
+    flex-direction: column;
+  }
+}

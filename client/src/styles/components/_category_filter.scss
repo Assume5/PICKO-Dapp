@@ -1,0 +1,68 @@
+.category-filter {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: $spacing 0px;
+
+  .scroll-text {
+    width: 100%;
+    text-align: center;
+    color: $white;
+    display: none;
+
+    &.overflow {
+      display: block;
+    }
+
+    .scroller {
+      position: relative;
+      left: 50%;
+      top: -6px;
+      margin-left: -20px;
+      width: 6px;
+      height: 6px;
+      background: cyan;
+      border-radius: 4px;
+      animation: scrollX 1.5s infinite;
+    }
+  }
+
+  .filter-container {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: $padding4;
+    overflow-x: auto;
+
+    &::-webkit-scrollbar {
+      width: 0; /* Remove scrollbar space */
+      background: transparent; /* Optional: just make scrollbar invisible */
+      height: 0;
+    }
+
+    &.overflow {
+      cursor: grabbing;
+    }
+
+    .filter-item {
+      padding: $padding2 $padding4;
+      background-color: $white;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-out;
+      line-height: 1;
+      flex: 1 0 auto;
+
+      &:hover {
+        background-color: $gray;
+        color: $white;
+      }
+
+      &.active {
+        background-color: $gray;
+        color: $white;
+      }
+    }
+  }
+}

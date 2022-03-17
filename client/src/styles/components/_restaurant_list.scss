@@ -1,0 +1,99 @@
+$cornerPixel: 15px;
+
+.restaurant-list {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  padding: $spacing 0px;
+
+  .restaurant-card {
+    width: calc(25% - 64px);
+    margin: $padding4 $padding3;
+    padding: $padding5 $padding3;
+    border-radius: 15px;
+    color: $white;
+    overflow: hidden;
+    cursor: pointer;
+    animation: fadeIn 0.5s linear;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    transition: transform 0.3s ease-out;
+
+    &:hover {
+      transform: translateY(-15px);
+
+      .overlay {
+        opacity: 1;
+      }
+    }
+
+    p,
+    h4 {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .overlay {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: linear-gradient(to right, #000000, #130d11, #1b171d, #20202b, #1f2a39);
+      opacity: 0.6;
+      transition: opacity 0.3s ease-out;
+    }
+
+    .corner {
+      backface-visibility: hidden;
+      border-right: 1px dotted $aqua;
+      border-top: 1px dotted $aqua;
+      height: 10px;
+      position: absolute;
+      width: 10px;
+      z-index: 2;
+
+      &:nth-of-type(1) {
+        right: $cornerPixel;
+        top: $cornerPixel;
+      }
+
+      &:nth-of-type(2) {
+        left: $cornerPixel;
+        top: $cornerPixel;
+        transform: rotateZ(-90deg);
+      }
+
+      &:nth-of-type(3) {
+        bottom: $cornerPixel;
+        left: $cornerPixel;
+        transform: rotateZ(180deg);
+      }
+
+      &:nth-of-type(4) {
+        bottom: $cornerPixel;
+        right: $cornerPixel;
+        transform: rotateZ(90deg);
+      }
+    }
+
+    &-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    &-information {
+      display: flex;
+      gap: 10px;
+    }
+  }
+
+  .load-more {
+    width: 100%;
+    text-align: center;
+    margin: $spacing;
+  }
+}

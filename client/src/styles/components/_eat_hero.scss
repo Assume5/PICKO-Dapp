@@ -1,5 +1,4 @@
 .eat-hero {
-  background-color: $mineShaft;
   padding: $padding5 $padding6;
   display: flex;
   flex-direction: column;
@@ -14,10 +13,9 @@
 
     .image-container {
       width: 80%;
-
       overflow: hidden;
-
       height: auto;
+      border-radius: 25px;
 
       .carousel-item {
         display: none;
@@ -26,7 +24,7 @@
 
         &.active {
           display: block;
-          animation: fadeInLeftEatHero 1.5s;
+          animation: fadeInLeftEatHero 1s;
         }
 
         .overlay {
@@ -59,7 +57,6 @@
         height: 100%;
         max-width: 1300px;
         max-height: 700px;
-        border-radius: 25px;
         object-fit: cover;
       }
     }
@@ -167,25 +164,25 @@
     justify-content: center;
     align-items: center;
     opacity: 0;
-    visibility: hidden;
+    pointer-events: none;
     transition: opacity 0.5s ease-out;
     color: white;
 
     &.modal-up {
       opacity: 1;
-      visibility: visible;
+      pointer-events: auto;
     }
 
     .close-modal {
-        position: absolute;
-        top: 50px;
-        right: 50px;
+      position: absolute;
+      top: 50px;
+      right: 50px;
 
-        svg {
-            font-size: 40px;
-            cursor: pointer;
-            color: $white;
-        }
+      svg {
+        font-size: 40px;
+        cursor: pointer;
+        color: $white;
+      }
     }
   }
 }
