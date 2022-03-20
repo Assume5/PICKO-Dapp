@@ -4,24 +4,24 @@ const textHolder =
 
 const choice: MenuChoice = {
   choice: {
-    size: {
+    Size: {
       required: true,
       choices: {
-        small: {
+        Small: {
           price: 0,
           check: true,
         },
-        medium: {
+        Medium: {
           price: 1,
           check: false,
         },
-        large: {
+        Large: {
           price: 1.5,
           check: false,
         },
       },
     },
-    topping: {
+    Topping: {
       required: true,
       choices: {
         Mayo: {

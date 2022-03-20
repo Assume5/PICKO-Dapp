@@ -3,24 +3,24 @@ $primaryFont: 'Roboto', sans-serif;
 
 // Colors
 $black: #000;
-$grey: grey;
+$grey: #77787f;
 $error: red;
 $white: white;
-$aqua: #00FFFF;
+$aqua: #00ffff;
 $gray: #1e1e1e;
 $mineShaft: #303030;
-$mineShaftBackground: rgba(48,48,48, .7);
+$mineShaftBackground: rgba(48, 48, 48, 0.7);
 
 // Media query breakpoints
 $breakpoints: (
-  "xsm": 400px,
-  "sm": 576px,
-  "md": 768px,
-  "lg": 992px,
-  "xl": 1200px,
-  "xxl": 1400px,
-  "xxxl": 1600px,
-  "xxxxl": 1900px,
+  'xsm': 400px,
+  'sm': 576px,
+  'md': 768px,
+  'lg': 992px,
+  'xl': 1200px,
+  'xxl': 1400px,
+  'xxxl': 1600px,
+  'xxxxl': 1900px,
 );
 
 // Spacing

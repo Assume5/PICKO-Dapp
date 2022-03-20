@@ -18,6 +18,10 @@ export const MenuGrid: React.FC<Props> = ({ sortedKey, menu, globalChoices, acti
     setShowModal(true);
     setMenuItem(menuItem);
     setMenuName(menuName);
+    const body = document.getElementsByTagName('body')[0];
+    if(body) {
+      body.style.overflow= "hidden";
+    }
   };
 
   return (

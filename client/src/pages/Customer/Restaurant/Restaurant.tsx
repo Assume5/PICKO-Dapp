@@ -13,25 +13,26 @@ export const Restaurant = () => {
 
   useEffect(() => {
     //get hero
-    // const getHeroType = async () => {
-    //   setHero({
-    //     type: 'image',
-    //     image: '/imgs/restaurant-hero-holder.jpg',
-    //   });
-    // };
+    const win: Window = window;
     const getHeroType = async () => {
-      setHero({
-        type: 'video',
-        videoUrl: 'https://www.youtube.com/watch?v=xPPLbEFbCAo',
-      });
+      if (win.location.href.includes('china-taste')) {
+        setHero({
+          type: 'carousel',
+          images:
+            '/imgs/restaurant-hero-holder.jpg,/imgs/restaurant-hero-holder-2.jpg,/imgs/restaurant-hero-holder-3.jpg',
+        });
+      } else if (win.location.href.includes('india-taste')) {
+        setHero({
+          type: 'image',
+          image: '/imgs/restaurant-hero-holder.jpg',
+        });
+      } else {
+        setHero({
+          type: 'video',
+          videoUrl: 'https://www.youtube.com/watch?v=xPPLbEFbCAo',
+        });
+      }
     };
-    // const getHeroType = async () => {
-    //   setHero({
-    //     type: 'carousel',
-    //     images:
-    //       '/imgs/restaurant-hero-holder.jpg,/imgs/restaurant-hero-holder-2.jpg,/imgs/restaurant-hero-holder-3.jpg',
-    //   });
-    // };
 
     getHeroType();
   }, []);

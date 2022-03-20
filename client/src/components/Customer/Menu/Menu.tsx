@@ -9,12 +9,21 @@ export const Menu = () => {
 
   useEffect(() => {
     //get menu
+    const win: Window = window;
     const getMenu = async () => {
-      setMenu({
-        type: 'filter',
-        menu: fakeMenu,
-        allInOneImage: allInOneImage,
-      });
+      if (win.location.href.includes('china-taste')) {
+        setMenu({
+          type: 'filter',
+          menu: fakeMenu,
+          allInOneImage: allInOneImage,
+        });
+      } else {
+        setMenu({
+          type: 'allInOne',
+          menu: fakeMenu,
+          allInOneImage: allInOneImage,
+        });
+      }
     };
 
     getMenu();

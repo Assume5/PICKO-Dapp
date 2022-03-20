@@ -1,4 +1,4 @@
-body {
+* {
   &::-webkit-scrollbar {
     background-color: $white;
     width: 16px;
@@ -14,7 +14,6 @@ body {
     border: 4px solid #fff;
   }
 }
-
 
 .error-metamask {
   width: 100%;
@@ -41,3 +40,4 @@ button {
     color: $black;
   }
 }
+

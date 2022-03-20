@@ -18,6 +18,10 @@ export const MenuAllInOneType: React.FC<Props> = ({ menu, globalChoices }) => {
     setShowModal(true);
     setMenuItem(menuItem);
     setMenuName(menuName);
+    const body = document.getElementsByTagName('body')[0];
+    if (body) {
+      body.style.overflow = 'hidden';
+    }
   };
 
   useEffect(() => {

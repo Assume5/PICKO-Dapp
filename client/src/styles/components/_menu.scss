@@ -331,12 +331,100 @@
     left: 0;
     background-color: $mineShaftBackground;
     z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $black;
 
-    svg {
-      font-size: 30px;
-      position: absolute;
-      top: 50px;
-      right: 60px;
+    &.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-inner {
+      max-width: 30%;
+      max-height: 80%;
+      overflow-x: hidden;
+      background-color: $white;
+      border-radius: 20px;
+      padding: $padding4 $padding4;
+      padding-bottom: $padding5;
+      position: relative;
+
+      img {
+        width: 100%;
+        height: auto;
+        border-radius: 15px;
+      }
+
+      // .choice {
+      //   .choice-title {
+      //     display: flex;
+      //     align-items: center;
+      //     justify-content: space-between;
+      //   }
+
+      //   .choice-item {
+      //     display: flex;
+      //     align-items: center;
+      //     cursor: pointer;
+      //     padding: $padding1 0px;
+
+      //     input {
+      //       width: 20px;
+      //       height: 20px;
+      //       cursor: pointer;
+      //     }
+
+      //     span {
+      //       padding-left: $padding2;
+      //       color: $grey;
+      //       line-height: 1;
+      //     }
+      //   }
+      // }
+
+      .add-to-cart {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: $spacing;
+
+        .quantity {
+          display: flex;
+          align-items: center;
+          padding-right: $padding4;
+
+          p {
+            padding: 0 $padding3;
+            margin: 0px $padding3;
+            background-color: $gray;
+            border-radius: 10px;
+            height: 40px;
+            color: $white;
+            display: flex;
+            align-items: center;
+            line-height: 1;
+          }
+        }
+
+        svg {
+          cursor: pointer;
+        }
+      }
+    }
+
+    .close-button {
+      svg {
+        font-size: 25px;
+        position: absolute;
+        top: 30px;
+        right: 30px;
+        cursor: pointer;
+      }
     }
   }
 }
