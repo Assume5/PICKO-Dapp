@@ -22,7 +22,10 @@
 
   h2 {
     z-index: 1;
-  }
+    text-align: center;
 
-  
+    @include breakpoint-max(sm) {
+      padding: $padding2 $padding3;
+    }
+  }
 }

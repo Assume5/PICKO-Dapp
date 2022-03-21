@@ -4,12 +4,29 @@
   padding: $padding5;
   background-color: $black;
 
+  @include breakpoint-max(lg) {
+    padding: $padding4;
+  }
+
+
   p {
     color: $white;
   }
 
   &-col {
     width: 33%;
+
+    @include breakpoint-max(lg) {
+      width: 50%;
+
+      &:last-child {
+        width: 100%;
+      }
+    }
+
+    @include breakpoint-max(sm) {
+      width: 100%;
+    }
 
     .title {
       padding-bottom: $padding3;
@@ -64,22 +81,22 @@
         margin-right: $padding3;
       }
     }
-    
+
     .newsletter {
-        width: 70%;
+      width: 70%;
 
-        button {
-            padding: $padding3;
-            border: 1px solid $white;
-            border-radius: 0px;
-        }
+      button {
+        padding: $padding3;
+        border: 1px solid $white;
+        border-radius: 0px;
+      }
 
-        input {
-            padding: $padding3;
-            width: 60%;
-            background-color: transparent;
-            border: 1px solid $white;
-        }
+      input {
+        padding: $padding3;
+        width: 60%;
+        background-color: transparent;
+        border: 1px solid $white;
+      }
     }
   }
 }
