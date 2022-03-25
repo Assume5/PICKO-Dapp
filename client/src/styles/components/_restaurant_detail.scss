@@ -15,12 +15,19 @@
     border-radius: 15px;
     padding: $padding4;
 
+    @include breakpoint-max(md) {
+      padding: $padding3;
+      margin: 0px $padding3;
+    }
+
     p {
-      font-size: 18px;
+      @include breakpoint-max(md) {
+        text-align: center;
+      }
     }
 
     span {
-        font-weight: bold;
+      font-weight: bold;
     }
 
     .name {
@@ -39,6 +46,10 @@
       p {
         padding: 0px $padding3;
       }
+
+      @include breakpoint-max(md) {
+        justify-content: center;
+      }
     }
 
     .info {
@@ -48,6 +59,10 @@
 
       p {
         padding: 0px $padding3;
+      }
+
+      @include breakpoint-max(md) {
+        justify-content: center;
       }
     }
   }

@@ -35,6 +35,14 @@
     gap: $padding4;
     overflow-x: auto;
 
+    @include breakpoint-max(lg) {
+      gap: $padding3;
+    }
+
+    @include breakpoint-max(sm) {
+      gap: $padding2;
+    }
+
     &::-webkit-scrollbar {
       width: 0; /* Remove scrollbar space */
       background: transparent; /* Optional: just make scrollbar invisible */
@@ -53,6 +61,10 @@
       transition: background-color 0.3s ease-out;
       line-height: 1;
       flex: 1 0 auto;
+
+      @include breakpoint-max(sm) {
+        padding: $padding2 $padding3;
+      }
 
       &:hover {
         background-color: $gray;

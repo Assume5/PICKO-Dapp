@@ -4,6 +4,25 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
+
+  @include breakpoint-max(xxl) {
+    padding: $padding5 $padding4;
+  }
+
+  @include breakpoint-max(lg) {
+    height: 100vh;
+    padding: 0 $padding3;
+  }
+
+  @include breakpoint-max(md) {
+    flex-direction: column-reverse;
+    overflow: hidden;
+  }
+
+  @include breakpoint-max(sm) {
+    height: 80vh;
+  }
 
   .top-restaurants {
     display: flex;
@@ -11,11 +30,26 @@
     align-items: center;
     gap: $padding4;
 
+    @include breakpoint-max(lg) {
+      margin: $padding4 0px;
+    }
+
+    @include breakpoint-max(md) {
+      flex-direction: column-reverse;
+      margin: $padding4 0px;
+    }
+
     .image-container {
       width: 80%;
       overflow: hidden;
       height: auto;
       border-radius: 25px;
+
+      @include breakpoint-max(md) {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+      }
 
       .carousel-item {
         display: none;
@@ -38,14 +72,13 @@
         }
 
         .overlay-text {
-          color: white;
+          color: $white;
           position: absolute;
           left: 50px;
           bottom: 50px;
           z-index: 1;
 
           p {
-            font-size: 18px;
             font-style: italic;
             font-weight: bold;
           }
@@ -64,6 +97,21 @@
     .slider-lists {
       width: 20%;
 
+      @include breakpoint-max(md) {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        position: relative;
+        padding: 0px $padding3;
+        overflow-x: auto;
+
+        &::-webkit-scrollbar {
+          width: 0; /* Remove scrollbar space */
+          background: transparent; /* Optional: just make scrollbar invisible */
+          height: 0;
+        }
+      }
+
       .slider-list {
         height: 12.5vh;
         margin: $padding3 0px;
@@ -76,6 +124,25 @@
         transition: background-color 0.3s ease-out;
         overflow: hidden;
         position: relative;
+
+        @include breakpoint-max(xl) {
+          height: 10vw;
+          padding: $padding1 $padding2;
+        }
+
+        @include breakpoint-max(lg) {
+          height: 50px;
+        }
+
+        @include breakpoint-max(md) {
+          height: 8vh;
+          flex: 1 0 auto;
+          width: 33.33%;
+
+          &:last-child {
+            display: none;
+          }
+        }
 
         &:hover {
           background-color: $gray;
@@ -93,6 +160,10 @@
             width: 100%;
             height: 100%;
             transition: width 5s cubic-bezier(0, 0, 0, 0);
+
+            @include breakpoint-max(md) {
+              display: none;
+            }
           }
         }
 

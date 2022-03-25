@@ -29,6 +29,18 @@ $cornerPixel: 15px;
       }
     }
 
+    @include breakpoint-max(xl) {
+      width: calc(33.333% - 64px);
+    }
+
+    @include breakpoint-max(md) {
+      width: calc(50% - 64px);
+    }
+
+    @include breakpoint-max(sm) {
+      width: 100%;
+    }
+
     p,
     h4 {
       text-overflow: ellipsis;

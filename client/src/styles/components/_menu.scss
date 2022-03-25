@@ -9,6 +9,15 @@
     background-color: $mineShaft;
     color: $white;
 
+    @include breakpoint-max(lg) {
+      max-width: 75%;
+    }
+
+    @include breakpoint-max(md) {
+      max-width: 80%;
+      padding: $padding3;
+    }
+
     .menu-items {
       display: flex;
       flex-wrap: wrap;
@@ -22,6 +31,11 @@
         border-radius: 5px;
         cursor: pointer;
         transition: transform 0.3s ease-out;
+
+        @include breakpoint-max(md) {
+          width: 100%;
+          margin: $padding1 0px;
+        }
 
         &:hover {
           transform: scale(1.01);
@@ -120,6 +134,10 @@
         max-width: 50%;
         overflow-x: auto;
 
+        @include breakpoint-max(lg) {
+          max-width: 80%;
+        }
+
         &.overflow {
           cursor: grabbing;
         }
@@ -208,6 +226,15 @@
       align-items: center;
       position: relative;
 
+      @include breakpoint-max(lg) {
+        max-width: 90%;
+        min-height: 35vw;
+      }
+
+      @include breakpoint-max(sm) {
+        min-height: 40vw;
+      }
+
       .overlay {
         position: absolute;
         background-color: $black;
@@ -234,6 +261,11 @@
           border-bottom: 1px solid $aqua;
           bottom: 30px;
           left: 30px;
+
+          @include breakpoint-max(md) {
+            bottom: 15px;
+            left: 15px;
+          }
         }
 
         &::after {
@@ -247,6 +279,11 @@
           border-top: 1px solid $aqua;
           top: 30px;
           right: 30px;
+
+          @include breakpoint-max(md) {
+            top: 15px;
+            right: 15px;
+          }
         }
       }
 
@@ -266,6 +303,15 @@
 
     .menu-container {
       max-width: 60%;
+
+      @include breakpoint-max(lg) {
+        max-width: 75%;
+      }
+
+      @include breakpoint-max(md) {
+        max-width: 80%;
+        padding: $padding3;
+      }
     }
 
     .menu-sidebar {
@@ -280,6 +326,10 @@
       justify-content: center;
       align-items: center;
 
+      @include breakpoint-max(lg) {
+        right: 15px;
+      }
+
       .sidebar-item {
         float: left;
         width: 7px;
@@ -291,6 +341,11 @@
         cursor: pointer;
         transition: background-color 0.3s ease-out, opacity 0.3s ease-out;
         opacity: 0;
+
+        @include breakpoint-max(lg) {
+          width: 6px;
+          height: 6px;
+        }
 
         &.active {
           background-color: $aqua;
@@ -319,10 +374,16 @@
           margin-right: 20px;
           min-width: 150px;
           pointer-events: none;
+          z-index: 20;
+
+          @include breakpoint-max(lg) {
+            margin-right: 0;
+          }
         }
       }
     }
   }
+
   .menu-modal {
     width: 100vw;
     height: 100vh;
@@ -354,38 +415,27 @@
       padding-bottom: $padding5;
       position: relative;
 
+      @include breakpoint-max(xl) {
+        max-width: 40%;
+      }
+
+      @include breakpoint-max(lg) {
+        max-width: 50%;
+      }
+
+      @include breakpoint-max(md) {
+        max-width: 60%;
+      }
+
+      @include breakpoint-max(sm) {
+        max-width: 80%;
+      }
+
       img {
         width: 100%;
         height: auto;
         border-radius: 15px;
       }
-
-      // .choice {
-      //   .choice-title {
-      //     display: flex;
-      //     align-items: center;
-      //     justify-content: space-between;
-      //   }
-
-      //   .choice-item {
-      //     display: flex;
-      //     align-items: center;
-      //     cursor: pointer;
-      //     padding: $padding1 0px;
-
-      //     input {
-      //       width: 20px;
-      //       height: 20px;
-      //       cursor: pointer;
-      //     }
-
-      //     span {
-      //       padding-left: $padding2;
-      //       color: $grey;
-      //       line-height: 1;
-      //     }
-      //   }
-      // }
 
       .add-to-cart {
         display: flex;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { Restaurant } from '../../../../types/components';
 import { getCookie } from '../../../../utils/functions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -30,19 +30,55 @@ export const EatHero: React.FC<Props> = ({ topRestaurants }) => {
   }, [topRestaurants]);
 
   useEffect(() => {
-    const len = Object.keys(topRestaurants).length;
-    const nextSlide = setTimeout(() => {
-      if (slideIndex + 1 === len) {
-        setCurrentSlide(Object.keys(topRestaurants)[0]);
-        setSlideIndex(0);
-      } else {
-        setCurrentSlide(Object.keys(topRestaurants)[slideIndex + 1]);
-        setSlideIndex(slideIndex + 1);
-      }
-    }, 5000);
+    if (window.innerWidth >= 768) {
+      const len = Object.keys(topRestaurants).length;
+      const nextSlide = setTimeout(() => {
+        if (slideIndex + 1 === len) {
+          setCurrentSlide(Object.keys(topRestaurants)[0]);
+          setSlideIndex(0);
+        } else {
+          setCurrentSlide(Object.keys(topRestaurants)[slideIndex + 1]);
+          setSlideIndex(slideIndex + 1);
+        }
+      }, 5000);
 
-    return () => clearTimeout(nextSlide);
+      return () => clearTimeout(nextSlide);
+    }
   }, [slideIndex, currentSlide, topRestaurants]);
+
+  useLayoutEffect(() => {
+    if (window.innerWidth < 768) {
+      const container: HTMLDivElement | null = document.querySelector('.slider-lists');
+
+      if (container && container.scrollWidth > container.clientWidth) {
+        let mouseDown = false;
+        let startX: number, scrollLeft: number;
+
+        const dragging = (e: any) => {
+          mouseDown = true;
+          startX = e.pageX - container.offsetLeft;
+          scrollLeft = container.scrollLeft;
+        };
+
+        const stopDragging = (e: any) => {
+          mouseDown = false;
+        };
+
+        container.addEventListener('mousemove', (e: any) => {
+          e.preventDefault();
+          if (!mouseDown) {
+            return;
+          }
+          const x = e.pageX - container.offsetLeft;
+          const scroll = x - startX;
+          container.scrollLeft = scrollLeft - scroll;
+        });
+        container?.addEventListener('mousedown', dragging, false);
+        container?.addEventListener('mouseup', stopDragging, false);
+        container?.addEventListener('mouseleave', stopDragging, false);
+      }
+    }
+  });
 
   const onSliderClick = (key: string, i: number) => {
     setCurrentSlide(key);

@@ -11,5 +11,13 @@
     align-items: center;
     max-width: 60%;
     flex-direction: column;
+
+    @include breakpoint-max(xxxl) {
+      max-width: 70%;
+    }
+
+    @include breakpoint-max(xxl) {
+      max-width: 80%;
+    }
   }
 }
