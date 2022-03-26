@@ -49,3 +49,17 @@ export type Restaurant = {
     mile: number;
   };
 };
+
+export type Cart = {
+  isCartEmpty: boolean;
+  restaurantID?: number;
+  restaurantName?: string;
+  deliveryAddress?: string;
+  cartItems?: {
+    [key: string]: {
+      itemID: number;
+      quantity: number;
+      price: number;
+    };
+  };
+};

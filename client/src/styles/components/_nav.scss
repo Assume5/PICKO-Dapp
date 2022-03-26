@@ -12,11 +12,19 @@
   top: 0;
   left: 0;
   right: 0;
-  transition: background .3s ease-out;
+  transition: background 0.3s ease-out;
+
+  @include breakpoint-max(sm) {
+    padding: $padding2 $padding3;
+  }
 
   .logo {
     height: 74px;
     cursor: pointer;
+
+    @include breakpoint-max(sm) {
+      height: 60px;
+    }
 
     img {
       width: 100%;
@@ -25,7 +33,7 @@
   }
 
   &.sticky {
-    background-color: black;
+    background-color: $black;
   }
 
   .content {
@@ -38,13 +46,157 @@
       color: $white;
     }
 
+    svg {
+      font-size: 20px;
+      color: $white;
+      cursor: pointer;
+      padding-left: $padding4;
+    }
+
     button {
       background-color: $white;
       color: $black;
+      padding: $padding2 $padding3;
+      border-radius: 0px;
 
       &:hover {
         background-color: $black;
         color: $white;
+      }
+    }
+  }
+
+  .sidebar-container {
+    position: absolute;
+
+    &.visible {
+      .side-bar {
+        width: 400px;
+
+        @include breakpoint-max(sm) {
+          width: 100%;
+        }
+      }
+
+      .overlay {
+        visibility: visible;
+        opacity: 0.5;
+        pointer-events: auto;
+      }
+    }
+
+    .overlay {
+      width: 100%;
+      height: 100%;
+      position: fixed;
+      top: 0;
+      left: 0;
+      background-color: $gray;
+      z-index: 1;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease-out;
+    }
+
+    .side-bar {
+      position: fixed;
+      right: 0;
+      top: 0;
+      height: 100vh;
+      background-color: $mineShaft;
+      display: flex;
+      flex-direction: column;
+      color: $white;
+      overflow-y: auto;
+      overflow-x: hidden;
+      transform: translateX(0);
+      width: 0px;
+      transition: width 0.5s ease-out;
+      z-index: 999;
+
+      &.empty {
+        align-items: center;
+        justify-content: center;
+      }
+
+      .close-button {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        color: $white;
+
+        svg {
+          width: 30px;
+          height: 30px;
+          cursor: pointer;
+        }
+      }
+
+      .empty {
+        text-align: center;
+
+        svg {
+          width: 50px;
+          height: 50px;
+        }
+      }
+
+      .cart-content {
+        padding: $padding5 $padding4 $padding4;
+        width: 336px;
+        margin: 0 auto;
+
+        @include breakpoint-max(sm) {
+          width: 300px;
+        }
+
+        h2 {
+          cursor: pointer;
+        }
+
+        .delivery-to {
+          font-size: 14px;
+          padding-bottom: $padding3;
+        }
+
+        .cart-item {
+          display: flex;
+          gap: 0px $padding4;
+          align-items: center;
+          border-bottom: 1px solid $white;
+
+          &:last-child {
+            border-bottom: 0px;
+          }
+
+          .item-quantity {
+            padding: 0 $padding3;
+            background-color: $gray;
+            border-radius: 10px;
+            height: 40px;
+            color: $white;
+            display: flex;
+            align-items: center;
+            line-height: 1;
+          }
+        }
+      }
+
+      .checkout-button {
+        background-color: $gray;
+        margin-top: auto;
+        padding: $padding4 0px;
+        text-align: center;
+        z-index: 2;
+        box-shadow: $gray 0px -4px 7px;
+        position: sticky;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+
+        button {
+          width: 200px;
+        }
       }
     }
   }

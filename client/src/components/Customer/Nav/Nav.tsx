@@ -1,7 +1,11 @@
-import React, { useEffect, useRef } from 'react';
-// import {logo} from '../../../public/imgs/PICKO-logo.png'
-import { User } from '../../../types/index';
+import React, { useEffect, useRef, useState } from 'react';
+import { Cart, User } from '../../../types/index';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { fakeCartData } from './fakeCartData';
 import Web3 from 'web3';
+import { SideBar } from './SideBar';
+import { getCookie } from '../../../utils/functions';
 declare var window: any;
 
 interface Props {
@@ -30,6 +34,10 @@ const logout = async (setUser: React.Dispatch<React.SetStateAction<User>>) => {
 
 export const Nav: React.FC<Props> = ({ user, setUser }) => {
   const navbar = useRef<HTMLDivElement>(null);
+  const [cart, setCart] = useState<Cart | null>();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const sidebar = useRef(null);
+
   useEffect(() => {
     const checkLogin = async () => {
       const token = localStorage.getItem('userId');
@@ -59,6 +67,22 @@ export const Nav: React.FC<Props> = ({ user, setUser }) => {
   }, [setUser]);
 
   useEffect(() => {
+    const tempFake = fakeCartData;
+    tempFake.deliveryAddress = getCookie('address_details').home;
+
+    setCart(tempFake);
+  }, []);
+
+  useEffect(() => {
+    const body: HTMLBodyElement | null = document.querySelector('body');
+    if (sidebarOpen && body && document) {
+      body.style.overflowY = 'hidden';
+    } else if (!sidebarOpen && body && document) {
+      body.style.overflowY = 'auto';
+    }
+  }, [sidebarOpen]);
+
+  useEffect(() => {
     //detect account change
     if (window.ethereum) {
       window.ethereum.on('accountsChanged', () => {
@@ -78,13 +102,18 @@ export const Nav: React.FC<Props> = ({ user, setUser }) => {
         {user && user.login ? (
           <>
             <p>{user.address}</p>
-            <button onClick={() => logout(setUser)}> Sign out</button>
+            <button>View Account</button>
           </>
         ) : (
           <>
             <button onClick={() => login(setUser)}>Sign In</button>
           </>
         )}
+        <FontAwesomeIcon icon={faShoppingCart} onClick={() => setSidebarOpen(!sidebarOpen)} />
+      </div>
+      <div className={`sidebar-container ${sidebarOpen ? 'visible' : 'hidden'}`} ref={sidebar}>
+        {cart && <SideBar cart={cart} setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />}
+        <div className="overlay"></div>
       </div>
     </div>
   );

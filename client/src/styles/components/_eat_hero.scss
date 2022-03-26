@@ -22,6 +22,7 @@
 
   @include breakpoint-max(sm) {
     height: 80vh;
+    padding: $padding5 0;
   }
 
   .top-restaurants {

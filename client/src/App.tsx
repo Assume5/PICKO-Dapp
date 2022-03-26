@@ -5,8 +5,8 @@ import { Abi, Contract, User } from './types/index';
 import './dist/main.css';
 
 //components
-import { Nav } from './components/Global/Nav/Nav';
-import { Footer } from './components/Global/Footer/Footer';
+import { Nav } from './components/Customer/Nav/Nav';
+import { Footer } from './components/Customer/Footer/Footer';
 
 import Customer from './pages/Customer/index';
 
@@ -15,7 +15,6 @@ declare var window: any;
 const App: React.FC = () => {
   const [contract, setContract] = useState<Contract | null>(null);
   const [metamask, setMetamask] = useState(false);
-  const [user, setUser] = useState<User>({ login: false });
 
   useEffect(() => {
     const checkMetaMask = async () => {
@@ -45,9 +44,7 @@ const App: React.FC = () => {
   }, []);
   return (
     <div className="App">
-      <Nav user={user} setUser={setUser} />
       <Customer contract={contract} />
-      <Footer />
     </div>
   );
 };
