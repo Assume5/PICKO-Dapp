@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { MenuChoice, MenuType, MenuItem } from '../../../../types';
+import { MenuType, MenuItem } from '../../../../types';
 import { MenuModal } from '../MenuModal/MenuModal';
 import { MenuSideBar } from '../MenuSideBar/MenuSideBar';
 
 interface Props {
   menu: MenuType;
-  globalChoices: MenuChoice;
 }
 
-export const MenuAllInOneType: React.FC<Props> = ({ menu, globalChoices }) => {
+export const MenuAllInOneType: React.FC<Props> = ({ menu }) => {
   const [sortedKey, setSortedKey] = useState<string[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [menuItem, setMenuItem] = useState<MenuItem>();
@@ -89,6 +88,8 @@ export const MenuAllInOneType: React.FC<Props> = ({ menu, globalChoices }) => {
                           </div>
                         </div>
                       );
+                    } else {
+                      return <></>;
                     }
                   })}
                 </div>
@@ -101,13 +102,7 @@ export const MenuAllInOneType: React.FC<Props> = ({ menu, globalChoices }) => {
       })}
 
       <MenuSideBar sortedKey={sortedKey} />
-      <MenuModal
-        showModal={showModal}
-        setShowModal={setShowModal}
-        menuItem={menuItem}
-        globalChoices={globalChoices}
-        menuName={menuName}
-      />
+      <MenuModal showModal={showModal} setShowModal={setShowModal} menuItem={menuItem} menuName={menuName} />
     </div>
   );
 };

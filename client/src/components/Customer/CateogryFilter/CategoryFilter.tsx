@@ -1,5 +1,4 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
-import { Restaurant } from '../../../types/index';
 interface Props {
   categories: string[];
   currentFilter: string[];

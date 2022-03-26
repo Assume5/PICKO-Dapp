@@ -1,0 +1,83 @@
+.past-orders {
+  width: 50%;
+  margin: 0 auto;
+
+  @include breakpoint-max(xl) {
+    width: 60%;
+  }
+
+  @include breakpoint-max(lg) {
+    width: 80%;
+  }
+
+  @include breakpoint-max(sm) {
+    width: 90%;
+  }
+
+  .order-details {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: $spacing 0;
+    border-bottom: 1px solid $white;
+
+    &:last-child {
+      border-bottom: 0px;
+    }
+
+    &-image {
+      width: 40%;
+
+      @include breakpoint-max(sm) {
+        width: 100%;
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        cursor: pointer;
+      }
+    }
+
+    &-desc {
+      width: 55%;
+
+      @include breakpoint-max(sm) {
+        width: 100%;
+      }
+
+      h2 {
+        cursor: pointer;
+        text-decoration: underline;
+      }
+
+      .order-item {
+        display: flex;
+        align-items: center;
+        width: auto;
+        border-bottom: 1px solid $white;
+
+        &:last-child {
+          border-bottom: 0px;
+        }
+
+        p {
+          padding: 0px $padding3;
+
+          &.item-quantity {
+            padding: 0 $padding3;
+            background-color: $gray;
+            border-radius: 10px;
+            height: 40px;
+            color: $white;
+            display: flex;
+            align-items: center;
+            line-height: 1;
+          }
+        }
+      }
+    }
+  }
+}

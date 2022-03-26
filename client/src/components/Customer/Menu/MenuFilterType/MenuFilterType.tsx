@@ -1,13 +1,12 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { MenuChoice, MenuType } from '../../../../types';
+import { MenuType } from '../../../../types';
 import { MenuGrid } from '../MenuGrid/MenuGrid';
 
 interface Props {
   menu: MenuType;
-  globalChoices: MenuChoice;
 }
 
-export const MenuFilterType: React.FC<Props> = ({ menu, globalChoices }) => {
+export const MenuFilterType: React.FC<Props> = ({ menu }) => {
   const [sortedKey, setSortedKey] = useState<string[]>([]);
   const [containerOverflow, setContainerOverFlow] = useState(false);
   const [activeFilter, setActiveFilter] = useState('');
@@ -105,7 +104,7 @@ export const MenuFilterType: React.FC<Props> = ({ menu, globalChoices }) => {
       )}
 
       <div className="menu-container">
-        <MenuGrid sortedKey={sortedKey} menu={menu} globalChoices={globalChoices} activeFilter={activeFilter} />
+        <MenuGrid sortedKey={sortedKey} menu={menu} activeFilter={activeFilter} />
       </div>
     </div>
   );

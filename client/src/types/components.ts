@@ -63,3 +63,20 @@ export type Cart = {
     };
   };
 };
+
+export type Orders = {
+  [key: string]: {
+    storeID: number;
+    storeImage: string;
+    totalPrice: number;
+    totalItems: number;
+    orderDate: string;
+    orderItems: {
+      [key: string]: {
+        itemID: number;
+        quantity: number;
+        price: number;
+      };
+    };
+  };
+};

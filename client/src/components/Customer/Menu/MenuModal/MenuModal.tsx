@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { MenuChoice, MenuItem } from '../../../../types';
+import React, { useState } from 'react';
+import { MenuItem } from '../../../../types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 
@@ -7,23 +7,15 @@ interface Props {
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   menuItem: MenuItem | undefined;
-  globalChoices: MenuChoice;
   menuName: string;
 }
 
-export const MenuModal: React.FC<Props> = ({ showModal, setShowModal, menuItem, globalChoices, menuName }) => {
-  const [choices, setChoices] = useState<MenuChoice>();
+export const MenuModal: React.FC<Props> = ({ showModal, setShowModal, menuItem, menuName }) => {
   const [quantity, setQuantity] = useState(1);
 
-  useEffect(() => {
-    if (menuItem && typeof menuItem === 'object') {
-      setChoices(menuItem['choices']);
-    }
-  }, [menuItem, choices]);
 
   const onCloseButtonClick = () => {
     setShowModal(false);
-    setChoices(undefined)
     setQuantity(1)
     const body = document.getElementsByTagName('body')[0];
     if (body) {

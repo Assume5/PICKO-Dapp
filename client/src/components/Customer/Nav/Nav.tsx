@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { Cart } from '../../../types/index';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { fakeCartData } from './fakeCartData';
@@ -7,9 +6,11 @@ import Web3 from 'web3';
 import { SideBar } from './SideBar';
 import { getCookie } from '../../../utils/functions';
 import { UserContext, CartContext } from '../../../contexts';
+import { useNavigate } from 'react-router-dom';
 declare var window: any;
 
 export const Nav = () => {
+  const navigate = useNavigate();
   const navbar = useRef<HTMLDivElement>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const sidebar = useRef(null);
@@ -95,14 +96,14 @@ export const Nav = () => {
 
   return (
     <div className="header" ref={navbar}>
-      <div className="logo" onClick={() => (window.location = '/')}>
+      <div className="logo" onClick={() => navigate('/')}>
         <img src={'/imgs/PICKO-logo.png'} alt="logo" />
       </div>
       <div className="content">
         {userCtx.user.login ? (
           <>
             <p>{userCtx.user.address}</p>
-            <button>View Account</button>
+            <button onClick={() => navigate('/account')}>View Account</button>
           </>
         ) : (
           <>

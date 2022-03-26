@@ -8,25 +8,26 @@ import { Home } from './Home/Home';
 import { Restaurant } from './Restaurant/Restaurant';
 import { LeafletMap } from './LeafletMap/LeafletMap';
 import { Eat } from './Eat/Eat';
-import {UserContextProvider, ContractContext, CartContextProvider} from '../../contexts';
+import { UserContextProvider, ContractContext, CartContextProvider } from '../../contexts';
+import { Account } from './Account/Account';
 
 const Customer = () => {
   const contractCtx = useContext(ContractContext);
-  console.log(contractCtx);
   return (
     <>
       <UserContextProvider>
         <CartContextProvider>
-          <Nav />
           <BrowserRouter>
+            <Nav />
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/restaurant/*" element={<Restaurant />} />
               <Route path="/map" element={<LeafletMap />} />
               <Route path="/eat" element={<Eat />} />
+              <Route path="/account" element={<Account />} />
             </Routes>
+            <Footer />
           </BrowserRouter>
-          <Footer />
         </CartContextProvider>
       </UserContextProvider>
     </>

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Cart } from '../../../types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartArrowDown, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 interface Props {
   cart: Cart;
@@ -10,13 +11,25 @@ interface Props {
 }
 
 export const SideBar: React.FC<Props> = ({ cart, setSidebarOpen, sidebarOpen }) => {
+  const navigate = useNavigate();
+  const [step, setStep] = useState('checkout');
+  const [tip, setTip] = useState(0.0);
+
   const onRestaurantCardClick = (key: string, id: number) => {
     const keyWithDash = key.trim().replaceAll(' ', '-').toLowerCase();
-    // (`/restaurant/${keyWithDash}-${id}`);
+    navigate(`/restaurant/${keyWithDash}-${id}`);
+    setSidebarOpen(false);
   };
+
   return (
     <div className={`side-bar ${cart.isCartEmpty && 'empty'}`}>
-      <div className="close-button" onClick={() => setSidebarOpen(!sidebarOpen)}>
+      <div
+        className="close-button"
+        onClick={() => {
+          setSidebarOpen(!sidebarOpen);
+          setStep('checkout');
+        }}
+      >
         <FontAwesomeIcon icon={faTimes} />
       </div>
       {cart.isCartEmpty ? (
@@ -45,7 +58,14 @@ export const SideBar: React.FC<Props> = ({ cart, setSidebarOpen, sidebarOpen }) 
         </div>
       )}
       <div className="checkout-button">
-        <button>Checkout</button>
+        {step === 'checkout' && <button onClick={() => setStep('tip')}>Checkout</button>}
+        {step === 'tip' && (
+          <>
+            <p>Enter a tip</p>
+            <input type="number" min="0" step="0.1" onChange={(e) => setTip(parseFloat(e.target.value))} />
+            <button onClick={() => setStep('checkout')}>Complete Checkout</button>
+          </>
+        )}
       </div>
     </div>
   );

@@ -21,15 +21,10 @@ export const Restaurant = () => {
           images:
             '/imgs/restaurant-hero-holder.jpg,/imgs/restaurant-hero-holder-2.jpg,/imgs/restaurant-hero-holder-3.jpg',
         });
-      } else if (win.location.href.includes('india-taste')) {
+      } else {
         setHero({
           type: 'image',
           image: '/imgs/restaurant-hero-holder.jpg',
-        });
-      } else {
-        setHero({
-          type: 'video',
-          videoUrl: 'https://www.youtube.com/watch?v=xPPLbEFbCAo',
         });
       }
     };

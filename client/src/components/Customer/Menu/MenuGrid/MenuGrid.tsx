@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { MenuChoice, MenuType, MenuItem } from '../../../../types';
+import { MenuType, MenuItem } from '../../../../types';
 import { MenuModal } from '../MenuModal/MenuModal';
 
 interface Props {
   sortedKey: string[];
   menu: MenuType;
-  globalChoices: MenuChoice;
   activeFilter: String;
 }
 
-export const MenuGrid: React.FC<Props> = ({ sortedKey, menu, globalChoices, activeFilter }) => {
+export const MenuGrid: React.FC<Props> = ({ sortedKey, menu, activeFilter }) => {
   const [showModal, setShowModal] = useState(false);
   const [menuItem, setMenuItem] = useState<MenuItem>();
   const [menuName, setMenuName] = useState('');
@@ -19,8 +18,8 @@ export const MenuGrid: React.FC<Props> = ({ sortedKey, menu, globalChoices, acti
     setMenuItem(menuItem);
     setMenuName(menuName);
     const body = document.getElementsByTagName('body')[0];
-    if(body) {
-      body.style.overflow= "hidden";
+    if (body) {
+      body.style.overflow = 'hidden';
     }
   };
 
@@ -52,18 +51,14 @@ export const MenuGrid: React.FC<Props> = ({ sortedKey, menu, globalChoices, acti
                       </div>
                     </div>
                   );
+                } else {
+                  return <></>;
                 }
               })}
             </div>
           );
         })}
-      <MenuModal
-        showModal={showModal}
-        setShowModal={setShowModal}
-        menuItem={menuItem}
-        globalChoices={globalChoices}
-        menuName={menuName}
-      />
+      <MenuModal showModal={showModal} setShowModal={setShowModal} menuItem={menuItem} menuName={menuName} />
     </>
   );
 };

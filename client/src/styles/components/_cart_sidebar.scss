@@ -84,6 +84,7 @@
 
       h2 {
         cursor: pointer;
+        text-decoration: underline;
       }
 
       .delivery-to {
@@ -125,6 +126,14 @@
       bottom: 0;
       left: 0;
       width: 100%;
+
+      input {
+        display: block;
+        margin: 0 auto;
+        padding: $padding2 $padding3;
+        margin-bottom: $padding2;
+        border-radius: 5px;
+      }
 
       button {
         width: 200px;
