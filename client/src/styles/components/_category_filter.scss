@@ -66,9 +66,11 @@
         padding: $padding2 $padding3;
       }
 
-      &:hover {
-        background-color: $gray;
-        color: $white;
+      @include breakpoint-min(lg) {
+        &:hover {
+          background-color: $gray;
+          color: $white;
+        }
       }
 
       &.active {

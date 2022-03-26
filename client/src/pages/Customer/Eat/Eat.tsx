@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { CategoryFilter } from '../../../components/Customer/CateogryFilter/CategoryFilter';
 import { EatHero } from '../../../components/Customer/Hero/EatHero/EatHero';
 import { RestaurantList } from '../../../components/Customer/RestaurantList/RestaurantList';

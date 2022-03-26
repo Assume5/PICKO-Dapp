@@ -10,7 +10,6 @@ interface Props {
 }
 
 export const SideBar: React.FC<Props> = ({ cart, setSidebarOpen, sidebarOpen }) => {
-  console.log(cart);
   const onRestaurantCardClick = (key: string, id: number) => {
     const keyWithDash = key.trim().replaceAll(' ', '-').toLowerCase();
     // (`/restaurant/${keyWithDash}-${id}`);
@@ -30,10 +29,9 @@ export const SideBar: React.FC<Props> = ({ cart, setSidebarOpen, sidebarOpen }) 
           <h2 onClick={() => onRestaurantCardClick(cart.restaurantName!, cart.restaurantID!)}>{cart.restaurantName}</h2>
           <p className="delivery-to">Delivery to {cart.deliveryAddress}</p>
           {Object.keys(cart.cartItems!).map((key) => {
-            console.log(key);
             const item = cart.cartItems![key];
             return (
-              <div className="cart-item">
+              <div className="cart-item" key={key}>
                 <div className="item-quantity">
                   <p>{item.quantity}</p>
                 </div>

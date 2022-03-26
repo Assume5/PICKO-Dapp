@@ -15,6 +15,7 @@ export const Home = () => {
     };
     initCheck();
   }, [navigate]);
+
   return (
     <div className="home">
       <HomeHero />
