@@ -109,9 +109,12 @@ export const Nav: React.FC<Props> = ({ user, setUser }) => {
             <button onClick={() => login(setUser)}>Sign In</button>
           </>
         )}
-        <FontAwesomeIcon icon={faShoppingCart} onClick={() => setSidebarOpen(!sidebarOpen)} />
+        <div className={`${cart && !cart.isCartEmpty ? 'has-item' : ''}`}>
+          <FontAwesomeIcon icon={faShoppingCart} onClick={() => setSidebarOpen(!sidebarOpen)} />
+          <div className="dot"></div>
+        </div>
       </div>
-      <div className={`sidebar-container ${sidebarOpen ? 'visible' : 'hidden'}`} ref={sidebar}>
+      <div className={`cart-sidebar-container ${sidebarOpen ? 'visible' : 'hidden'}`} ref={sidebar}>
         {cart && <SideBar cart={cart} setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />}
         <div className="overlay"></div>
       </div>

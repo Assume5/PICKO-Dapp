@@ -22,7 +22,7 @@
 
   @include breakpoint-max(sm) {
     height: 80vh;
-    padding: $padding5 0;
+    padding: $padding5 $padding3;
   }
 
   .top-restaurants {
@@ -82,6 +82,16 @@
           p {
             font-style: italic;
             font-weight: bold;
+          }
+
+          @include breakpoint-max(lg) {
+            left: 30px;
+            bottom: 30px;
+          }
+
+          @include breakpoint-max(sm) {
+            left: 10px;
+            bottom: 10px;
           }
         }
       }
