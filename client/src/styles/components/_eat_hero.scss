@@ -216,11 +216,15 @@
   .current-location {
     background-color: $gray;
     padding: $padding3 $padding4;
-    color: white;
+    color: $white;
     display: inline-block;
     border-radius: 100px;
     transition: background-color 0.5s ease-in-out;
     cursor: pointer;
+
+    @include breakpoint-max(sm) {
+      padding: $padding3;
+    }
 
     &:hover {
       background-color: $white;

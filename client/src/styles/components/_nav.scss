@@ -23,7 +23,8 @@
     cursor: pointer;
 
     @include breakpoint-max(sm) {
-      height: 60px;
+      width: 125px;
+      height: auto;
     }
 
     img {

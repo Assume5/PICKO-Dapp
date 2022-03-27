@@ -229,6 +229,7 @@
       @include breakpoint-max(lg) {
         max-width: 90%;
         min-height: 35vw;
+        background-attachment: unset;
       }
 
       @include breakpoint-max(sm) {

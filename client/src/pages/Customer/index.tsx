@@ -10,6 +10,7 @@ import { LeafletMap } from './LeafletMap/LeafletMap';
 import { Eat } from './Eat/Eat';
 import { UserContextProvider, ContractContext, CartContextProvider } from '../../contexts';
 import { Account } from './Account/Account';
+import { ScrollToTop } from '../../components/Global/ScrollToTop/ScrollToTop';
 
 const Customer = () => {
   const contractCtx = useContext(ContractContext);
@@ -18,6 +19,7 @@ const Customer = () => {
       <UserContextProvider>
         <CartContextProvider>
           <BrowserRouter>
+            <ScrollToTop />
             <Nav />
             <Routes>
               <Route path="/" element={<Home />} />
