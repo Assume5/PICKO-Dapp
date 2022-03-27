@@ -14,6 +14,7 @@ export const SideBar: React.FC<Props> = ({ cart, setSidebarOpen, sidebarOpen }) 
   const navigate = useNavigate();
   const [step, setStep] = useState('checkout');
   const [tip, setTip] = useState(0.0);
+  const [name, setName] = useState('');
 
   const onRestaurantCardClick = (key: string, id: number) => {
     const keyWithDash = key.trim().replaceAll(' ', '-').toLowerCase();
@@ -58,7 +59,14 @@ export const SideBar: React.FC<Props> = ({ cart, setSidebarOpen, sidebarOpen }) 
         </div>
       )}
       <div className="checkout-button">
-        {step === 'checkout' && <button onClick={() => setStep('tip')}>Checkout</button>}
+        {step === 'checkout' && <button onClick={() => setStep('name')}>Checkout</button>}
+        {step === 'name' && (
+          <>
+            <p>Enter your name</p>
+            <input type="text" onChange={(e) => setName(e.target.value)} />{' '}
+            <button onClick={() => setStep('tip')}>Next Step</button>
+          </>
+        )}
         {step === 'tip' && (
           <>
             <p>Enter a tip</p>
