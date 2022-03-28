@@ -13,3 +13,9 @@ export type MenuDict = {
     priority: boolean;
   };
 };
+
+export type orderItems = {
+  productName: string;
+  quantity: number;
+  price: number;
+};

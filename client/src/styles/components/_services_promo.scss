@@ -15,7 +15,7 @@
 
     &:hover {
       svg {
-        padding-left: $padding3;
+        margin-left: $padding3;
       }
     }
 
@@ -24,8 +24,8 @@
     }
 
     svg {
-      padding-left: $padding2;
-      transition: padding-left 0.3s ease-out;
+      margin-left: $padding2;
+      transition: margin-left 0.3s ease-out;
     }
 
     img {

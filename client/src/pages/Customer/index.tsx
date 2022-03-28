@@ -11,6 +11,7 @@ import { Eat } from './Eat/Eat';
 import { UserContextProvider, ContractContext, CartContextProvider } from '../../contexts';
 import { Account } from './Account/Account';
 import { ScrollToTop } from '../../components/Global/ScrollToTop/ScrollToTop';
+import { Order } from './Order/Order';
 
 const Customer = () => {
   const contractCtx = useContext(ContractContext);
@@ -27,6 +28,7 @@ const Customer = () => {
               <Route path="/map" element={<LeafletMap />} />
               <Route path="/eat" element={<Eat />} />
               <Route path="/account" element={<Account />} />
+              <Route path="/order/*" element={<Order />} />
             </Routes>
             <Footer />
           </BrowserRouter>

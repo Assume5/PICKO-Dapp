@@ -71,7 +71,14 @@ export const SideBar: React.FC<Props> = ({ cart, setSidebarOpen, sidebarOpen }) 
           <>
             <p>Enter a tip</p>
             <input type="number" min="0" step="0.1" onChange={(e) => setTip(parseFloat(e.target.value))} />
-            <button onClick={() => setStep('checkout')}>Complete Checkout</button>
+            <button
+              onClick={() => {
+                navigate('/order');
+                setSidebarOpen(false);
+              }}
+            >
+              Complete Checkout
+            </button>
           </>
         )}
       </div>

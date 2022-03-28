@@ -1,10 +1,11 @@
 .eat-hero {
-  padding: $padding5 $padding6;
+  padding: $padding6 $padding6;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  gap: $padding4 0;
 
   @include breakpoint-max(xxl) {
     padding: $padding5 $padding4;
@@ -22,7 +23,7 @@
 
   @include breakpoint-max(sm) {
     height: 80vh;
-    padding: $padding5 $padding3;
+    margin: $padding5 0;
   }
 
   .top-restaurants {
@@ -232,7 +233,7 @@
     }
 
     svg {
-      padding-right: $padding3;
+      margin-right: $padding3;
     }
   }
 

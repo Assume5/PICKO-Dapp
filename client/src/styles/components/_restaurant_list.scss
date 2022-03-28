@@ -7,7 +7,7 @@ $cornerPixel: 15px;
   padding: $spacing 0px;
 
   .restaurant-card {
-    width: calc(25% - 64px);
+    width: calc(25% - 32px);
     margin: $padding4 $padding3;
     padding: $padding5 $padding3;
     border-radius: 15px;
@@ -30,11 +30,11 @@ $cornerPixel: 15px;
     }
 
     @include breakpoint-max(xl) {
-      width: calc(33.333% - 64px);
+      width: calc(33.333% - 32px);
     }
 
     @include breakpoint-max(md) {
-      width: calc(50% - 64px);
+      width: calc(50% - 32px);
     }
 
     @include breakpoint-max(sm) {

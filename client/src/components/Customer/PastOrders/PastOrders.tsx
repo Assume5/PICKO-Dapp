@@ -8,7 +8,7 @@ interface Props {
 
 export const PastOrders: React.FC<Props> = ({ orders }) => {
   const navigate = useNavigate();
-  
+
   const onRedirectClick = (key: string, id: number) => {
     const keyWithDash = key.trim().replaceAll(' ', '-').toLowerCase();
     navigate(`/restaurant/${keyWithDash}-${id}`);
@@ -37,7 +37,7 @@ export const PastOrders: React.FC<Props> = ({ orders }) => {
                     <div className="order-item" key={item}>
                       <p className="item-quantity">{orderItem.quantity}</p>
                       <p>{item}</p>
-                      <p>{orderItem.price}</p>
+                      <p className="price">{orderItem.price}</p>
                     </div>
                   );
                 })}

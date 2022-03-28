@@ -1,0 +1,49 @@
+.order-detail {
+  background-color: $gray;
+  padding: $padding6 $padding5;
+  color: $white;
+
+  @include breakpoint-max(lg) {
+    padding: $padding4 $padding5;
+  }
+
+  @include breakpoint-max(md) {
+    padding: $padding4 $padding3;
+  }
+
+  .space-btw {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .order-date {
+    text-align: right;
+  }
+
+  hr {
+    margin: $padding3 0;
+  }
+
+  &-product {
+    display: flex;
+    align-items: center;
+
+    p {
+      padding: 0 $padding3;
+
+      &:last-child {
+        margin-left: auto;
+      }
+
+      &:first-child {
+        background-color: $mineShaft;
+        border-radius: 10px;
+        height: 40px;
+        color: $white;
+        display: flex;
+        align-items: center;
+        line-height: 1;
+      }
+    }
+  }
+}

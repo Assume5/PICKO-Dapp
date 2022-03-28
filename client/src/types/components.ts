@@ -1,3 +1,4 @@
+import { orderItems } from './componentsPart';
 import { MenuDict } from './index';
 
 export type User = {
@@ -79,4 +80,21 @@ export type Orders = {
       };
     };
   };
+};
+
+export type OrderStatus = {
+  orderID: number;
+  orderFrom: string;
+  restaurantID: number;
+  currentStatus: number;
+  driverID: number;
+  driverCurrentLocation: [number, number];
+  restaurantLocation: [number, number];
+  clientLocation: [number, number];
+  orderItems: orderItems[];
+  orderDate: string;
+  orderTime: string;
+  driverTips: number;
+  deliveryFee: number;
+  total: number;
 };
