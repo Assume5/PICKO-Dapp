@@ -12,7 +12,6 @@ $cornerPixel: 15px;
     padding: $padding5 $padding3;
     border-radius: 15px;
     color: $white;
-    overflow: hidden;
     cursor: pointer;
     animation: fadeIn 0.5s linear;
     background-position: center;
@@ -57,6 +56,7 @@ $cornerPixel: 15px;
       background: linear-gradient(to right, #000000, #130d11, #1b171d, #20202b, #1f2a39);
       opacity: 0.6;
       transition: opacity 0.3s ease-out;
+      border-radius: 15px;
     }
 
     .corner {
