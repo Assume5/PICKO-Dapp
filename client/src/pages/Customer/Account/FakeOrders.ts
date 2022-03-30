@@ -2,6 +2,7 @@ import { Orders } from '../../../types';
 
 export const fakeOrders: Orders = {
   'China Taste': {
+    orderID: 2,
     storeID: 1,
     storeImage: '/imgs/restaurant-hero-holder.jpg',
     totalPrice: 1,
@@ -36,6 +37,7 @@ export const fakeOrders: Orders = {
     },
   },
   'India Taste': {
+    orderID: 1,
     storeID: 1,
     storeImage: '/imgs/restaurant-hero-holder.jpg',
     totalPrice: 1,

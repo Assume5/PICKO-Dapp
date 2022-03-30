@@ -29,6 +29,7 @@ export const PastOrders: React.FC<Props> = ({ orders }) => {
               <p>
                 Total {order.totalItems} Items for {order.totalPrice} ETH at {order.orderDate}
               </p>
+              <p onClick={() => navigate(`/order/${order.orderID}`)} className="receipt">View Receipt</p>
               <div className="order-items">
                 {Object.keys(order.orderItems).map((item) => {
                   const orderItem = order.orderItems[item];

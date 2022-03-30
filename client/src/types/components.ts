@@ -67,6 +67,7 @@ export type Cart = {
 
 export type Orders = {
   [key: string]: {
+    orderID: number;
     storeID: number;
     storeImage: string;
     totalPrice: number;

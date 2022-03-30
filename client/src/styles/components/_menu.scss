@@ -323,6 +323,7 @@
       @include breakpoint-max(md) {
         max-width: 85%;
         padding: $padding3;
+        margin: 0;
       }
     }
 
@@ -440,7 +441,7 @@
       }
 
       @include breakpoint-max(sm) {
-        max-width: 90%;
+        max-width: 95%;
       }
 
       img {
