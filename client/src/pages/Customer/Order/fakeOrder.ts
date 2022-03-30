@@ -1,4 +1,4 @@
-import { OrderStatus } from '../../../types';
+import { OrderStatus } from '@src/types';
 
 export const fakeOrderDetails: OrderStatus = {
   orderID: 1,

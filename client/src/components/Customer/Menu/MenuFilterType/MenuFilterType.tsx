@@ -1,5 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { MenuType } from '../../../../types';
+import { MenuType } from '@src/types';
 import { MenuGrid } from '../MenuGrid/MenuGrid';
 
 interface Props {

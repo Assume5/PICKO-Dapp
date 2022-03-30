@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MenuType, MenuItem } from '../../../../types';
+import { MenuType, MenuItem } from '@src/types';
 import { MenuModal } from '../MenuModal/MenuModal';
 
 interface Props {

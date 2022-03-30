@@ -1,5 +1,5 @@
 import React from 'react';
-import { OrderStatus } from '../../../types';
+import { OrderStatus } from '@src/types';
 
 type Props = {
   order: OrderStatus;

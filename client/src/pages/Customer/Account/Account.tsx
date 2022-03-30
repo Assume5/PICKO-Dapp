@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { PastOrders } from '../../../components/Customer/PastOrders/PastOrders';
-import { Orders } from '../../../types';
+import { Orders } from '@src/types';
 import { fakeOrders } from './FakeOrders';
 
 export const Account = () => {

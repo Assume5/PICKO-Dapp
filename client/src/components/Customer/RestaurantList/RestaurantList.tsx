@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Restaurant } from '../../../types';
+import { Restaurant } from '@src/types';
 
 interface Props {
   restaurants: Restaurant;

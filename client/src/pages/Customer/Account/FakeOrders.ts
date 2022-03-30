@@ -1,4 +1,4 @@
-import { Orders } from '../../../types';
+import { Orders } from '@src/types';
 
 export const fakeOrders: Orders = {
   'China Taste': {

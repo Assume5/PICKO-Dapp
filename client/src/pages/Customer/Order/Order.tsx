@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { OrderDetail } from '../../../components/Customer/OrderDetail/OrderDetail';
 import { Map } from '../../../components/Global/Map/Map';
-import { OrderStatus } from '../../../types';
+import { OrderStatus } from '@src/types';
 import { fakeOrderDetails } from './fakeOrder';
 
 export const Order = () => {

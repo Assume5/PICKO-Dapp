@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { CategoryFilter } from '../../../components/Customer/CateogryFilter/CategoryFilter';
 import { EatHero } from '../../../components/Customer/Hero/EatHero/EatHero';
 import { RestaurantList } from '../../../components/Customer/RestaurantList/RestaurantList';
-import { Restaurant } from '../../../types';
+import { Restaurant } from '@src/types';
 import { checkAddress } from '../../../utils/functions';
 
 import { topRestaurants, restaurants } from './FakeRestaurantData';

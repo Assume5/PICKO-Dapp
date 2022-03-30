@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MenuType, MenuItem } from '../../../../types';
+import { MenuType, MenuItem } from '@src/types';
 import { MenuModal } from '../MenuModal/MenuModal';
 import { MenuSideBar } from '../MenuSideBar/MenuSideBar';
 

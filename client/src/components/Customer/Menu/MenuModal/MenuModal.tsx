@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MenuItem } from '../../../../types';
+import { MenuItem } from '@src/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 

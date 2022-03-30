@@ -1,4 +1,4 @@
-import { Cart } from '../../../types';
+import { Cart } from '@src/types';
 
 export const fakeCartData: Cart = {
   isCartEmpty: false,

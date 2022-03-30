@@ -1,4 +1,4 @@
-import { Restaurant } from '../../../types';
+import { Restaurant } from '@src/types';
 
 export const test = 1;
 

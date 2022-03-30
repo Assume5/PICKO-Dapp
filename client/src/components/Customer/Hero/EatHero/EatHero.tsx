@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
-import { Restaurant } from '../../../../types/components';
+import { Restaurant } from '@src/types';
 import { getCookie } from '../../../../utils/functions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationArrow } from '@fortawesome/free-solid-svg-icons';

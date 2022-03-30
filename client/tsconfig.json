@@ -4,7 +4,7 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "types": ["vite/client", "vite-plugin-svgr/client"],
     "paths": {
-      "@types": ["./src/types/index.ts"]
+      "@src/types": ["./src/types/index.ts"],
     },
     "allowJs": true,
     "skipLibCheck": true,

@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationArrow } from '@fortawesome/free-solid-svg-icons';
 
 import React from 'react';
-import { RestaurantDetailType } from '../../../types/index';
+import { RestaurantDetailType } from '@src/types';
 interface Props {
   details: RestaurantDetailType;
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Cart } from '../../../types';
+import { Cart } from '@src/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartArrowDown, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';

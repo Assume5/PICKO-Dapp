@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { HeroType, Social, RestaurantDetailType } from '../../../types/index';
+import { HeroType, Social, RestaurantDetailType } from '@src/types';
 import { serverUrl } from '../../../utils/constant';
 
 import { RestaurantHero } from '../../../components/Customer/Hero/RestaurantHero/RestaurantHero';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Social } from '../../../types';
+import { Social } from '@src/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookSquare, faTwitter, faInstagram } from '@fortawesome/free-brands-svg-icons';
 
@@ -26,7 +26,7 @@ export const SocialMedia: React.FC<Props> = ({ social }) => {
       {social.twitter && (
         <div className="social-icon">
           <a href={social.twitter}>
-            <FontAwesomeIcon className="FontAwesomeIcon" icon={faTwitter}/>
+            <FontAwesomeIcon className="FontAwesomeIcon" icon={faTwitter} />
           </a>
         </div>
       )}

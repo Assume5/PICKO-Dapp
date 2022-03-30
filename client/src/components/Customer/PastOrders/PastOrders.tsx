@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Orders } from '../../../types';
+import { Orders } from '@src/types';
 
 interface Props {
   orders: Orders;

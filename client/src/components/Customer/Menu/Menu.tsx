@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { MenuType } from '../../../types';
+import { MenuType } from '@src/types';
 import { MenuAllInOneType } from './MenuAllInOneType/MenuAllInOneType';
 import { MenuFilterType } from './MenuFilterType/MenuFilterType';
 import { fakeMenu, allInOneImage } from '../../../pages/Customer/Restaurant/MenuFakeData';
