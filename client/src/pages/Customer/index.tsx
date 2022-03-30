@@ -12,9 +12,21 @@ import { UserContextProvider, ContractContext, CartContextProvider } from '../..
 import { Account } from './Account/Account';
 import { ScrollToTop } from '../../components/Global/ScrollToTop/ScrollToTop';
 import { Order } from './Order/Order';
+import Web3 from 'web3';
+declare var window: any;
 
 const Customer = () => {
   const contractCtx = useContext(ContractContext);
+  const runExample = async () => {
+    if (contractCtx.contract) {
+      const web3 = new Web3(window.ethereum);
+      const accounts = await web3.eth.getAccounts();
+      await contractCtx.contract.methods.set(5).send({ from: accounts[0] });
+      const response = await contractCtx.contract.methods.get().call();
+      console.log(response);
+    }
+  };
+
   return (
     <>
       <UserContextProvider>

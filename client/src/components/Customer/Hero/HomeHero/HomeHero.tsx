@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getCookie } from '../../../../utils/functions';
 import { AddressSearch } from '../../AddressSearch/AddressSearch';
 import { useNavigate } from 'react-router-dom';
