@@ -136,6 +136,8 @@
         display: inline-flex;
         max-width: 50%;
         overflow-x: auto;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none;  /* Internet Explorer 10+ */
 
         @include breakpoint-max(lg) {
           max-width: 75%;
@@ -340,7 +342,7 @@
       align-items: center;
 
       @include breakpoint-max(lg) {
-        right: 15px;
+        right: 10px;
       }
 
       .sidebar-item {
@@ -356,8 +358,6 @@
         opacity: 0;
 
         @include breakpoint-max(lg) {
-          width: 6px;
-          height: 6px;
         }
 
         &.active {
@@ -429,19 +429,51 @@
       position: relative;
 
       @include breakpoint-max(xl) {
-        max-width: 50%;
+        max-width: 100%;
+        width: 50%;
       }
 
       @include breakpoint-max(lg) {
-        max-width: 60%;
+        width: 60%;
       }
 
       @include breakpoint-max(md) {
-        max-width: 70%;
+        width: 70%;
       }
 
       @include breakpoint-max(sm) {
-        max-width: 95%;
+        width: 95%;
+      }
+
+      &.address-false {
+        min-height: 80%;
+        min-width: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow-y: hidden;
+
+        .address-search {
+          margin: 0;
+          width: 100%;
+
+          input {
+            border: 2px solid $black;
+          }
+        }
+
+        .error-message {
+          top: 50%;
+        }
+
+        .address-search-result {
+          top: calc(50% + 45px);
+          border: 1px solid $black;
+
+          @include breakpoint-max(lg) {
+            width: 95%;
+          }
+        }
       }
 
       img {

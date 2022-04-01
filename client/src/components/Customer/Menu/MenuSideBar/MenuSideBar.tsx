@@ -39,7 +39,7 @@ export const MenuSideBar: React.FC<Props> = ({ sortedKey }) => {
     };
 
     win.addEventListener('scroll', onScroll);
-  }, [sortedKey, win]);
+  }, [sortedKey, win, currentPosition]);
 
   return (
     <div className="menu-sidebar">

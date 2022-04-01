@@ -48,15 +48,6 @@ export const Footer = () => {
             </a>
           </p>
         </div>
-        <div className="newsletter">
-          <p className="title">Sign Up For News And Exclusive Deals</p>
-          <div className="email-input">
-            <input type="email" name="email-address" id="email-address" placeholder="Email" />
-            <button>
-              <FontAwesomeIcon className="FontAwesomeIcon" icon={faArrowRight} />
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   );

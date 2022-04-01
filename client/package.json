@@ -37,7 +37,7 @@
     "web3": "1.2.2"
   },
   "scripts": {
-    "start": "vite",
+    "start": "vite --host",
     "build": "tsc && vite build",
     "serve": "vite preview",
     "test": "react-scripts test",

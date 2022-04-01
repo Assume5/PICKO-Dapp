@@ -116,6 +116,8 @@
         position: relative;
         padding: 0px $padding3;
         overflow-x: auto;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none;  /* Internet Explorer 10+ */
 
         &::-webkit-scrollbar {
           width: 0; /* Remove scrollbar space */
@@ -149,7 +151,7 @@
         @include breakpoint-max(md) {
           height: 8vh;
           flex: 1 0 auto;
-          width: 33.33%;
+          width: 45%;
 
           &:last-child {
             display: none;
@@ -225,6 +227,9 @@
 
     @include breakpoint-max(sm) {
       padding: $padding3;
+      width: 100%;
+      text-align: center;
+      
     }
 
     &:hover {

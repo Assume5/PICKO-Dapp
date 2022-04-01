@@ -54,11 +54,12 @@ export const Nav = () => {
   useEffect(() => {
     const tempFake = fakeCartData;
     if (getCookie('address_details')) {
+      console.log(2)
       tempFake.deliveryAddress = getCookie('address_details').home;
     }
 
     cartCtx.setCart(tempFake);
-  }, []);
+  }, [sidebarOpen]);
 
   useEffect(() => {
     const body: HTMLBodyElement | null = document.querySelector('body');

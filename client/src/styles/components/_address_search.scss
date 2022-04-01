@@ -60,6 +60,10 @@
   max-height: 300px;
   overflow-y: auto;
 
+  @include breakpoint-max(sm) {
+    width: 95%;
+  }
+
   &-item {
     cursor: pointer;
     padding: $padding3 0px;

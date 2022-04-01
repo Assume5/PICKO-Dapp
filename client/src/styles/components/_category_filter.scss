@@ -34,7 +34,9 @@
     align-items: center;
     gap: $padding4;
     overflow-x: auto;
-
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    
     @include breakpoint-max(lg) {
       gap: $padding3;
     }
