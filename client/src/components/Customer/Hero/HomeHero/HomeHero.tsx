@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getCookie } from '../../../../utils/functions';
+import { getCookie } from '@src/helpers';
 import { AddressSearch } from '../../AddressSearch/AddressSearch';
 import { useNavigate } from 'react-router-dom';
 
@@ -12,9 +12,7 @@ export const HomeHero = () => {
     }
   }, [changeSuccess, navigate]);
 
-  useEffect(() => {
-    
-  })
+  useEffect(() => {});
   return (
     <div className="home-hero">
       <h2>Enter your address and order your food!</h2>

@@ -26,7 +26,7 @@ export const MenuGrid: React.FC<Props> = ({ sortedKey, menu, activeFilter }) => 
   return (
     <>
       {menu &&
-        sortedKey.map((key) => {
+        sortedKey.map((key, i) => {
           const menus = menu.menu[key];
           return (
             <div className={`menu-items ${activeFilter === key ? 'active' : ''}`} data-category={key} key={key}>

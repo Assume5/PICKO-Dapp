@@ -7,24 +7,28 @@
 @import 'global/global';
 
 //components
-@import './components/_address_search';
-@import './components/cart_sidebar';
-@import './components/category_filter';
-@import './components/eat_hero';
-@import './components/footer';
-@import './components/home_hero';
-@import './components/menu';
-@import './components/nav';
-@import './components/order_details';
-@import './components/past_orders';
-@import './components/restaurant_detail';
-@import './components/restaurant_hero';
-@import './components/restaurant_list';
-@import './components/services_promo';
+@import './components/customer/_address_search';
+@import './components/customer/cart_sidebar';
+@import './components/customer/category_filter';
+@import './components/customer/eat_hero';
+@import './components/customer/footer';
+@import './components/customer/home_hero';
+@import './components/customer/menu';
+@import './components/customer/nav';
+@import './components/customer/order_details';
+@import './components/customer/past_orders';
+@import './components/customer/restaurant_detail';
+@import './components/customer/restaurant_hero';
+@import './components/customer/restaurant_list';
+@import './components/customer/services_promo';
+
+@import './components/owner/metamask_login';
 
 //pages
-@import './pages/account';
-@import './pages/eat';
-@import './pages/home';
-@import './pages/order';
-@import './pages/restaurant';
+@import './pages/customer/account';
+@import './pages/customer/eat';
+@import './pages/customer/home';
+@import './pages/customer/order';
+@import './pages/customer/restaurant';
+
+@import './pages/owner/home';

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { OrderDetail } from '../../../components/Customer/OrderDetail/OrderDetail';
-import { Map } from '../../../components/Global/Map/Map';
+import { OrderDetail } from '@src/components/Customer/OrderDetail/OrderDetail';
+import { Map } from '@src/components/Global/Map/Map';
 import { OrderStatus } from '@src/types';
 import { fakeOrderDetails } from './fakeOrder';
 

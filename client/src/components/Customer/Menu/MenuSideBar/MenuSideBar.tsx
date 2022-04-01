@@ -34,12 +34,13 @@ export const MenuSideBar: React.FC<Props> = ({ sortedKey }) => {
         });
       } else {
         setCurrentPosition('');
-        setAtMenuPosition(false)
+        setAtMenuPosition(false);
       }
     };
 
     win.addEventListener('scroll', onScroll);
-  }, [sortedKey, win, currentPosition]);
+    return () => win.removeEventListener('scroll', onScroll);
+  }, [sortedKey, currentPosition]);
 
   return (
     <div className="menu-sidebar">

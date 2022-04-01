@@ -3,7 +3,7 @@ import { MenuItem } from '@src/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { AddressSearch } from '../../AddressSearch/AddressSearch';
-import { getCookie } from '../../../../utils/functions';
+import { getCookie } from '@src/helpers';
 
 interface Props {
   showModal: boolean;

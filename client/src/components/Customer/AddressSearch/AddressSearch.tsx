@@ -5,7 +5,7 @@ import { OpenStreetMapProvider } from 'leaflet-geosearch';
 import type { RawResult } from 'leaflet-geosearch/dist/providers/openStreetMapProvider';
 import type { SearchResult } from 'leaflet-geosearch/dist/providers/provider';
 
-import { setCookie } from '../../../utils/functions';
+import { setCookie } from '@src/helpers';
 
 interface RawResultAddress extends RawResult {
   address?: {

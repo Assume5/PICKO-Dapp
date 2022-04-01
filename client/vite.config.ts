@@ -1,6 +1,7 @@
-import { defineConfig } from 'vite'
-import reactRefresh from '@vitejs/plugin-react-refresh'
-import svgrPlugin from 'vite-plugin-svgr'
+import { defineConfig } from 'vite';
+import reactRefresh from '@vitejs/plugin-react-refresh';
+import svgrPlugin from 'vite-plugin-svgr';
+import path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -18,4 +19,13 @@ export default defineConfig({
       },
     }),
   ],
-})
+  resolve: {
+    alias: {
+      '@src/types': path.resolve(__dirname, './src/types/index.ts'),
+      '@src/components': path.resolve(__dirname, './src/components'),
+      '@src/contexts': path.resolve(__dirname, './src/contexts/index.tsx'),
+      '@src/helpers': path.resolve(__dirname, './src/utils/functions.ts'),
+      '@src/constants': path.resolve(__dirname, './src/utils/constants.ts'),
+    },
+  },
+});

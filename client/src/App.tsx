@@ -1,17 +1,16 @@
 import React from 'react';
-import { ContractContextProvider } from './contexts';
+import { ContractContextProvider } from '@src/contexts';
 import './dist/main.css';
 
-//components
-import Customer from './pages/Customer/index';
+import { Page } from './pages';
 
 const App: React.FC = () => {
   return (
-    <ContractContextProvider>
-      <div className="App">
-        <Customer />
-      </div>
-    </ContractContextProvider>
+    <div className="App">
+      <ContractContextProvider>
+        <Page />
+      </ContractContextProvider>
+    </div>
   );
 };
 

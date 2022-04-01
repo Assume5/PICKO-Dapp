@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 import CryptoJS from 'crypto-js';
 import { AES } from 'crypto-js';
-import { hashKey } from './constant';
+import { hashKey } from './constants';
 
 export const getCookie = (name: string) => {
   if (Cookies.get(name)) {

@@ -1,18 +1,32 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Restaurant } from '@src/types';
+import { ContractContext } from '@src/contexts';
+import Web3 from 'web3';
 
 interface Props {
   restaurants: Restaurant;
   currentFilter: string[];
 }
-
+declare var window: any;
 export const RestaurantList: React.FC<Props> = ({ restaurants, currentFilter }) => {
   const navigate = useNavigate();
+  const contractCtx = useContext(ContractContext);
+  const runExample = async () => {
+    if (contractCtx.contract) {
+      const web3 = new Web3(window.ethereum);
+      const accounts = await web3.eth.getAccounts();
+      await contractCtx.contract.methods.set(5).send({ from: accounts[0] });
+      const response = await contractCtx.contract.methods.get().call();
+      console.log(response);
+    }
+  };
+
   const onRestaurantCardClick = (key: string, id: number) => {
     const keyWithDash = key.trim().replaceAll(' ', '-').toLowerCase();
     navigate(`/restaurant/${keyWithDash}-${id}`);
   };
+
   return (
     <div className="restaurant-list">
       {Object.keys(restaurants).map((key, i) => {
@@ -50,8 +64,8 @@ export const RestaurantList: React.FC<Props> = ({ restaurants, currentFilter }) 
           );
         } else return <></>;
       })}
-      <div className='load-more'>
-        <button>Load More</button>
+      <div className="load-more">
+        <button onClick={() => runExample()}>Load More</button>
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ interface Props {
   sidebarOpen: boolean;
 }
 
-export const SideBar: React.FC<Props> = ({ cart, setSidebarOpen, sidebarOpen }) => {
+export const CartSidebar: React.FC<Props> = ({ cart, setSidebarOpen, sidebarOpen }) => {
   const navigate = useNavigate();
   const [step, setStep] = useState('checkout');
   const [tip, setTip] = useState(0.0);

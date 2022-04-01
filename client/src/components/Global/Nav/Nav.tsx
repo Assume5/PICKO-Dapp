@@ -1,15 +1,16 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-import { fakeCartData } from './fakeCartData';
+import { fakeCartData } from '../../Customer/CartSidebar/fakeCartData';
 import Web3 from 'web3';
-import { SideBar } from './SideBar';
-import { getCookie } from '../../../utils/functions';
-import { UserContext, CartContext } from '../../../contexts';
-import { useNavigate } from 'react-router-dom';
+import { CartSidebar } from '../../Customer/CartSidebar/CartSidebar';
+import { getCookie } from '@src/helpers';
+import { UserContext, CartContext } from '@src/contexts';
+import { useLocation, useNavigate } from 'react-router-dom';
 declare var window: any;
 
 export const Nav = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const navbar = useRef<HTMLDivElement>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -54,7 +55,6 @@ export const Nav = () => {
   useEffect(() => {
     const tempFake = fakeCartData;
     if (getCookie('address_details')) {
-      console.log(2)
       tempFake.deliveryAddress = getCookie('address_details').home;
     }
 
@@ -92,12 +92,21 @@ export const Nav = () => {
       name: '',
       address: accounts[0],
     });
-    localStorage.setItem('userId', accounts[0]);
+  };
+
+  const onLogoClick = () => {
+    if (!location.pathname.includes('/owner') && !location.pathname.includes('/driver')) {
+      navigate('/');
+    } else if (location.pathname.includes('/owner')) {
+      navigate('/owner');
+    } else {
+      navigate('/driver');
+    }
   };
 
   return (
     <div className="header" ref={navbar}>
-      <div className="logo" onClick={() => navigate('/')}>
+      <div className="logo" onClick={() => onLogoClick()}>
         <img src={'/imgs/PICKO-logo.png'} alt="logo" />
       </div>
       <div className="content">
@@ -111,14 +120,20 @@ export const Nav = () => {
             <button onClick={() => login()}>Sign In</button>
           </>
         )}
-        <div className={`${cartCtx.cart && !cartCtx.cart.isCartEmpty ? 'has-item' : ''}`}>
-          <FontAwesomeIcon icon={faShoppingCart} onClick={() => setSidebarOpen(!sidebarOpen)} />
-          <div className="dot"></div>
-        </div>
-      </div>
-      <div className={`cart-sidebar-container ${sidebarOpen ? 'visible' : 'hidden'}`} ref={sidebar}>
-        {cartCtx.cart && <SideBar cart={cartCtx.cart} setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />}
-        <div className="overlay"></div>
+        {!location.pathname.includes('/owner') && !location.pathname.includes('/driver') && (
+          <>
+            <div className={`${cartCtx.cart && !cartCtx.cart.isCartEmpty ? 'has-item' : ''}`}>
+              <FontAwesomeIcon icon={faShoppingCart} onClick={() => setSidebarOpen(!sidebarOpen)} />
+              <div className="dot"></div>
+            </div>
+            <div className={`cart-sidebar-container ${sidebarOpen ? 'visible' : 'hidden'}`} ref={sidebar}>
+              {cartCtx.cart && (
+                <CartSidebar cart={cartCtx.cart} setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
+              )}
+              <div className="overlay"></div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

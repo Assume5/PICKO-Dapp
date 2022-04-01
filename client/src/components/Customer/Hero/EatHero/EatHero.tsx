@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
 import { Restaurant } from '@src/types';
-import { getCookie } from '../../../../utils/functions';
+import { getCookie } from '@src/helpers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationArrow } from '@fortawesome/free-solid-svg-icons';
 import { EatHeroModal } from './EatHeroModal';

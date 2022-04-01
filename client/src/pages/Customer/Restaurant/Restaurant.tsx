@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { HeroType, Social, RestaurantDetailType } from '@src/types';
-import { serverUrl } from '../../../utils/constant';
+import { serverUrl } from '@src/constants';
 
-import { RestaurantHero } from '../../../components/Customer/Hero/RestaurantHero/RestaurantHero';
-import { Menu } from '../../../components/Customer/Menu/Menu';
-import { RestaurantDetail } from '../../../components/Customer/RestaurantDetail/RestaurantDetail';
+import { RestaurantHero } from '@src/components/Customer/Hero/RestaurantHero/RestaurantHero';
+import { Menu } from '@src/components//Customer/Menu/Menu';
+import { RestaurantDetail } from '@src/components/Customer/RestaurantDetail/RestaurantDetail';
 
 export const Restaurant = () => {
   const [hero, setHero] = useState<HeroType>(null);

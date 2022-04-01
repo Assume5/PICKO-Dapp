@@ -5,6 +5,10 @@
     "types": ["vite/client", "vite-plugin-svgr/client"],
     "paths": {
       "@src/types": ["./src/types/index.ts"],
+      "@src/components/*": ["./src/components/*"],
+      "@src/contexts": ["./src/contexts/index.tsx"],
+      "@src/helpers": ["./src/utils/functions.ts"],
+      "@src/constants": ["./src/utils/constants.ts"]
     },
     "allowJs": true,
     "skipLibCheck": true,

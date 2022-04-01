@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { CategoryFilter } from '../../../components/Customer/CateogryFilter/CategoryFilter';
-import { EatHero } from '../../../components/Customer/Hero/EatHero/EatHero';
-import { RestaurantList } from '../../../components/Customer/RestaurantList/RestaurantList';
+import { CategoryFilter } from '@src/components/Customer/CateogryFilter/CategoryFilter';
+import { EatHero } from '@src/components/Customer/Hero/EatHero/EatHero';
+import { RestaurantList } from '@src/components/Customer/RestaurantList/RestaurantList';
 import { Restaurant } from '@src/types';
-import { checkAddress } from '../../../utils/functions';
+import { checkAddress } from '@src/helpers';
 
 import { topRestaurants, restaurants } from './FakeRestaurantData';
 
