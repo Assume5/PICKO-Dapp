@@ -38,8 +38,14 @@ export const Page = () => {
           SimpleStorageContract.abi as Abi[],
           deployedNetwork && deployedNetwork.address,
         );
-        console.log('Contract: ', contract);
+        console.log('Contract: ');
+        console.log(contract);
         contractCtx.setContract(contract);
+        const accounts = await web3.eth.getAccounts();
+        console.log(accounts);
+        await contract.methods.set(5).send({ from: accounts[0] });
+        const response = await contract.methods.get().call();
+        console.log(response);
       } else {
         alert('Please install Metamask');
       }
