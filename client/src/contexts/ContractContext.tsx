@@ -24,12 +24,15 @@ export const ContractContextProvider: React.FC = (props) => {
       if (window.ethereum) {
         const web3 = new Web3(window.ethereum);
         const networkId = await web3.eth.net.getId();
+        console.log(`networkId: ${networkId}`);
         const contractNetwork: any = SimpleStorageContract.networks;
         const deployedNetwork = contractNetwork[networkId];
+        console.log(contractNetwork, deployedNetwork);
         const contract = await new web3.eth.Contract(
           SimpleStorageContract.abi as Abi[],
           deployedNetwork && deployedNetwork.address,
         );
+        console.log(contract)
         setContract(contract);
       } else {
         alert('Please install Metamask');
