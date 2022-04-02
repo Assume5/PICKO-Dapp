@@ -1,5 +1,5 @@
 const path = require("path");
-// require("dotenv").config();
+require("dotenv").config();
 const HDWalletProvider = require("@truffle/hdwallet-provider");
 
 module.exports = {
@@ -14,11 +14,21 @@ module.exports = {
                     `https://ropsten.infura.io/v3/${process.env.INFURA_API_KEY}`
                 ),
             gas: 8000000,
-            gasPrice: 25000000000,
+            gasPrice: 100000000000,
             network_id: 3,
         },
+        rinkeby: {
+            provider: () =>
+                new HDWalletProvider(
+                    process.env.MNEMONIC,
+                    `https://rinkeby.infura.io/v3/${process.env.INFURA_API_KEY}`
+                ),
+            network_id: 4,
+            gas: 8000000,
+            gasPrice: 100000000000,
+        },
         development: {
-            port: 8545,
+            port: 7545,
             gas: 8000000,
             network_id: "*",
         },

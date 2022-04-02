@@ -2,6 +2,3 @@
 from = '/*'
 to = '/index.html'
 status = 200
-
-[build]
-command = "cd .. && npm install && truffle migrate --reset --network ropsten && cd ./client && npm run build"
