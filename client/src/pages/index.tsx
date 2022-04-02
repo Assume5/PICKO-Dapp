@@ -1,8 +1,6 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Web3 from 'web3';
-
-import { CartContextProvider, ContractContext, UserContextProvider } from '@src/contexts';
+import { CartContextProvider, UserContextProvider } from '@src/contexts';
 
 //pages customer
 import { Account as CustomerAccount } from './Customer/Account/Account';
@@ -19,39 +17,8 @@ import { Home as StoreHome } from './Owner/Home/Home';
 import { Footer } from '@src/components/Global/Footer/Footer';
 import { Nav } from '@src/components/Global/Nav/Nav';
 import { ScrollToTop } from '@src/components/Global/ScrollToTop/ScrollToTop';
-import SimpleStorageContract from '../contracts/SimpleStorage.json';
-import { Abi, Contract } from '@src/types';
 
-declare var window: any;
 export const Page = () => {
-  const contractCtx = useContext(ContractContext);
-  useEffect(() => {
-    const initContract = async () => {
-      if (window.ethereum) {
-        const web3 = new Web3(window.ethereum);
-        const networkId = await web3.eth.net.getId();
-        console.log(`networkId: ${networkId}`);
-        const contractNetwork: any = SimpleStorageContract.networks;
-        const deployedNetwork = contractNetwork[networkId];
-        console.log(contractNetwork, deployedNetwork);
-        const contract = await new web3.eth.Contract(
-          SimpleStorageContract.abi as Abi[],
-          deployedNetwork && deployedNetwork.address,
-        );
-        console.log('Contract: ');
-        console.log(contract);
-        contractCtx.setContract(contract);
-        const accounts = await web3.eth.getAccounts();
-        console.log(accounts);
-        await contract.methods.set(5).send({ from: accounts[0] });
-        const response = await contract.methods.get().call();
-        console.log(response);
-      } else {
-        alert('Please install Metamask');
-      }
-    };
-    initContract();
-  }, []);
   return (
     <>
       <UserContextProvider>
