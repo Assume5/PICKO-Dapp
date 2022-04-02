@@ -5,7 +5,7 @@
 ##### Truffle
 ##### MetaMask
 ##### Ganache
-##### Node version >= 14.18
+##### Node version >= 16.13.2
 ##### MySQL
 
 ## Installation
@@ -41,6 +41,8 @@
 ##### Compile and migrate the smart contracts inside the developer console.
     compile
     migrate
+
+##### If you ran into some RPC errors try  run migrate with reset flag
 ##### Testing Solidity
     // inside the development console.
     test

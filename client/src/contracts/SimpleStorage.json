@@ -38,7 +38,7 @@
   "sourceMap": "69:186:1:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;69:186:1;;;;;;;",
   "deployedSourceMap": "69:186:1:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;69:186:1;;;;;;;;;;;;;;;;;;;;;;;;119:55;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;119:55:1;;;;;;;;;;;;;;;;;:::i;:::-;;180:72;;;:::i;:::-;;;;;;;;;;;;;;;;;;;119:55;167:1;154:10;:14;;;;119:55;:::o;180:72::-;216:4;236:10;;229:17;;180:72;:::o",
   "source": "// SPDX-License-Identifier: MIT\r\npragma solidity >=0.4.21 <0.7.0;\r\n\r\ncontract SimpleStorage {\r\n  uint storedData;\r\n\r\n  function set(uint x) public {\r\n    storedData = x;\r\n  }\r\n\r\n  function get() public view returns (uint) {\r\n    return storedData;\r\n  }\r\n}\r\n",
-  "sourcePath": "C:\\Users\\zouch\\Desktop\\PICKO\\contracts\\SimpleStorage.sol",
+  "sourcePath": "C:\\Users\\zouch\\Documents\\GitHub\\PICK-Dapp\\contracts\\SimpleStorage.sol",
   "ast": {
     "absolutePath": "project:/contracts/SimpleStorage.sol",
     "exportedSymbols": {
@@ -598,6 +598,12 @@
     "version": "0.5.16+commit.9c3226ce.Emscripten.clang"
   },
   "networks": {
+    "3": {
+      "events": {},
+      "links": {},
+      "address": "0xffe8648E3140fE08bfed0415DB4ee0b868ea1bA2",
+      "transactionHash": "0x96b91e7fbac98362fce6006a5888a85b395a0258cd7eb36dc2ca2891a9b4e2a7"
+    },
     "5777": {
       "events": {},
       "links": {},
@@ -606,7 +612,7 @@
     }
   },
   "schemaVersion": "3.4.4",
-  "updatedAt": "2022-01-30T17:53:20.969Z",
+  "updatedAt": "2022-04-02T01:39:18.887Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}

@@ -26,6 +26,10 @@ export default defineConfig({
       '@src/contexts': path.resolve(__dirname, './src/contexts/index.tsx'),
       '@src/helpers': path.resolve(__dirname, './src/utils/functions.ts'),
       '@src/constants': path.resolve(__dirname, './src/utils/constants.ts'),
+      process: 'process/browser',
+      stream: 'stream-browserify',
+      zlib: 'browserify-zlib',
+      util: 'util',
     },
   },
 });
