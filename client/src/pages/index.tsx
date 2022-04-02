@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Web3 from 'web3';
 
@@ -19,9 +19,33 @@ import { Home as StoreHome } from './Owner/Home/Home';
 import { Footer } from '@src/components/Global/Footer/Footer';
 import { Nav } from '@src/components/Global/Nav/Nav';
 import { ScrollToTop } from '@src/components/Global/ScrollToTop/ScrollToTop';
+import SimpleStorageContract from '../contracts/SimpleStorage.json';
+import { Abi, Contract } from '@src/types';
 
 declare var window: any;
 export const Page = () => {
+  const contractCtx = useContext(ContractContext);
+  useEffect(() => {
+    const initContract = async () => {
+      if (window.ethereum) {
+        const web3 = new Web3(window.ethereum);
+        const networkId = await web3.eth.net.getId();
+        console.log(`networkId: ${networkId}`);
+        const contractNetwork: any = SimpleStorageContract.networks;
+        const deployedNetwork = contractNetwork[networkId];
+        console.log(contractNetwork, deployedNetwork);
+        const contract = await new web3.eth.Contract(
+          SimpleStorageContract.abi as Abi[],
+          deployedNetwork && deployedNetwork.address,
+        );
+        console.log('Contract: ', contract);
+        contractCtx.setContract(contract);
+      } else {
+        alert('Please install Metamask');
+      }
+    };
+    initContract();
+  }, []);
   return (
     <>
       <UserContextProvider>
