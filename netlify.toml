@@ -4,4 +4,4 @@ to = '/index.html'
 status = 200
 
 [build]
-command = "truffle migrate --network ropsten && npm run build"
+command = "truffle migrate --reset --network ropsten && cd ./client && npm install && npm run build"
