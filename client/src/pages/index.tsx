@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { CartContextProvider, UserContextProvider } from '@src/contexts';
+import Web3 from 'web3';
+
+import { CartContextProvider, ContractContext, UserContextProvider } from '@src/contexts';
 
 //pages customer
 import { Account as CustomerAccount } from './Customer/Account/Account';
@@ -18,6 +20,7 @@ import { Footer } from '@src/components/Global/Footer/Footer';
 import { Nav } from '@src/components/Global/Nav/Nav';
 import { ScrollToTop } from '@src/components/Global/ScrollToTop/ScrollToTop';
 
+declare var window: any;
 export const Page = () => {
   return (
     <>

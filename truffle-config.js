@@ -14,24 +14,11 @@ module.exports = {
                     `https://ropsten.infura.io/v3/${process.env.INFURA_API_KEY}`
                 ),
             gas: 8000000,
-            gasPrice: 100000000000,
+            gasPrice: 25000000000,
             network_id: 3,
-            skipDryRun: true,
-        },
-        rinkeby: {
-            provider: () =>
-                new HDWalletProvider(
-                    process.env.MNEMONIC,
-                    `https://rinkeby.infura.io/v3/${process.env.INFURA_API_KEY}`
-                ),
-            network_id: 4,
-            gas: 8000000,
-            gasPrice: 100000000000,
-            skipDryRun: true,
         },
         development: {
-            host: "localhost",
-            port: 7545,
+            port: 8545,
             gas: 8000000,
             network_id: "*",
         },
