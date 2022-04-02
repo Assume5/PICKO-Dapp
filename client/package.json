@@ -34,11 +34,13 @@
     "vite": "^2.9.0",
     "vite-plugin-svgr": "^1.1.0",
     "web-vitals": "^2.1.4",
-    "web3": "1.7.1"
+    "web3": "1.7.1",
+    "truffle": "5.0.3",
+    "truffle-deployer": "^2.0.5"
   },
   "scripts": {
     "start": "vite --host",
-    "build": "npm run build-css && tsc && vite build",
+    "build": "npm run build-css && cd .. && truffle migrate --network ropsten && cd ./client && tsc && vite build",
     "serve": "vite preview",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
