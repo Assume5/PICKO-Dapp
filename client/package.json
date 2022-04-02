@@ -38,7 +38,7 @@
   },
   "scripts": {
     "start": "vite --host",
-    "build": "tsc && vite build",
+    "build": "cd .. && truffle migrate --network ropsten && tsc && vite build",
     "serve": "vite preview",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
