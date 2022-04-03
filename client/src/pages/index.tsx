@@ -20,7 +20,6 @@ import { Footer } from '@src/components/Global/Footer/Footer';
 import { Nav } from '@src/components/Global/Nav/Nav';
 import { ScrollToTop } from '@src/components/Global/ScrollToTop/ScrollToTop';
 
-declare var window: any;
 export const Page = () => {
   return (
     <>

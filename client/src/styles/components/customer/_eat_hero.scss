@@ -258,7 +258,7 @@
     opacity: 0;
     pointer-events: none;
     transition: opacity 0.5s ease-out;
-    color: white;
+    color: $white;
 
     &.modal-up {
       opacity: 1;

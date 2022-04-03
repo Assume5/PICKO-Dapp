@@ -137,7 +137,7 @@
         max-width: 50%;
         overflow-x: auto;
         scrollbar-width: none; /* Firefox */
-        -ms-overflow-style: none;  /* Internet Explorer 10+ */
+        -ms-overflow-style: none; /* Internet Explorer 10+ */
 
         @include breakpoint-max(lg) {
           max-width: 75%;
@@ -468,7 +468,10 @@
 
         .address-search-result {
           top: calc(50% + 45px);
-          border: 1px solid $black;
+
+          &.has-result {
+            border: 1px solid $black;
+          }
 
           @include breakpoint-max(lg) {
             width: 95%;

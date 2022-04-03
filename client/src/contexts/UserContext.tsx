@@ -17,4 +17,3 @@ export const UserContextProvider: React.FC = (props) => {
   const [user, setUser] = useState<User>({ login: false });
   return <UserContext.Provider value={{ user, setUser }}>{props.children}</UserContext.Provider>;
 };
-

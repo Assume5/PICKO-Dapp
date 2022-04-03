@@ -1,0 +1,131 @@
+.search-category {
+  position: relative;
+  width: 300px;
+
+  @include breakpoint-max(sm) {
+      width: 90%;
+  }
+
+  input {
+    padding: $padding3 $padding2;
+    width: 100%;
+  }
+}
+
+.menus-container {
+  &.visible {
+    display: block;
+  }
+
+  &.hidden {
+    display: none;
+  }
+}
+
+.owner-home-menus {
+  min-height: 100vh;
+  padding: $spacing 0;
+  max-width: 70%;
+  margin: 0 auto;
+  color: $white;
+
+  @include breakpoint-max(lg) {
+    max-width: 80%;
+  }
+
+  @include breakpoint-max(sm) {
+    max-width: 100%;
+  }
+
+  .menu-type {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid $white;
+    padding: $padding2;
+    margin-top: $padding1;
+
+    .icons {
+      svg {
+        margin: 0 $padding1;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .menu-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    padding: $spacing 0;
+
+    .menu-item {
+      width: calc(50% - 10px);
+      display: flex;
+      border: 1px solid $grey;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: transform 0.3s ease-out;
+      padding: $padding3 $padding2;
+
+      @include breakpoint-max(md) {
+        width: 100%;
+        margin: $padding1 0px;
+      }
+
+      &:hover {
+        transform: scale(1.01);
+      }
+
+      .item-image {
+        img {
+          width: 100%;
+          width: 70px;
+          height: 70px;
+          border-radius: 50%;
+          object-fit: cover;
+          position: relative;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+      }
+
+      .item-text {
+        padding: 0px $padding3;
+        display: flex;
+        flex-direction: column;
+
+        h4 {
+          margin: 0;
+        }
+
+        .heading {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+
+        .desc {
+          p {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+
+        .price {
+          p {
+            display: block;
+            margin-top: 0px;
+            font-weight: bold;
+            font-style: italic;
+          }
+        }
+      }
+    }
+  }
+}

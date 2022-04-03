@@ -1,5 +1,5 @@
 # PICKO Dapp
-## Front end Demo Link: https://62467a5f778a4f0009116b3d--poetic-pothos-edd2df.netlify.app/
+## Front end Demo Link: https://poetic-pothos-edd2df.netlify.app/
 
 ## Requirement
 ##### Truffle

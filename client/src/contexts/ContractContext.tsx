@@ -2,7 +2,6 @@ import React, { createContext, useEffect, useState } from 'react';
 import { Abi, Contract } from '@src/types';
 import Web3 from 'web3';
 import SimpleStorageContract from '../contracts/SimpleStorage.json';
-declare var window: any;
 
 interface contextType {
   contract: Contract | null;

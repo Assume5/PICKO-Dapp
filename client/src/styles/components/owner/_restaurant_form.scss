@@ -1,0 +1,93 @@
+.join-restaurant-form {
+  min-height: 100vh;
+  width: 100%;
+  padding: $spacing 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  h2,
+  label {
+    width: 100%;
+    text-align: center;
+    color: $white;
+  }
+
+  .restaurant-form {
+    display: flex;
+    align-items: center;
+    justify-self: center;
+    flex-direction: column;
+    width: 100%;
+    position: relative;
+
+    input {
+      padding: 16px;
+      padding-right: 32px;
+      background-color: #fff;
+      border: 1px solid #fff;
+      width: 100%;
+      max-width: 500px;
+      margin: $padding4 0;
+
+      @include breakpoint-max(sm) {
+        width: 90%;
+      }
+    }
+
+    .open-close-time {
+      display: flex;
+      gap: 0px 50px;
+
+      @include breakpoint-max(sm) {
+        flex-direction: column;
+        width: 90%;
+
+        .open-time,
+        .close-time {
+          input {
+            max-width: 100%;
+            width: 500px;
+            height: 49px;
+          }
+        }
+      }
+    }
+  }
+
+  .address-search {
+    margin: 0;
+    width: 100%;
+    justify-content: center;
+
+    @include breakpoint-max(sm) {
+       max-width: 100%;
+    }
+
+    svg {
+      display: none;
+      right: 30px;
+    }
+  }
+
+  .address-search-result {
+    top: 265px;
+    z-index: 2;
+
+    &.has-result {
+      box-shadow: 1px 1px 1px 1px $black;
+    }
+  }
+
+  .error-message {
+    top: 265px;
+
+    &.hidden {
+      display: none;
+    }
+
+    &.visible {
+      display: block;
+    }
+  }
+}

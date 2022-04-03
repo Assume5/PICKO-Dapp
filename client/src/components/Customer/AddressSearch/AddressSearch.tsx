@@ -15,9 +15,11 @@ interface RawResultAddress extends RawResult {
 
 interface Props {
   setChangeSuccess?: React.Dispatch<React.SetStateAction<boolean>>;
+  setAddressResult?: React.Dispatch<React.SetStateAction<SearchResult<RawResultAddress> | undefined>>;
+  setErr?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const AddressSearch: React.FC<Props> = ({ setChangeSuccess }) => {
+export const AddressSearch: React.FC<Props> = ({ setChangeSuccess, setAddressResult, setErr }) => {
   const addressInput = useRef<HTMLInputElement>(null);
   const [address, setAddress] = useState('');
   const [loadingAddress, setLoadingAddress] = useState(false);
@@ -56,6 +58,10 @@ export const AddressSearch: React.FC<Props> = ({ setChangeSuccess }) => {
       setResult(result);
       addressInput.current.value = result.label;
       setErrorMessage(undefined);
+      setErr && setErr(false);
+      if (setAddressResult) {
+        setAddressResult(result);
+      }
     }
   };
 
@@ -96,13 +102,19 @@ export const AddressSearch: React.FC<Props> = ({ setChangeSuccess }) => {
   return (
     <>
       <div className={`address-search ${loadingAddress ? 'loading' : ''}`}>
-        <input type="text" placeholder="Address" onChange={(e) => onInputChange(e.target.value)} ref={addressInput} />
+        <input
+          type="text"
+          placeholder="Address"
+          onChange={(e) => onInputChange(e.target.value)}
+          ref={addressInput}
+          required
+        />
         <FontAwesomeIcon icon={faArrowCircleRight} className="submit-button" onClick={onSubmitClick} />
         <FontAwesomeIcon icon={faCircleNotch} className="loading-icon fa-spin" />
       </div>
       {errorMessage && <p className="error-message">{errorMessage}</p>}
       {searchResult && (
-        <div className="address-search-result">
+        <div className={`address-search-result ${searchResult.length > 0 && 'has-result'}`}>
           {searchResult.map((result) => {
             const label = result.label;
             return (

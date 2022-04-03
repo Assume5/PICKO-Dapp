@@ -7,7 +7,6 @@ import { CartSidebar } from '../../Customer/CartSidebar/CartSidebar';
 import { getCookie } from '@src/helpers';
 import { UserContext, CartContext } from '@src/contexts';
 import { useLocation, useNavigate } from 'react-router-dom';
-declare var window: any;
 
 export const Nav = () => {
   const location = useLocation();
@@ -84,9 +83,7 @@ export const Nav = () => {
   });
 
   const login = async () => {
-    const web3 = new Web3(window.ethereum);
-    await window.ethereum.enable();
-    const accounts = await web3.eth.getAccounts();
+    const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
     userCtx.setUser({
       login: true,
       name: '',
@@ -126,15 +123,17 @@ export const Nav = () => {
               <FontAwesomeIcon icon={faShoppingCart} onClick={() => setSidebarOpen(!sidebarOpen)} />
               <div className="dot"></div>
             </div>
-            <div className={`cart-sidebar-container ${sidebarOpen ? 'visible' : 'hidden'}`} ref={sidebar}>
-              {cartCtx.cart && (
-                <CartSidebar cart={cartCtx.cart} setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
-              )}
-              <div className="overlay"></div>
-            </div>
           </>
         )}
       </div>
+      {!location.pathname.includes('/owner') && !location.pathname.includes('/driver') && (
+        <div className={`cart-sidebar-container ${sidebarOpen ? 'visible' : 'hidden'}`} ref={sidebar}>
+          {cartCtx.cart && (
+            <CartSidebar cart={cartCtx.cart} setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
+          )}
+          <div className="overlay"></div>
+        </div>
+      )}
     </div>
   );
 };
