@@ -56,7 +56,7 @@ export const OwnerHome = () => {
               <h3>{key}</h3>
               <div className="icons">
                 <FontAwesomeIcon icon={faTrash} className="" />
-                <FontAwesomeIcon icon={faPlus} className="" />
+                <FontAwesomeIcon icon={faPlus} className="" onClick={() => setAddMealModal(!addMealModal)} />
               </div>
             </div>
             <div className="menu-items">
@@ -89,8 +89,7 @@ export const OwnerHome = () => {
           </div>
         );
       })}
-
-      <AddMeal />
+      <AddMeal modalOpen={addMealModal} setModalOpen={setAddMealModal} keys={sortedKey} />
     </div>
   );
 };

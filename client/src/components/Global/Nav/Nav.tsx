@@ -101,6 +101,16 @@ export const Nav = () => {
     }
   };
 
+  const onViewAccountClick = () => {
+    if (!location.pathname.includes('/owner') && !location.pathname.includes('/driver')) {
+      navigate('/account');
+    } else if (location.pathname.includes('/owner')) {
+      navigate('/owner/account');
+    } else {
+      navigate('/driver/account');
+    }
+  };
+
   return (
     <div className="header" ref={navbar}>
       <div className="logo" onClick={() => onLogoClick()}>
@@ -110,7 +120,7 @@ export const Nav = () => {
         {userCtx.user.login ? (
           <>
             <p>{userCtx.user.address}</p>
-            <button onClick={() => navigate('/account')}>View Account</button>
+            <button onClick={() => onViewAccountClick()}>View Account</button>
           </>
         ) : (
           <>

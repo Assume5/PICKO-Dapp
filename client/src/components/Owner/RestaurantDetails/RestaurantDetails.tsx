@@ -17,6 +17,8 @@ export const RestaurantDetails = () => {
             <span>Open: </span> 9:00 AM - 9:00 PM
           </p>
         </div>
+        <p>Status: Accepting Orders</p>
+        <button>No Longer Accepting Orders</button>
         <FontAwesomeIcon icon={faLocationArrow} />
         <p>1234 Chestnut Ridge Road, Buffalo NY, 14228</p>
       </div>

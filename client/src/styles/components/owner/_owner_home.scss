@@ -3,7 +3,7 @@
   width: 300px;
 
   @include breakpoint-max(sm) {
-      width: 90%;
+    width: 90%;
   }
 
   input {
@@ -51,6 +51,15 @@
         width: 20px;
         height: 20px;
         cursor: pointer;
+        transition: color 0.3s ease-out;
+
+        &[data-icon='trash'] {
+          color: $grey;
+        }
+        
+        &:hover {
+          color: $aqua;
+        }
       }
     }
   }

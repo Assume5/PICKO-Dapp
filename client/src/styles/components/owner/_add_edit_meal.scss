@@ -1,0 +1,88 @@
+.add-meal {
+  color: $black;
+
+  .close-button {
+    cursor: pointer;
+  }
+
+  .preview-image-container {
+    position: relative;
+
+    svg {
+      position: absolute;
+      top: 0px;
+      right: 20px;
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .preview-image {
+      width: 300px;
+      height: auto;
+      margin: $padding3 auto;
+      display: block;
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+
+  input:not([type='file']) {
+    padding: $padding3;
+    padding-right: $padding4;
+    background-color: $white;
+    border: 1px solid $gray;
+    width: 100%;
+    min-width: 300px;
+  }
+
+  input[type='file'] {
+    display: none;
+  }
+
+  .upload-button {
+    border-radius: 0;
+  }
+
+  textarea {
+    width: 100%;
+    max-width: 350px;
+    max-height: 250px;
+  }
+
+  form {
+    height: 100%;
+  }
+
+  &.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  #category-dropdown {
+    border: 2px solid orange;
+    border-radius: 10px 10px 10px 10px;
+    font-size: 18px;
+    padding: 5px;
+    height: 35px;
+    width: 350px;
+  }
+
+  .modal-inner {
+    padding: $spacing;
+    width: 65%;
+    max-height: 80%;
+    border-radius: 15px;
+    background-color: $white;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    overflow: auto;
+
+    @include breakpoint-max(sm) {
+      width: 95%;
+    }
+  }
+}

@@ -9,8 +9,14 @@
   }
 
   .restaurant-detail {
-    @include breakpoint-max(sm) {
-      .container {
+    button {
+      margin-bottom: $padding3;
+    }
+
+    .container {
+      width: 50%;
+
+      @include breakpoint-max(sm) {
         width: 100%;
       }
     }
