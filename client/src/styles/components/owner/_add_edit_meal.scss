@@ -1,4 +1,5 @@
-.add-meal {
+.add-meal,
+.edit-meal {
   color: $black;
 
   .close-button {
@@ -29,6 +30,28 @@
     }
   }
 
+  .category-select {
+    &__control {
+      border: 1px solid $gray;
+      height: 49px;
+      border-radius: 0;
+      text-align: left;
+      font-size: 13px;
+      padding-left: $padding2;
+      color: $black;
+    }
+
+    &__single-value {
+      color: $black;
+    }
+
+    &__menu {
+      text-align: left;
+      font-size: 12px;
+      border-radius: 0;
+    }
+  }
+
   input:not([type='file']) {
     padding: $padding3;
     padding-right: $padding4;
@@ -36,6 +59,7 @@
     border: 1px solid $gray;
     width: 100%;
     min-width: 300px;
+    border-radius: 0;
   }
 
   input[type='file'] {
@@ -50,9 +74,11 @@
     width: 100%;
     max-width: 350px;
     max-height: 250px;
+    border-radius: 0;
   }
 
   form {
+    max-width: 350px;
     height: 100%;
   }
 
@@ -61,13 +87,13 @@
     pointer-events: auto;
   }
 
-  #category-dropdown {
-    border: 2px solid orange;
-    border-radius: 10px 10px 10px 10px;
-    font-size: 18px;
-    padding: 5px;
-    height: 35px;
-    width: 350px;
+  .delete-button {
+    margin-right: $padding3;
+    background-color: $grey;
+
+    &:hover {
+      background-color: $error;
+    }
   }
 
   .modal-inner {

@@ -19,3 +19,8 @@ export type orderItems = {
   quantity: number;
   price: number;
 };
+
+export type OptionType = {
+  value: string;
+  label: string;
+};

@@ -18,7 +18,6 @@ export const PastOrders: React.FC<Props> = ({ orders }) => {
     <div className="past-orders">
       {Object.keys(orders).map((key) => {
         const order = orders[key];
-        console.log(order);
         return (
           <div className="order-details" key={key}>
             <div className="order-details-image">
@@ -33,7 +32,6 @@ export const PastOrders: React.FC<Props> = ({ orders }) => {
               <div className="order-items">
                 {Object.keys(order.orderItems).map((item) => {
                   const orderItem = order.orderItems[item];
-                  console.log(orderItem);
                   return (
                     <div className="order-item" key={item}>
                       <p className="item-quantity">{orderItem.quantity}</p>

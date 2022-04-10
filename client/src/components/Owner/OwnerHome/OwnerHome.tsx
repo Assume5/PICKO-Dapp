@@ -1,12 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faTrash, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { fakeMenu } from '../../../pages/Customer/Restaurant/MenuFakeData';
 import { AddMeal } from '../AddMeal/AddMeal';
+import { EditMeal } from '../EditMeal/EditMeal';
+import { MenuItem, OptionType } from '@src/types';
+
+type MenuWithCategory = MenuItem & {
+  category: OptionType;
+  name: string;
+};
+
 export const OwnerHome = () => {
   const [sortedKey, setSortedKey] = useState<string[]>([]);
   const [search, setSearch] = useState('');
   const [addMealModal, setAddMealModal] = useState(false);
+  const [editMealModal, setEditMealModal] = useState(false);
+  const [option, setOption] = useState<OptionType[]>([]);
+  const [currentSelectedMenu, setCurrentSelectedMenu] = useState<MenuWithCategory>();
 
   useEffect(() => {
     if (fakeMenu) {
@@ -34,8 +45,32 @@ export const OwnerHome = () => {
     }
   }, [fakeMenu]);
 
+  useEffect(() => {
+    let arr: OptionType[] = [];
+    sortedKey.forEach((key) => {
+      arr.push({ value: key.toLowerCase(), label: key });
+    });
+
+    setOption(arr);
+  }, [sortedKey]);
+
   const onSearchChange = (val: string) => {
     setSearch(val);
+  };
+
+  const onMenuItemClick = (category: string, menuKey: string, item: MenuItem) => {
+    if (typeof item === 'object') {
+      const currentItem: MenuWithCategory = {
+        image: item.image,
+        description: item.description,
+        price: item.price,
+        id: item.id,
+        category: { value: category.toLowerCase(), label: category },
+        name: menuKey,
+      };
+      setEditMealModal(!editMealModal);
+      setCurrentSelectedMenu(currentItem);
+    }
   };
 
   return (
@@ -51,6 +86,7 @@ export const OwnerHome = () => {
             className={`menus-container ${
               search !== '' && (key.toLowerCase().includes(search.toLowerCase()) ? 'visible' : 'hidden')
             } `}
+            key={key}
           >
             <div className="menu-type" key={key}>
               <h3>{key}</h3>
@@ -64,7 +100,7 @@ export const OwnerHome = () => {
                 const menuItem = menus[menusKey];
                 if (typeof menuItem === 'object') {
                   return (
-                    <div className="menu-item" key={menusKey}>
+                    <div className="menu-item" key={menusKey} onClick={() => onMenuItemClick(key, menusKey, menuItem)}>
                       <div className="item-image">
                         <img src={menuItem && menuItem.image} alt="" />
                       </div>
@@ -89,7 +125,14 @@ export const OwnerHome = () => {
           </div>
         );
       })}
-      <AddMeal modalOpen={addMealModal} setModalOpen={setAddMealModal} keys={sortedKey} />
+      <AddMeal modalOpen={addMealModal} setModalOpen={setAddMealModal} option={option} />
+      <EditMeal
+        modalOpen={editMealModal}
+        setModalOpen={setEditMealModal}
+        current={currentSelectedMenu}
+        setCurrent={setCurrentSelectedMenu}
+        option={option}
+      />
     </div>
   );
 };

@@ -21,8 +21,11 @@ export const ImageUpload = () => {
   }, [files]);
 
   const onFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
+    if (e.target.files && (e.target.files[0].type === 'image/png' || e.target.files[0].type === 'image/jpeg')) {
       setFiles(e.target.files[0]);
+    } else {
+      fileUpload.current!.value = '';
+      setFiles(fileUpload.current!.files![0]);
     }
   };
 
@@ -34,7 +37,7 @@ export const ImageUpload = () => {
 
   const clearFile = () => {
     if (fileUpload && fileUpload.current) {
-      console.log(fileUpload.current.value)
+      console.log(fileUpload.current.value);
       fileUpload.current.value = '';
       setFiles(fileUpload.current.files![0]);
     }
@@ -42,7 +45,7 @@ export const ImageUpload = () => {
 
   return (
     <div className="image-upload">
-      <input type="file" onChange={(e) => onFileChange(e)} ref={fileUpload} />
+      <input type="file" onChange={(e) => onFileChange(e)} ref={fileUpload} accept="image/*" />
       <button className="upload-button" type="button" onClick={onUploadButtonClick}>
         Select a File
       </button>

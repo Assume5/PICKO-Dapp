@@ -1,18 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { MenuDict } from '@src/types';
 import { ImageUpload } from '@src/components/Global/ImageUpload/ImageUpload';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { OptionType } from '../../../types/componentsPart';
+import Select from 'react-select';
 
 interface Props {
   modalOpen: boolean;
   setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  keys: string[];
+  option: OptionType[];
 }
 
-export const AddMeal: React.FC<Props> = ({ modalOpen, setModalOpen, keys }) => {
+export const AddMeal: React.FC<Props> = ({ modalOpen, setModalOpen, option }) => {
   const [currentSelected, setCurrentSelected] = useState('');
   const categoryInput = useRef<HTMLInputElement | null>(null);
+  const formContainer = useRef<HTMLFormElement | null>(null);
 
   useEffect(() => {
     if (categoryInput && categoryInput.current) {
@@ -29,22 +31,34 @@ export const AddMeal: React.FC<Props> = ({ modalOpen, setModalOpen, keys }) => {
     }
   }, [modalOpen]);
 
+  const onCloseClick = () => {
+    setModalOpen(!modalOpen);
+    if (formContainer && formContainer.current) {
+      console.log(formContainer.current);
+      let inputs = formContainer.current.querySelectorAll('input');
+      console.log(inputs);
+      inputs.forEach((input) => {
+        input.value = '';
+      });
+    }
+  };
+
   const onFormSubmit = () => {};
   return (
     <div className={`add-meal modal ${modalOpen && 'visible'}`}>
-      <FontAwesomeIcon icon={faTimes} className="close-button" onClick={() => setModalOpen(!modalOpen)} />
+      <FontAwesomeIcon icon={faTimes} className="close-button" onClick={() => onCloseClick()} />
       <div className="modal-inner">
-        <form onSubmit={() => onFormSubmit()}>
+        <form onSubmit={() => onFormSubmit()} ref={formContainer}>
           <h4>Meal Image</h4>
           <ImageUpload />
           <h4>Menu Category</h4>
           <div className="dropdown-input">
-            <input list="category-dropdown" type="text" placeholder="Search a category" required ref={categoryInput} />
-            <datalist id="category-dropdown">
-              {keys.map((key) => {
-                return <option value={key} />;
-              })}
-            </datalist>
+            <Select
+              options={option}
+              classNamePrefix="category-select"
+              placeholder={'Select a Category'}
+              isClearable={true}
+            />
           </div>
           <h4>Meal Name</h4>
           <input type="text" placeholder="Meal Name" />
