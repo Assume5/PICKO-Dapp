@@ -1,8 +1,12 @@
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 
-export const ImageUpload = () => {
+interface Props {
+  previewImage?: string;
+}
+
+export const ImageUpload: React.FC<Props> = ({ previewImage }) => {
   const fileUpload = useRef<HTMLInputElement>(null);
   const [files, setFiles] = useState<File | null>(null);
   const [preview, setPreview] = useState('');
@@ -11,6 +15,10 @@ export const ImageUpload = () => {
     if (!files) {
       setPreview('');
       return;
+    }
+
+    if (previewImage) {
+      setPreview(previewImage);
     }
 
     const objectUrl = URL.createObjectURL(files);
@@ -45,14 +53,17 @@ export const ImageUpload = () => {
 
   return (
     <div className="image-upload">
-      <input type="file" onChange={(e) => onFileChange(e)} ref={fileUpload} accept="image/*" />
-      <button className="upload-button" type="button" onClick={onUploadButtonClick}>
-        Select a File
-      </button>
+      <div className={`file-container ${files && 'hidden'}`}>
+        <input type="file" onChange={(e) => onFileChange(e)} ref={fileUpload} accept="image/*" />
+        <button className="upload-button" type="button" onClick={onUploadButtonClick}>
+          Select a File
+        </button>
+      </div>
+
       {files && (
         <div className="preview-image-container">
           <img className="preview-image" src={preview} alt="" />
-          <FontAwesomeIcon icon={faTimes} onClick={clearFile} />
+          <FontAwesomeIcon icon={faTimesCircle} onClick={clearFile} />
         </div>
       )}
     </div>

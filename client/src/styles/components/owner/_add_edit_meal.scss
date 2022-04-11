@@ -1,5 +1,5 @@
 .add-meal,
-.edit-meal {
+.edit-meal{
   color: $black;
 
   .close-button {
@@ -11,10 +11,10 @@
 
     svg {
       position: absolute;
-      top: 0px;
-      right: 20px;
-      width: 20px;
-      height: 20px;
+      top: -15px;
+      right: -20px;
+      width: 25px;
+      height: 25px;
       cursor: pointer;
     }
 
@@ -109,6 +109,12 @@
 
     @include breakpoint-max(sm) {
       width: 95%;
+    }
+  }
+
+  .file-container {
+    &.hidden {
+      display: none;
     }
   }
 }

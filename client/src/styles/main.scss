@@ -21,11 +21,12 @@
 @import './components/customer/restaurant_hero';
 @import './components/customer/restaurant_list';
 @import './components/customer/services_promo';
-
+//owner
 @import './components/owner/add_edit_meal';
 @import './components/owner/metamask_login';
 @import './components/owner/owner_home';
 @import './components/owner/restaurant_form';
+@import './components/owner/warning_modal';
 
 //pages
 @import './pages/customer/account';

@@ -1,0 +1,28 @@
+.warning-modal {
+  &.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .modal-inner {
+    padding: $spacing;
+    width: 500px;
+    border-radius: 15px;
+    background-color: $white;
+    text-align: center;
+    overflow: auto;
+
+    p {
+      display: block;
+      text-align: center;
+    }
+
+    .remove-button {
+      margin-right: $padding3;
+    }
+
+    @include breakpoint-max(sm) {
+      padding: $spacing $padding4;
+      width: 95%;
+    }
+  }
+}

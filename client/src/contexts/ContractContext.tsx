@@ -30,8 +30,6 @@ export const ContractContextProvider: React.FC = (props) => {
           deployedNetwork && deployedNetwork.address,
         );
         setContract(contract);
-      } else {
-        alert('Please install Metamask');
       }
     };
     initContract();

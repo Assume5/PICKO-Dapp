@@ -5,6 +5,7 @@ import { fakeMenu } from '../../../pages/Customer/Restaurant/MenuFakeData';
 import { AddMeal } from '../AddMeal/AddMeal';
 import { EditMeal } from '../EditMeal/EditMeal';
 import { MenuItem, OptionType } from '@src/types';
+import { WarningModal } from '../WarningModal/WarningModal';
 
 type MenuWithCategory = MenuItem & {
   category: OptionType;
@@ -16,6 +17,8 @@ export const OwnerHome = () => {
   const [search, setSearch] = useState('');
   const [addMealModal, setAddMealModal] = useState(false);
   const [editMealModal, setEditMealModal] = useState(false);
+  const [warningModal, setWarningModal] = useState(false);
+  const [currentCategory, setCurrentCategory] = useState('');
   const [option, setOption] = useState<OptionType[]>([]);
   const [currentSelectedMenu, setCurrentSelectedMenu] = useState<MenuWithCategory>();
 
@@ -73,6 +76,16 @@ export const OwnerHome = () => {
     }
   };
 
+  const onPlusClick = (category: string) => {
+    setCurrentCategory(category);
+    setAddMealModal(!addMealModal);
+  };
+
+  const onTrashClick = (category: string) => {
+    setCurrentCategory(category);
+    setWarningModal(!warningModal);
+  };
+
   return (
     <div className="owner-home-menus">
       <div className="search-category">
@@ -91,8 +104,8 @@ export const OwnerHome = () => {
             <div className="menu-type" key={key}>
               <h3>{key}</h3>
               <div className="icons">
-                <FontAwesomeIcon icon={faTrash} className="" />
-                <FontAwesomeIcon icon={faPlus} className="" onClick={() => setAddMealModal(!addMealModal)} />
+                <FontAwesomeIcon icon={faTrash} className="" onClick={() => onTrashClick(key)} />
+                <FontAwesomeIcon icon={faPlus} className="" onClick={() => onPlusClick(key)} />
               </div>
             </div>
             <div className="menu-items">
@@ -125,7 +138,7 @@ export const OwnerHome = () => {
           </div>
         );
       })}
-      <AddMeal modalOpen={addMealModal} setModalOpen={setAddMealModal} option={option} />
+      <AddMeal modalOpen={addMealModal} setModalOpen={setAddMealModal} option={option} category={currentCategory} />
       <EditMeal
         modalOpen={editMealModal}
         setModalOpen={setEditMealModal}
@@ -133,6 +146,7 @@ export const OwnerHome = () => {
         setCurrent={setCurrentSelectedMenu}
         option={option}
       />
+      <WarningModal modalOpen={warningModal} setModalOpen={setWarningModal} category={currentCategory} />
     </div>
   );
 };

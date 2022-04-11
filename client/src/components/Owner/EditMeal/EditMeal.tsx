@@ -1,4 +1,4 @@
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ImageUpload } from '@src/components/Global/ImageUpload/ImageUpload';
 import { MenuItem, OptionType } from '@src/types';
@@ -19,6 +19,7 @@ interface Props {
 
 export const EditMeal: React.FC<Props> = ({ modalOpen, setModalOpen, current, setCurrent, option }) => {
   const formContainer = useRef<HTMLFormElement | null>(null);
+  const [imageChange, setImageChange] = useState(false);
 
   useEffect(() => {
     const body: HTMLBodyElement | null = document.querySelector('body');
@@ -32,6 +33,7 @@ export const EditMeal: React.FC<Props> = ({ modalOpen, setModalOpen, current, se
   const onCloseClick = () => {
     setModalOpen(!modalOpen);
     setCurrent(undefined);
+    setImageChange(false);
   };
 
   const onFormSubmit = () => {};
@@ -43,7 +45,14 @@ export const EditMeal: React.FC<Props> = ({ modalOpen, setModalOpen, current, se
           <div className="modal-inner">
             <form onSubmit={() => onFormSubmit()} ref={formContainer}>
               <h4>Meal Image</h4>
-              <ImageUpload />
+              {!imageChange ? (
+                <div className="preview-image-container">
+                  <img className="preview-image" src={current.image} alt="" />
+                  <FontAwesomeIcon icon={faTimesCircle} onClick={() => setImageChange(true)} />
+                </div>
+              ) : (
+                <ImageUpload />
+              )}
               <h4>Menu Category</h4>
               <div className="dropdown-input">
                 <Select
