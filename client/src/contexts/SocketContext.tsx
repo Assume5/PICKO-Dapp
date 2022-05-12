@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
 import io, { Socket } from 'socket.io-client';
-import { User } from '@src/types';
+import { serverUrl } from '@src/constants';
 
 interface contextType {
   socket: Socket | null;
@@ -17,7 +17,7 @@ export const SocketContext = createContext<contextType>(contextState);
 export const SocketContextProvider: React.FC = (props) => {
   const [socket, setSocket] = useState<Socket | null>(null);
   useEffect(() => {
-    const newSocket = io('http://localhost:8000', {
+    const newSocket = io(serverUrl, {
       transports: ['websocket', 'polling'],
       withCredentials: true,
     });
