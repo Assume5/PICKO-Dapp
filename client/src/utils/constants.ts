@@ -1,2 +1,3 @@
-export const serverUrl = 'http://localhost:4000/';
-export const hashKey = 'fiojhasdsadusdenguiosgherayhtdrfhiusdgunzguiondzfiopbm'
+export const serverUrl = import.meta.env.VITE_SERVER_URL || 'http://localhost:8000';
+export const hashKey = 'fiojhasdsadusdenguiosgherayhtdrfhiusdgunzguiondzfiopbm';
+console.log(process.env);

@@ -1,0 +1,19 @@
+{
+    "apps": [
+        {
+            "name": "picko-server",
+            "script": "./dist/server.js",
+            "instances": "max",
+            "exec_mode": "cluster",
+            "env": {
+                "NODE_ENV": "development"
+            },
+            "env_local": {
+                "NODE_ENV": "local"
+            },
+            "env_production": {
+                "NODE_ENV": "production"
+            }
+        }
+    ]
+}

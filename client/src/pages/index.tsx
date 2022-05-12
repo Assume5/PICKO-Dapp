@@ -19,6 +19,8 @@ import { Home as StoreHome } from './Owner/Home/Home';
 import { Footer } from '@src/components/Global/Footer/Footer';
 import { Nav } from '@src/components/Global/Nav/Nav';
 import { ScrollToTop } from '@src/components/Global/ScrollToTop/ScrollToTop';
+import { SocketExample } from '@src/components/Global/SocketExample/SocketExample';
+import { TestServer } from './Customer/TestServer/TestServer';
 
 export const Page = () => {
   return (
@@ -28,6 +30,7 @@ export const Page = () => {
           <BrowserRouter>
             <ScrollToTop />
             <Nav />
+            <SocketExample />
             <Routes>
               <Route path="/" element={<CustomerHome />} />
               <Route path="/restaurant/*" element={<Restaurant />} />
@@ -37,6 +40,8 @@ export const Page = () => {
               <Route path="/order/*" element={<CustomerOrder />} />
 
               <Route path="/owner" element={<StoreHome />} />
+
+              <Route path="/test-example" element={<TestServer />} />
             </Routes>
             <Footer />
           </BrowserRouter>

@@ -1,0 +1,21 @@
+{
+    "name": "picko-contract",
+    "version": "1.0.0",
+    "description": "",
+    "main": "truffle-config.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "compile-dev": "truffle compile && truffle migrations --rest --network development",
+        "compile-ropsten": "truffle compile && truffle migrations --rest --network ropsten"
+    },
+    "dependencies": {
+        "@truffle/hdwallet-provider": "^2.0.4",
+        "dotenv": "^16.0.0",
+        "solc": "0.8.11",
+        "truffle": "^5.4.29",
+        "web3": "1.2.11"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}

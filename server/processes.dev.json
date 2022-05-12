@@ -1,0 +1,26 @@
+{
+    "apps": [
+        {
+            "name": "picko-server",
+            "script": "./dist/server.js",
+            "instances": "3",
+            "exec_mode": "cluster",
+            "watch": ["dist"],
+            "watch_delay": 1000,
+            "ignore_watch": ["node_modules"],
+            "detached": true,
+            "watch_options": {
+                "followSymlinks": false
+            },
+            "env": {
+                "NODE_ENV": "development"
+            },
+            "env_local": {
+                "NODE_ENV": "local"
+            },
+            "env_production": {
+                "NODE_ENV": "production"
+            }
+        }
+    ]
+}

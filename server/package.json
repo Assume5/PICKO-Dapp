@@ -1,0 +1,48 @@
+{
+    "name": "picko-server",
+    "version": "1.0.0",
+    "description": "",
+    "main": "dist/server.js",
+    "scripts": {
+        "build": "tsc",
+        "test": "jest",
+        "test-watch": "jest --watchAll",
+        "start": "tsc & node .",
+        "watch": "tsc -w & nodemon .",
+        "start-cluster": "tsc && pm2 start processes.prod.json --env production",
+        "watch-cluster": "tsc -w & pm2 start processes.dev.json --watch",
+        "stop": "pm2 delete processes.dev.json",
+        "cluster": "npm run build && pm2 start processes.json --watch"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "jest": {
+        "testEnvironment": "node"
+    },
+    "dependencies": {
+        "@socket.io/cluster-adapter": "^0.1.0",
+        "@socket.io/pm2": "^5.1.0",
+        "@socket.io/sticky": "^1.0.1",
+        "@types/cors": "^2.8.12",
+        "@types/morgan": "^1.9.3",
+        "@types/pg": "^8.6.5",
+        "cors": "^2.8.5",
+        "csv-parse": "^5.0.4",
+        "dotenv": "^16.0.0",
+        "express": "^4.18.1",
+        "helmet": "^5.0.2",
+        "morgan": "^1.10.0",
+        "pg": "^8.7.3",
+        "pm2": "^5.1.0",
+        "socket.io": "^4.5.0"
+    },
+    "devDependencies": {
+        "@types/express": "^4.17.13",
+        "@types/node": "^17.0.32",
+        "jest": "^28.0.3",
+        "nodemon": "^2.0.16",
+        "supertest": "^6.2.3",
+        "typescript": "^4.6.4"
+    }
+}
