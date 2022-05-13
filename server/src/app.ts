@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(api);
 
 app.get("/", (req, res) => {
-    res.status(200).send("PICKO-DAPP Server 1  3 2  123  1 1");
+    res.status(200).send("PICKO-DAPP Server");
 });
 
 const delay = (duration: number) => {

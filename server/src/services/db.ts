@@ -9,13 +9,24 @@ const dbConfig = {
     port: +process.env.DATABASE_PORT,
 };
 
-const pool = new Pool({
-    user: dbConfig.user,
-    host: dbConfig.host,
-    password: dbConfig.password,
-    database: dbConfig.database,
-    port: dbConfig.port,
-});
+const isProd = process.env.NODE_ENV === "production";
+
+const connectionString = `postgres://${dbConfig.user}:${dbConfig.password}@${dbConfig.host}:${dbConfig.port}/${dbConfig.database}`;
+
+let pool: Pool;
+
+if (isProd) {
+    pool = new Pool({
+        connectionString: connectionString,
+        ssl: {
+            rejectUnauthorized: false,
+        },
+    });
+} else {
+    pool = new Pool({
+        connectionString: connectionString,
+    });
+}
 
 pool.on("connect", () => {
     console.log("Connected a client to the database");

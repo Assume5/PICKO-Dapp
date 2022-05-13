@@ -13,8 +13,7 @@ export const getExample = async (req: Request, res: Response) => {
 
 export const postExample = async (req: Request, res: Response) => {
     const { fname, lname } = req.body;
-    console.log(req.body);
-    console.log(fname, lname);
+
     if (!fname || !lname) {
         return res.status(400).json({ error: "Missing body" });
     }
@@ -24,13 +23,12 @@ export const postExample = async (req: Request, res: Response) => {
 };
 
 export const putExample = async (req: Request, res: Response) => {
-    console.log(req);
     const { fname, lname } = req.body;
     if (!fname || !lname) {
         return res.status(400).json({ error: "Missing body" });
     }
 
-    if (!findRow) {
+    if (!(await findRow(+req.params.id))) {
         return res.status(404).json({ error: "ID Not Found" });
     }
 
@@ -39,7 +37,7 @@ export const putExample = async (req: Request, res: Response) => {
 };
 
 export const deleteExample = async (req: Request, res: Response) => {
-    if (!findRow) {
+    if (!(await findRow(+req.params.id))) {
         return res.status(404).json({ error: "ID Not Found" });
     }
 

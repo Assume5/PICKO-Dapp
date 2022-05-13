@@ -3,6 +3,7 @@ import { Server, Socket } from "socket.io";
 // import { createAdapter } from "@socket.io/cluster-adapter";
 // const { setupWorker } = require("@socket.io/sticky");
 import app from "./app";
+import { createDatabaseTable } from "./services/createTable";
 import pool from "./services/db";
 require("dotenv").config();
 const PORT = process.env.PORT || 8000;
@@ -43,6 +44,7 @@ io.engine.on("connection_error", (err: any) => {
 const startServer = async () => {
     try {
         await pool.connect();
+        createDatabaseTable();
         server.listen(PORT, () => {
             console.log(`Listening on port ${PORT}`);
         });
