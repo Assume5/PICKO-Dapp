@@ -121,6 +121,11 @@ export const Nav = () => {
           <>
             <p>{userCtx.user.address}</p>
             <button onClick={() => onViewAccountClick()}>View Account</button>
+            {location.pathname.includes('/owner') && (
+              <button className="nav-menus-page" onClick={() => navigate('/owner/menus')}>
+                Menus
+              </button>
+            )}
           </>
         ) : (
           <>

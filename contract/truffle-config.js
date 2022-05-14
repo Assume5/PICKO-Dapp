@@ -13,8 +13,6 @@ module.exports = {
                     process.env.MNEMONIC,
                     `https://ropsten.infura.io/v3/${process.env.INFURA_API_KEY}`
                 ),
-            gas: 8000000,
-            gasPrice: 25000000000,
             network_id: 3,
         },
         development: {

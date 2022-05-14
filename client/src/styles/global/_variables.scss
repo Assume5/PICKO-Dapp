@@ -4,12 +4,14 @@ $primaryFont: 'Roboto', sans-serif;
 // Colors
 $black: #000;
 $grey: #77787f;
-$error: red;
+$success: #28a745;
+$error: #dc3545;
 $white: white;
 $aqua: #00ffff;
 $gray: #1e1e1e;
 $mineShaft: #303030;
-$mineShaftBackground: rgba(48, 48, 48, 0.7);
+$mineShaftBackground: rgba(48, 48, 48, 7);
+$grayBackground: #4b4b4b;
 
 // Media query breakpoints
 $breakpoints: (

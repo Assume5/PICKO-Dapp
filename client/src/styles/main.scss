@@ -5,34 +5,37 @@
 @import 'global/mixin';
 @import 'global/animation';
 @import 'global/global';
+@import 'global/nav';
 
 //components
-@import './components/customer/_address_search';
-@import './components/customer/cart_sidebar';
-@import './components/customer/category_filter';
-@import './components/customer/eat_hero';
-@import './components/customer/footer';
-@import './components/customer/home_hero';
-@import './components/customer/menu';
-@import './components/customer/nav';
-@import './components/customer/order_details';
-@import './components/customer/past_orders';
-@import './components/customer/restaurant_detail';
-@import './components/customer/restaurant_hero';
-@import './components/customer/restaurant_list';
-@import './components/customer/services_promo';
+@import 'components/customer/_address_search';
+@import 'components/customer/cart_sidebar';
+@import 'components/customer/category_filter';
+@import 'components/customer/eat_hero';
+@import 'components/customer/footer';
+@import 'components/customer/home_hero';
+@import 'components/customer/menu';
+@import 'components/customer/order_details';
+@import 'components/customer/past_orders';
+@import 'components/customer/restaurant_detail';
+@import 'components/customer/restaurant_hero';
+@import 'components/customer/restaurant_list';
+@import 'components/customer/services_promo';
+
 //owner
-@import './components/owner/add_edit_meal';
-@import './components/owner/metamask_login';
-@import './components/owner/owner_home';
-@import './components/owner/restaurant_form';
-@import './components/owner/warning_modal';
+@import 'components/owner/add_edit_meal';
+@import 'components/owner/metamask_login';
+@import 'components/owner/owner_home';
+@import 'components/owner/order_panel';
+@import 'components/owner/restaurant_form';
+@import 'components/owner/warning_modal';
 
 //pages
-@import './pages/customer/account';
-@import './pages/customer/eat';
-@import './pages/customer/home';
-@import './pages/customer/order';
-@import './pages/customer/restaurant';
+@import 'pages/customer/account';
+@import 'pages/customer/eat';
+@import 'pages/customer/home';
+@import 'pages/customer/order';
+@import 'pages/customer/restaurant';
 
-@import './pages/owner/home';
+@import 'pages/owner/home';
+@import 'pages/owner/menus';

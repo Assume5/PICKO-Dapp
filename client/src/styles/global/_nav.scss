@@ -75,6 +75,10 @@
         background-color: $black;
         color: $white;
       }
+
+      &.nav-menus-page {
+        margin-left: $padding3;
+      }
     }
   }
 

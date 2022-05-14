@@ -21,6 +21,7 @@ import { Nav } from '@src/components/Global/Nav/Nav';
 import { ScrollToTop } from '@src/components/Global/ScrollToTop/ScrollToTop';
 import { SocketExample } from '@src/components/Global/SocketExample/SocketExample';
 import { TestServer } from './Customer/TestServer/TestServer';
+import { MenusPage } from './Owner/MenusPage/MenusPage';
 
 export const Page = () => {
   return (
@@ -40,6 +41,7 @@ export const Page = () => {
               <Route path="/order/*" element={<CustomerOrder />} />
 
               <Route path="/owner" element={<StoreHome />} />
+              <Route path="/owner/menus" element={<MenusPage />} />
 
               <Route path="/test-example" element={<TestServer />} />
             </Routes>

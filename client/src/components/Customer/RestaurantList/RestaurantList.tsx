@@ -12,12 +12,9 @@ export const RestaurantList: React.FC<Props> = ({ restaurants, currentFilter }) 
   const navigate = useNavigate();
   const contractCtx = useContext(ContractContext);
   const runExample = async () => {
-    console.log(contractCtx);
-    console.log(1);
     if (contractCtx.contract) {
       const web3 = new Web3(window.ethereum);
       const accounts = await web3.eth.getAccounts();
-      console.log(accounts);
 
       try {
         await contractCtx.contract.methods.set(5).send({ from: accounts[0] });

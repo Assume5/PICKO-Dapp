@@ -1,42 +1,21 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { MenuType } from '@src/types';
 import { MenuGrid } from '../MenuGrid/MenuGrid';
+import { useSortMenuKey } from '../../../../hooks/useSortMenuKey';
 
 interface Props {
   menu: MenuType;
 }
 
 export const MenuFilterType: React.FC<Props> = ({ menu }) => {
-  const [sortedKey, setSortedKey] = useState<string[]>([]);
+  const [sortedKey, setSortedKey] = useSortMenuKey(menu);
   const [containerOverflow, setContainerOverFlow] = useState(false);
   const [activeFilter, setActiveFilter] = useState('');
   const filterContainer = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (menu) {
-      const menus = menu && menu.menu;
-      let priorityMenu: string[] = [];
-
-      Object.keys(menus).forEach((key) => {
-        if (menus[key].priority) {
-          priorityMenu.push(key);
-        }
-      });
-
-      const sortedMenusKey = Object.keys(menus).sort((a: string, b: string) => {
-        if (a < b) {
-          return -1;
-        }
-        if (a > b) {
-          return 1;
-        }
-        return 0;
-      });
-      const sortedKey: string[] = Array.from(new Set([...priorityMenu, ...sortedMenusKey]));
-      setSortedKey(sortedKey);
-      setActiveFilter(sortedKey[0]);
-    }
-  }, [menu]);
+    setActiveFilter(sortedKey[0]);
+  }, [sortedKey]);
 
   useLayoutEffect(() => {
     if (filterContainer && filterContainer.current) {

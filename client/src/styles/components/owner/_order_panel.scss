@@ -1,0 +1,207 @@
+.order-panel {
+  max-width: 80%;
+  margin: 0 auto;
+  color: $white;
+
+  @include breakpoint-max(lg) {
+    max-width: 100%;
+  }
+
+  .fade-in-up {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-name: fadeInUp;
+    -webkit-animation-name: fadeInUp;
+  }
+
+  .controller {
+    display: flex;
+
+    .icon-container {
+      width: 25%;
+      border: 1px solid $white;
+      padding: $padding3;
+      text-align: center;
+      transition: background-color 0.3s ease-out;
+      cursor: pointer;
+
+      &.active {
+        background-color: $grayBackground;
+      }
+    }
+
+    svg {
+      font-size: 22px;
+    }
+  }
+
+  .content {
+    height: 500px;
+    overflow: auto;
+    width: 100%;
+
+    p {
+      font-size: 16px;
+
+      @include breakpoint-max(xl) {
+        font-size: 14px;
+      }
+
+      @include breakpoint-max(sm) {
+        font-size: 12px;
+      }
+    }
+
+    .new-orders,
+    .in-progress-orders,
+    .ready-for-pickup-orders {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      .new-order {
+        display: flex;
+        width: 100%;
+        color: $white;
+        background-color: $black;
+        padding: $padding2 $padding4;
+        margin: $padding2 0;
+        transition: background-color 0.3s ease-out, color 0.3s ease-out;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $mineShaft;
+        }
+
+        &.info-bar {
+          background-color: $white;
+          color: $black;
+          cursor: initial;
+          margin-top: $padding4;
+        }
+
+        .order-number {
+          width: 20%;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .customer-name {
+          width: 50%;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          padding-right: $padding3;
+        }
+
+        .order-time {
+          width: 30%;
+        }
+      }
+    }
+
+    .order-history {
+      .top-bar {
+        margin-top: $padding4;
+
+        input {
+          padding: $padding3;
+          background-color: $white;
+          color: $black;
+          border: none;
+          border-radius: 0;
+          height: 50px;
+          margin-right: $padding3;
+          margin-bottom: $padding2;
+          width: auto;
+
+          &:focus {
+            outline: none;
+          }
+        }
+      }
+      .history-table {
+        width: 100%;
+        text-align: left;
+        margin-top: $padding4;
+        border-collapse: separate;
+        border-spacing: 0px $padding3;
+        font-size: 16px;
+
+        @include breakpoint-max(xl) {
+          font-size: 14px;
+        }
+
+        @include breakpoint-max(sm) {
+          font-size: 12px;
+        }
+
+        .info-bar {
+          background-color: $white;
+          color: $black;
+          cursor: initial;
+
+          &:hover {
+            background-color: $white;
+          }
+
+          th {
+            padding: $padding3;
+            width: 17.5%;
+            font-weight: 500;
+
+            &.status {
+              width: 30%;
+            }
+          }
+        }
+
+        tr {
+          cursor: pointer;
+          background-color: $black;
+          transition: background-color 0.3s ease-out;
+
+          &:hover {
+            background-color: $mineShaftBackground;
+          }
+
+          td {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            padding: $padding3;
+
+            &.status-container {
+              display: flex;
+              align-items: center;
+
+              .success {
+                color: $success;
+              }
+
+              .fail {
+                color: $error;
+              }
+
+              svg {
+                font-size: 25px;
+              }
+
+              .status {
+                padding-left: $padding3;
+
+                p {
+                  margin: 0;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
