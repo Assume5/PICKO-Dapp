@@ -130,6 +130,11 @@ export const Nav = () => {
         ) : (
           <>
             <button onClick={() => login()}>Sign In</button>
+            {location.pathname.includes('/owner') && (
+              <button className="nav-menus-page" onClick={() => navigate('/owner/menus')}>
+                Menus
+              </button>
+            )}
           </>
         )}
         {!location.pathname.includes('/owner') && !location.pathname.includes('/driver') && (
