@@ -1,0 +1,71 @@
+.order-details-modal {
+  opacity: 1;
+  pointer-events: initial;
+  flex-direction: column;
+
+  &.fade-in {
+    animation: fadeIn 300ms ease-out;
+  }
+
+  .modal-inner {
+    width: 500px;
+    background-color: $white;
+    border-radius: 10px;
+
+    padding: $spacing;
+
+    @include breakpoint-max(sm) {
+      width: calc(100% - 25px);
+      padding: $spacingMobile;
+    }
+
+    .order-info,
+    .order-items,
+    .summary {
+      border-bottom: 2px solid $black;
+    }
+
+    .order-items {
+      padding: $padding3 0;
+
+      .item {
+        display: flex;
+
+        h3 {
+          width: 30%;
+        }
+
+        h4 {
+          width: 50%;
+        }
+
+        p {
+          width: 20%;
+        }
+      }
+    }
+
+    .summary {
+      padding: $padding4 0;
+      text-align: right;
+    }
+
+    .action-button {
+      padding-top: $padding4;
+      float: right;
+
+      button {
+        transition: background-color 0.3s ease-out;
+      }
+
+      .cancel-button {
+        background-color: $grey;
+        margin-right: $padding3;
+
+        &:hover {
+          background-color: $error;
+        }
+      }
+    }
+  }
+}

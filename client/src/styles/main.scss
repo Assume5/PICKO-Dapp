@@ -26,6 +26,7 @@
 @import 'components/owner/add_edit_meal';
 @import 'components/owner/metamask_login';
 @import 'components/owner/owner_home';
+@import 'components/owner/order_details_modal';
 @import 'components/owner/order_panel';
 @import 'components/owner/restaurant_form';
 @import 'components/owner/warning_modal';
@@ -37,5 +38,6 @@
 @import 'pages/customer/order';
 @import 'pages/customer/restaurant';
 
+@import 'pages/owner/account';
 @import 'pages/owner/home';
 @import 'pages/owner/menus';

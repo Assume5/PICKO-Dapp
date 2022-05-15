@@ -72,6 +72,10 @@
         transition: background-color 0.3s ease-out, color 0.3s ease-out;
         cursor: pointer;
 
+        @include breakpoint-max(sm) {
+          padding: $padding2;
+        }
+
         &:hover {
           background-color: $mineShaft;
         }
@@ -124,10 +128,10 @@
           }
         }
       }
+
       .history-table {
         width: 100%;
         text-align: left;
-        margin-top: $padding4;
         border-collapse: separate;
         border-spacing: 0px $padding3;
         font-size: 16px;
@@ -156,6 +160,10 @@
 
             &.status {
               width: 30%;
+            }
+
+            @include breakpoint-max(sm) {
+              padding: $padding3 $padding2;
             }
           }
         }
@@ -193,6 +201,10 @@
 
               .status {
                 padding-left: $padding3;
+
+                @include breakpoint-max(sm) {
+                  display: none;
+                }
 
                 p {
                   margin: 0;

@@ -1,0 +1,11 @@
+.owner-account {
+  background-color: $gray;
+  width: 100%;
+  min-height: 100vh;
+  height: 100%;
+  padding: $spacing;
+
+  @include breakpoint-max(lg) {
+    padding: $spacing $padding3;
+  }
+}
