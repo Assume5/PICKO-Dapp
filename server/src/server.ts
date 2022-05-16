@@ -1,14 +1,20 @@
 const http = require("http");
 import { Server, Socket } from "socket.io";
-// import { createAdapter } from "@socket.io/cluster-adapter";
-// const { setupWorker } = require("@socket.io/sticky");
 import app from "./app";
 import { createDatabaseTable } from "./services/createTable";
 import pool from "./services/db";
+
+// import { createAdapter } from "@socket.io/cluster-adapter";
+// const { setupWorker } = require("@socket.io/sticky");
+
 require("dotenv").config();
+
 const PORT = process.env.PORT || 8000;
+
 const server = http.createServer(app);
+
 const allowOrigin = process.env.ALLOW_ORIGIN || "http://localhost:3000";
+
 const io = new Server(server, {
     cors: {
         origin: allowOrigin,
@@ -17,8 +23,10 @@ const io = new Server(server, {
     },
     allowEIO3: true,
 });
+
 // io.adapter(createAdapter());
 // setupWorker(io);
+
 io.on("connection", (socket: Socket) => {
     console.log("Client connected: ", socket.id);
     pool.query(
@@ -52,4 +60,5 @@ const startServer = async () => {
         console.log(err);
     }
 };
+
 startServer();

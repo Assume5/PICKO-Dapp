@@ -1,0 +1,77 @@
+import { Response, NextFunction } from "express";
+import { CustomJwtPayload, UserAuthInfo } from "../types/interface";
+
+import { sign, verify, VerifyErrors } from "jsonwebtoken";
+import { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } from "../utils/constant";
+
+export const authenticateToken = (
+    req: UserAuthInfo,
+    res: Response,
+    next: NextFunction
+) => {
+    const token = req.cookies["access_token"];
+    if (!token) {
+        return res.status(401).json({ error: "Unauthorized token" });
+    }
+
+    verify(
+        token,
+        ACCESS_TOKEN_SECRET,
+        (err: VerifyErrors, user: CustomJwtPayload) => {
+            //check if access token expire
+            if (err && err.name === "TokenExpiredError") {
+                const refresh_token = req.cookies["refresh_token"];
+                if (!refresh_token) {
+                    res.clearCookie("access_token");
+                    res.clearCookie("refresh_token");
+                    return res
+                        .status(401)
+                        .json({ error: "Unauthorized token" });
+                }
+                //if expire generate new access token
+                verify(
+                    refresh_token,
+                    REFRESH_TOKEN_SECRET,
+                    (err: VerifyErrors, user: CustomJwtPayload) => {
+                        if (err) {
+                            res.clearCookie("access_token");
+                            res.clearCookie("refresh_token");
+                            return res.send({ error: "Token expires" });
+                        }
+                        const access_token = sign(
+                            {
+                                name: user.name,
+                            },
+                            ACCESS_TOKEN_SECRET,
+                            {
+                                expiresIn: "15s",
+                            }
+                        );
+                        req.accessToken = access_token;
+                        req.user = user;
+                        next();
+                    }
+                );
+            } else if (err) {
+                res.clearCookie("access_token");
+                res.clearCookie("refresh_token");
+                return res.status(403).json({ error: "Invalid token" });
+            } else {
+                req.user = user;
+                next();
+            }
+        }
+    );
+};
+
+//check if need to regenerate access token
+export const regenerateAccessToken = (
+    req: UserAuthInfo,
+    res: Response,
+    next: NextFunction
+) => {
+    if (req.accessToken) {
+        res.cookie("access_token", req.accessToken, { httpOnly: true });
+    }
+    next();
+};

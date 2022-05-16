@@ -3,6 +3,7 @@ import morgan from "morgan";
 import helmet from "helmet";
 import express from "express";
 import api from "./routes";
+import cookieParser from "cookie-parser";
 
 const app = express();
 const allowOrigin = process.env.ALLOW_ORIGIN || "http://localhost:3000";
@@ -12,8 +13,10 @@ app.use(helmet());
 app.use(
     cors({
         origin: allowOrigin,
+        credentials: true,
     })
 );
+app.use(cookieParser());
 app.use(morgan("combined"));
 app.use(express.json());
 app.use(api);

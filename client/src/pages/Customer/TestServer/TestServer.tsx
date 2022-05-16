@@ -3,9 +3,14 @@ import React, { useEffect, useState } from 'react';
 
 export const TestServer = () => {
   const [data, setData] = useState('');
+
   useEffect(() => {
     const getExample = async () => {
-      const response = await fetch(`${serverUrl}/example`);
+      const response = await fetch(`${serverUrl}/example`, {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'include',
+      });
       const data = await response.json();
       setData(data);
       console.log(data);
@@ -58,8 +63,60 @@ export const TestServer = () => {
     console.log(await res.json());
   };
 
+  const testLogin = async () => {
+    try {
+      const res = await fetch(`${serverUrl}/example/login`, {
+        method: 'POST',
+        mode: 'cors',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: 'test user',
+        }),
+      });
+      const data = await res.json();
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const testLogout = async () => {
+    const res = await fetch(`${serverUrl}/example/logout`, {
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'include',
+    });
+
+    const data = await res.json();
+    console.log(data);
+  };
+
+  const testGet = async () => {
+    const response = await fetch(`${serverUrl}/example`, {
+      method: 'GET',
+      mode: 'cors',
+      credentials: 'include',
+    });
+    const data = await response.json();
+    console.log(data);
+  };
+
   return (
     <div className="test-server" style={{ marginTop: '200px' }}>
+      <button onClick={() => testLogin()}>Test Login</button>
+      <br />
+      <br />
+      <button onClick={() => testLogout()}>Test Logout</button>
+      <br />
+      <br />
+      <button onClick={() => testGet()}>Test Get</button>
+
+      <br />
+      <br />
+
       <button onClick={() => testPost('fname', 'lname')}>Test Post</button>
       <br />
       <input type="text" placeholder="ID" id="id" />
