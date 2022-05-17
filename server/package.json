@@ -4,7 +4,8 @@
     "description": "",
     "main": "dist/server.js",
     "scripts": {
-        "build": "tsc",
+        "build": "tsc && prisma generate",
+        "postinstall": "tsc",
         "test": "jest",
         "test-watch": "jest --watchAll",
         "start": "tsc & node .",
@@ -12,7 +13,8 @@
         "start-cluster": "tsc && pm2 start processes.prod.json --env production",
         "watch-cluster": "tsc -w & pm2 start processes.dev.json --watch",
         "stop": "pm2 delete processes.dev.json",
-        "cluster": "npm run build && pm2 start processes.json --watch"
+        "cluster": "npm run build && pm2 start processes.json --watch",
+        "init-db": "npx prisma migrate dev --name init"
     },
     "keywords": [],
     "author": "",
@@ -21,6 +23,7 @@
         "testEnvironment": "node"
     },
     "dependencies": {
+        "@prisma/client": "^3.14.0",
         "@socket.io/cluster-adapter": "^0.1.0",
         "@socket.io/pm2": "^5.1.0",
         "@socket.io/sticky": "^1.0.1",
@@ -29,8 +32,8 @@
         "@types/express": "^4.17.13",
         "@types/jsonwebtoken": "^8.5.8",
         "@types/morgan": "^1.9.3",
-        "@types/node": "^17.0.32",
         "@types/pg": "^8.6.5",
+        "cookie": "^0.5.0",
         "cookie-parser": "^1.4.6",
         "cors": "^2.8.5",
         "csv-parse": "^5.0.4",
@@ -42,6 +45,7 @@
         "pg": "^8.7.3",
         "picko": "file:..",
         "pm2": "^5.1.0",
+        "prisma": "^3.14.0",
         "socket.io": "^4.5.0",
         "typescript": "^4.6.4"
     },
@@ -49,5 +53,8 @@
         "jest": "^28.0.3",
         "nodemon": "^2.0.16",
         "supertest": "^6.2.3"
+    },
+    "prisma": {
+        "seed": "ts-node ./prisma/seed.ts"
     }
 }

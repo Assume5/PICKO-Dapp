@@ -11,6 +11,8 @@ import { CustomJwtPayload, UserAuthInfo } from "../../types/interface";
 import {
     ACCESS_TOKEN_SECRET,
     REFRESH_TOKEN_SECRET,
+    sameSite,
+    secure,
 } from "../../utils/constant";
 
 export const getExample = async (req: UserAuthInfo, res: Response) => {
@@ -52,7 +54,6 @@ export const deleteExample = async (req: Request, res: Response) => {
 };
 
 //JWT Example
-let refreshTokens: string[] = []; //should store in db
 
 const generateAccessToken = (user: any) => {
     return sign(user, ACCESS_TOKEN_SECRET, {
@@ -70,14 +71,27 @@ export const login = (req: Request, res: Response) => {
     const accessToken = generateAccessToken(user);
     const refreshToken = sign(user, REFRESH_TOKEN_SECRET);
 
-    refreshTokens.push(refreshToken);
-    res.cookie("access_token", accessToken, { httpOnly: true });
-    res.cookie("refresh_token", refreshToken, { httpOnly: true });
+    res.cookie("access_token", accessToken, {
+        httpOnly: true,
+        sameSite: sameSite,
+        secure: secure,
+    });
+    res.cookie("refresh_token", refreshToken, {
+        httpOnly: true,
+        sameSite: sameSite,
+        secure: secure,
+    });
     return res.status(200).json({ ok: true });
 };
 
 export const logout = (req: Request, res: Response) => {
-    res.clearCookie("access_token");
-    res.clearCookie("refresh_token");
+    res.clearCookie("access_token", {
+        sameSite: sameSite,
+        secure: secure,
+    });
+    res.clearCookie("refresh_token", {
+        sameSite: sameSite,
+        secure: secure,
+    });
     res.status(200).json({ ok: true });
 };

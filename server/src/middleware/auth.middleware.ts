@@ -2,7 +2,12 @@ import { Response, NextFunction } from "express";
 import { CustomJwtPayload, UserAuthInfo } from "../types/interface";
 
 import { sign, verify, VerifyErrors } from "jsonwebtoken";
-import { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } from "../utils/constant";
+import {
+    ACCESS_TOKEN_SECRET,
+    REFRESH_TOKEN_SECRET,
+    sameSite,
+    secure,
+} from "../utils/constant";
 
 export const authenticateToken = (
     req: UserAuthInfo,
@@ -22,8 +27,14 @@ export const authenticateToken = (
             if (err && err.name === "TokenExpiredError") {
                 const refresh_token = req.cookies["refresh_token"];
                 if (!refresh_token) {
-                    res.clearCookie("access_token");
-                    res.clearCookie("refresh_token");
+                    res.clearCookie("access_token", {
+                        sameSite: sameSite,
+                        secure: secure,
+                    });
+                    res.clearCookie("refresh_token", {
+                        sameSite: sameSite,
+                        secure: secure,
+                    });
                     return res
                         .status(401)
                         .json({ error: "Unauthorized token" });
@@ -34,8 +45,14 @@ export const authenticateToken = (
                     REFRESH_TOKEN_SECRET,
                     (err: VerifyErrors, user: CustomJwtPayload) => {
                         if (err) {
-                            res.clearCookie("access_token");
-                            res.clearCookie("refresh_token");
+                            res.clearCookie("access_token", {
+                                sameSite: sameSite,
+                                secure: secure,
+                            });
+                            res.clearCookie("refresh_token", {
+                                sameSite: sameSite,
+                                secure: secure,
+                            });
                             return res.send({ error: "Token expires" });
                         }
                         const access_token = sign(
@@ -53,8 +70,14 @@ export const authenticateToken = (
                     }
                 );
             } else if (err) {
-                res.clearCookie("access_token");
-                res.clearCookie("refresh_token");
+                res.clearCookie("access_token", {
+                    sameSite: sameSite,
+                    secure: secure,
+                });
+                res.clearCookie("refresh_token", {
+                    sameSite: sameSite,
+                    secure: secure,
+                });
                 return res.status(403).json({ error: "Invalid token" });
             } else {
                 req.user = user;
@@ -71,7 +94,11 @@ export const regenerateAccessToken = (
     next: NextFunction
 ) => {
     if (req.accessToken) {
-        res.cookie("access_token", req.accessToken, { httpOnly: true });
+        res.cookie("access_token", req.accessToken, {
+            httpOnly: true,
+            sameSite: sameSite,
+            secure: secure,
+        });
     }
     next();
 };

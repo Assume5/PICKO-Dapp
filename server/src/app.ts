@@ -4,7 +4,9 @@ import helmet from "helmet";
 import express from "express";
 import api from "./routes";
 import cookieParser from "cookie-parser";
+import { Prisma, PrismaClient } from "@prisma/client";
 
+const prisma = new PrismaClient();
 const app = express();
 const allowOrigin = process.env.ALLOW_ORIGIN || "http://localhost:3000";
 
@@ -14,6 +16,7 @@ app.use(
     cors({
         origin: allowOrigin,
         credentials: true,
+        methods: ["GET", "POST", "PUT", "DELETE"],
     })
 );
 app.use(cookieParser());
@@ -23,18 +26,6 @@ app.use(api);
 
 app.get("/", (req, res) => {
     res.status(200).send("PICKO-DAPP Server");
-});
-
-const delay = (duration: number) => {
-    const startTime = Date.now();
-    while (Date.now() - startTime < duration) {
-        //event loop is blocked...
-    }
-};
-
-app.get("/timer", (req, res) => {
-    delay(5000);
-    res.status(200).send(`${process.pid}`);
 });
 
 export default app;

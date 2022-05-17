@@ -1,27 +1,30 @@
 import pool from "../services/db";
-
+import { prisma } from "../services/db";
 export const findRow = async (id: number) => {
-    return (
-        (await (
-            await pool.query(`SELECT * FROM test WHERE "ID"=${id};`)
-        ).rowCount) > 0
-    );
+    return await prisma.test.findUnique({
+        where: {
+            id: id,
+        },
+    });
 };
 
 export const getExampleDB = async () => {
     try {
-        const response = await pool.query(`SELECT * FROM test;`);
-        return response.rows;
+        const response = await prisma.test.findMany();
+        return response;
     } catch (err) {
         return err;
     }
 };
 
 export const postExampleDB = async (fname: string, lname: string) => {
-    await pool
-        .query(
-            `INSERT INTO test (fname,lname) VALUES ('${fname}', '${lname}');`
-        )
+    await prisma.test
+        .create({
+            data: {
+                fname: fname,
+                lname: lname,
+            },
+        })
         .catch((err) => {
             console.log(`Insert to example fail: ${err}`);
         });
@@ -32,17 +35,29 @@ export const updateExampleDB = async (
     fname: string,
     lname: string
 ) => {
-    await pool
-        .query(
-            `UPDATE test SET fname = '${fname}', lname = '${lname}' WHERE "ID" = ${ID}`
-        )
+    await prisma.test
+        .update({
+            where: {
+                id: ID,
+            },
+            data: {
+                fname: fname,
+                lname: lname,
+            },
+        })
         .catch((err) => {
             console.log(`Update to example fail: ${err}`);
         });
 };
 
 export const deleteExampleDB = async (ID: number) => {
-    await pool.query(`DELETE FROM test WHERE "ID" = ${ID}`).catch((err) => {
-        console.log(`Delete to example fail: ${err}`);
-    });
+    await prisma.test
+        .delete({
+            where: {
+                id: ID,
+            },
+        })
+        .catch((err) => {
+            console.log(`Delete to example fail: ${err}`);
+        });
 };

@@ -1,17 +1,11 @@
 import { Pool } from "pg";
 require("dotenv").config();
-
-const dbConfig = {
-    user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD,
-    host: process.env.DATABASE_HOST,
-    database: process.env.DATABASE,
-    port: +process.env.DATABASE_PORT,
-};
+import { Prisma, PrismaClient } from "@prisma/client";
 
 const isProd = process.env.NODE_ENV === "production";
 
-const connectionString = `postgres://${dbConfig.user}:${dbConfig.password}@${dbConfig.host}:${dbConfig.port}/${dbConfig.database}`;
+const connectionString = process.env.DATABASE_URL;
+console.log(connectionString);
 
 let pool: Pool;
 
@@ -36,5 +30,7 @@ pool.on("error", (err, client) => {
     console.error("Unexpected error on idle client", err);
     process.exit(-1);
 });
+
+export const prisma = new PrismaClient();
 
 export default pool;
