@@ -33,34 +33,17 @@ const io = new Server(server, {
 // setupWorker(io);
 
 io.on("connection", async (socket: Socket) => {
-    // console.log(cookie.parse(socket.handshake.headers.cookie)["socket-cookie"]);
     const socketCookie: string = socket.handshake.query[
         "socket-cookie"
     ] as string;
-    // console.log(headerCookie);
     console.log("Client connected: ", socket.id);
     socket.leave(socket.id);
     socket.join(socketCookie);
-    // console.log(socket.rooms)
-    // console.log(socketCookie);
-    // console.log(socket.handshake.query);
-    console.log(socket.handshake);
-    // await prisma.socket_session.create({
-    //     data: {
-    //         socket_id: socket.id,
-    //         socket_cookie: socketCookie,
-    //     },
-    // });
-
-    socket.on("JOIN", async (cookie) => {
-        console.log(socket.id);
-        console.log(cookie);
-        // await prisma.socket_session.create({
-        //     data: {
-        //         socket_id: socket.id,
-        //         socket_cookie: socketCookie,
-        //     },
-        // });
+    await prisma.socket_session.create({
+        data: {
+            socket_id: socket.id,
+            socket_cookie: socketCookie,
+        },
     });
 
     socket.broadcast.emit("hello", {
@@ -69,11 +52,11 @@ io.on("connection", async (socket: Socket) => {
 
     socket.on("disconnect", async () => {
         console.log("Client disconnected: ", socket.id);
-        // await prisma.socket_session.delete({
-        //     where: {
-        //         socket_id: socket.id,
-        //     },
-        // });
+        await prisma.socket_session.delete({ 
+            where: {
+                socket_id: socket.id,
+            },
+        });
     });
 });
 
