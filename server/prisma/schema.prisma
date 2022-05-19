@@ -38,7 +38,7 @@ model socket_session {
 }
 
 model guest {
-  cookie_value String @id
+  cookie_value String @id 
   carts guest_cart[]
   create_at DateTime @default(now())
 }
@@ -53,8 +53,8 @@ model guest_cart {
 }
 
 model customer {
-  id String @id
-  username String
+  id String  @id @default(uuid())
+  username String @unique
   password String
   first_name String
   last_name String
@@ -70,14 +70,15 @@ model cart {
   customer customer @relation(fields: [customer_id], references: [id])
   customer_id String
   menu_id Int
+  menu_name String
   price Float
   count Int
 }
 
 
 model driver {
-  id String @id
-  username String
+  id String  @id @default(uuid())
+  username String @unique
   password String
   first_name String
   last_name String
@@ -93,8 +94,8 @@ model driver {
 }
 
 model owner {
-  id String @id
-  username String
+  id String @id @default(uuid())
+  username String @unique
   password String
   first_name String
   last_name String
@@ -114,14 +115,14 @@ model restaurant {
   category String
   lat String
   long String
-  menu_type  String
-  hero_type String
-  restaurant_card_image String
   open_time DateTime
   clost_time DateTime
-  view_count Int
-  order_count Int
-  status String
+  menu_type  String @default("filter")
+  hero_type String @default("image")
+  restaurant_card_image String
+  view_count Int @default(0)
+  order_count Int @default(0)
+  status String @default("close")
   menus menus[]
   menu_category menu_category[]
   hero_images restaurant_hero[]

@@ -1,8 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
 import io, { Socket } from 'socket.io-client';
 import { serverUrl } from '@src/constants';
-import { getCookie } from '../utils/functions';
-import { randomBytes } from 'crypto';
 import Cookies from 'js-cookie';
 
 interface contextType {
@@ -27,15 +25,19 @@ export const SocketContextProvider: React.FC = (props) => {
     const newSocket = io(serverUrl, {
       transports: ['websocket', 'polling'],
       withCredentials: true,
-      extraHeaders: {
+      query: {
         'socket-cookie': Cookies.get('socket-cookie')!,
       },
     });
     setSocket(newSocket);
-    console.log(1);
 
     return (): any => newSocket.close();
   }, [setSocket]);
+
+  useEffect(() => {
+    socket && socket.emit('JOIN', Cookies.get('socket-cookie'));
+  }, [socket]);
+
   socket?.on('message', (arg) => {
     console.log(arg);
   });

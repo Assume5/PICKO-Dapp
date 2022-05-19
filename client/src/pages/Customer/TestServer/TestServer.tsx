@@ -1,5 +1,6 @@
 import { serverUrl } from '@src/constants';
 import React, { useEffect, useState } from 'react';
+import { CustomerHeader } from '../../../components/Customer/CustomerHeader/CustomerHeader';
 
 export const TestServer = () => {
   const [data, setData] = useState('');
@@ -105,30 +106,33 @@ export const TestServer = () => {
   };
 
   return (
-    <div className="test-server" style={{ marginTop: '200px' }}>
-      <button onClick={() => testLogin()}>Test Login</button>
-      <br />
-      <br />
-      <button onClick={() => testLogout()}>Test Logout</button>
-      <br />
-      <br />
-      <button onClick={() => testGet()}>Test Get</button>
+    <>
+      <CustomerHeader />
+      <div className="test-server" style={{ marginTop: '200px' }}>
+        <button onClick={() => testLogin()}>Test Login</button>
+        <br />
+        <br />
+        <button onClick={() => testLogout()}>Test Logout</button>
+        <br />
+        <br />
+        <button onClick={() => testGet()}>Test Get</button>
 
-      <br />
-      <br />
+        <br />
+        <br />
 
-      <button onClick={() => testPost('fname', 'lname')}>Test Post</button>
-      <br />
-      <input type="text" placeholder="ID" id="id" />
-      <input type="text" placeholder="lname" id="lname" />
-      <input type="text" placeholder="fname" id="fname" />
-      <br />
-      <button onClick={() => testPut()}>Test PUT</button>
-      <br />
-      <input type="text" placeholder="ID" id="delete-id" />
-      <br />
+        <button onClick={() => testPost('fname', 'lname')}>Test Post</button>
+        <br />
+        <input type="text" placeholder="ID" id="id" />
+        <input type="text" placeholder="lname" id="lname" />
+        <input type="text" placeholder="fname" id="fname" />
+        <br />
+        <button onClick={() => testPut()}>Test PUT</button>
+        <br />
+        <input type="text" placeholder="ID" id="delete-id" />
+        <br />
 
-      <button onClick={() => testDelete()}>Test DELETE</button>
-    </div>
+        <button onClick={() => testDelete()}>Test DELETE</button>
+      </div>
+    </>
   );
 };

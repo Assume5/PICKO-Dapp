@@ -25,7 +25,6 @@ export const Menus = () => {
   useEffect(() => {
     if (fakeMenu) {
       const menus = fakeMenu;
-      console.log(fakeMenu);
       let priorityMenu: string[] = [];
 
       Object.keys(fakeMenu).forEach((key) => {

@@ -5,6 +5,7 @@ export type User = {
   login: boolean;
   name?: string;
   address?: string;
+  role?: string;
 };
 
 export type HeroType = {

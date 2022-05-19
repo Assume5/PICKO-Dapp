@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { HomeHero } from '@src/components//Customer/Hero/HomeHero/HomeHero';
 import { ServicesPromo } from '@src/components//Customer/ServicesPromo/ServicesPromo';
 import { checkAddress } from '@src/helpers';
+import { CustomerHeader } from '../../../components/Customer/CustomerHeader/CustomerHeader';
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -17,9 +18,12 @@ export const Home = () => {
   }, [navigate]);
 
   return (
-    <div className="home">
-      <HomeHero />
-      <ServicesPromo />
-    </div>
+    <>
+      <CustomerHeader />
+      <div className="home">
+        <HomeHero />
+        <ServicesPromo />
+      </div>
+    </>
   );
 };

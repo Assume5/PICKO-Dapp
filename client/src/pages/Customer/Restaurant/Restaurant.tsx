@@ -5,6 +5,7 @@ import { serverUrl } from '@src/constants';
 import { RestaurantHero } from '@src/components/Customer/Hero/RestaurantHero/RestaurantHero';
 import { Menu } from '@src/components//Customer/Menu/Menu';
 import { RestaurantDetail } from '@src/components/Customer/RestaurantDetail/RestaurantDetail';
+import { CustomerHeader } from '../../../components/Customer/CustomerHeader/CustomerHeader';
 
 export const Restaurant = () => {
   const [hero, setHero] = useState<HeroType>(null);
@@ -63,10 +64,13 @@ export const Restaurant = () => {
   }, []);
 
   return (
-    <div className="restaurant">
-      <RestaurantHero hero={hero} social={social} />
-      <RestaurantDetail details={details} />
-      <Menu />
-    </div>
+    <>
+      <CustomerHeader />
+      <div className="restaurant">
+        <RestaurantHero hero={hero} social={social} />
+        <RestaurantDetail details={details} />
+        <Menu />
+      </div>
+    </>
   );
 };

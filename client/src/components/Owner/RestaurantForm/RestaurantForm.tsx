@@ -15,13 +15,9 @@ export const RestaurantForm = () => {
   const [err, setErr] = useState(false);
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(1);
     const addressInput: HTMLInputElement | null = document.querySelector('.address-search input');
-    console.log(addressInput);
     if (addressInput && addressInput.value === address?.label) {
       setErr(false);
-      console.log(addressInput.value);
-      console.log(address?.label);
     } else {
       setErr(true);
     }
@@ -30,18 +26,19 @@ export const RestaurantForm = () => {
     <div className="join-restaurant-form">
       <form className="restaurant-form" onSubmit={(e) => handleSubmit(e)}>
         <h2>Restaurant Form</h2>
-        <input type="text" className="" id="restaurant-name" placeholder="Restaurant Name" required />
+        <input type="text" name="restaurant-name" placeholder="Restaurant Name" required />
+        <input type="text" name="restaurant-phone" placeholder="Phone Number" required />
         <AddressSearch setAddressResult={setAddress} setErr={setErr} />
         <p className={`error-message ${err ? 'visible' : 'hidden'}`}>Please Select an Address</p>
-        <input className="" id="restaurant-category" placeholder="Category1, Category2" required />
+        <input className="" name="restaurant-category" placeholder="Category1, Category2" required />
         <div className="open-close-time">
           <div className="open-time">
             <label>Select a Open Time</label>
-            <input type="time" id="restaurant-open-close-time" required />
+            <input type="time" name="restaurant-open-close-time" required />
           </div>
           <div className="close-time">
             <label>Select a Close Time</label>
-            <input type="time" id="restaurant-open-close-time" required />
+            <input type="time" name="restaurant-open-close-time" required />
           </div>
         </div>
         <button type="submit">Submit</button>

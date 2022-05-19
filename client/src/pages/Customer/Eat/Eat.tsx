@@ -6,6 +6,7 @@ import { Restaurant } from '@src/types';
 import { checkAddress } from '@src/helpers';
 
 import { topRestaurants, restaurants } from './FakeRestaurantData';
+import { CustomerHeader } from '../../../components/Customer/CustomerHeader/CustomerHeader';
 
 export const Eat = () => {
   const [currentFilter, setCurrentFilter] = useState<string[]>([]);
@@ -36,17 +37,24 @@ export const Eat = () => {
   }, []);
 
   return (
-    <div className="start-eating">
-      <EatHero topRestaurants={topRestaurants} />
-      <div className="eat-content">
-        {tempRestaurants && categories && (
-          <>
-            <CategoryFilter categories={categories} currentFilter={currentFilter} setCurrentFilter={setCurrentFilter} />
-            <RestaurantList restaurants={tempRestaurants} currentFilter={currentFilter} />
-          </>
-        )}
-        {}
+    <>
+      <CustomerHeader />
+      <div className="start-eating">
+        <EatHero topRestaurants={topRestaurants} />
+        <div className="eat-content">
+          {tempRestaurants && categories && (
+            <>
+              <CategoryFilter
+                categories={categories}
+                currentFilter={currentFilter}
+                setCurrentFilter={setCurrentFilter}
+              />
+              <RestaurantList restaurants={tempRestaurants} currentFilter={currentFilter} />
+            </>
+          )}
+          {}
+        </div>
       </div>
-    </div>
+    </>
   );
 };

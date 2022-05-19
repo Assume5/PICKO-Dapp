@@ -57,11 +57,12 @@ export const authenticateToken = (
                         }
                         const access_token = sign(
                             {
-                                name: user.name,
+                                userId: user.userId,
+                                role: user.role,
                             },
                             ACCESS_TOKEN_SECRET,
                             {
-                                expiresIn: "15s",
+                                expiresIn: "20m",
                             }
                         );
                         req.accessToken = access_token;

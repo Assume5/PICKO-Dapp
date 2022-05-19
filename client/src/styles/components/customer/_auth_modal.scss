@@ -1,0 +1,17 @@
+.auth-modal {
+  opacity: 1;
+  pointer-events: initial;
+
+  .fade-in-up {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-name: fadeInUp;
+    -webkit-animation-name: fadeInUp;
+  }
+
+  .modal-inner {
+      
+  }
+}

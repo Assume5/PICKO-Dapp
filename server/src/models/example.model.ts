@@ -45,7 +45,7 @@ export const updateExampleDB = async (
                 lname: lname,
             },
         })
-        .catch((err) => {
+        .catch((err) => { 
             console.log(`Update to example fail: ${err}`);
         });
 };

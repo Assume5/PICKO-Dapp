@@ -8,7 +8,10 @@
 @import 'global/nav';
 
 //components
+@import 'components/global/login_sign_up_form';
+
 @import 'components/customer/_address_search';
+@import 'components/customer/auth_modal';
 @import 'components/customer/cart_sidebar';
 @import 'components/customer/category_filter';
 @import 'components/customer/eat_hero';
@@ -29,6 +32,7 @@
 @import 'components/owner/order_details_modal';
 @import 'components/owner/order_panel';
 @import 'components/owner/restaurant_form';
+@import 'components/owner/signup';
 @import 'components/owner/warning_modal';
 
 //pages
@@ -41,3 +45,4 @@
 @import 'pages/owner/account';
 @import 'pages/owner/home';
 @import 'pages/owner/menus';
+@import 'pages/owner/signup';

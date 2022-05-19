@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { PastOrders } from '@src/components/Customer/PastOrders/PastOrders';
 import { Orders } from '@src/types';
 import { fakeOrders } from './FakeOrders';
+import { CustomerHeader } from '../../../components/Customer/CustomerHeader/CustomerHeader';
 
 export const Account = () => {
   const [orders, setOrder] = useState<Orders | null>(null);
@@ -11,9 +12,12 @@ export const Account = () => {
   }, []);
   if (orders) {
     return (
-      <div className="account">
-        <PastOrders orders={orders} />
-      </div>
+      <>
+        <CustomerHeader />
+        <div className="account">
+          <PastOrders orders={orders} />
+        </div>
+      </>
     );
   }
   return <></>;
