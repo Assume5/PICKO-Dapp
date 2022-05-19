@@ -1,6 +1,11 @@
 .auth-modal {
   opacity: 1;
   pointer-events: initial;
+  padding: $spacing;
+
+  @include breakpoint-max(sm) {
+    padding: $spacingMobile;
+  }
 
   .fade-in-up {
     animation-duration: 1s;
@@ -12,6 +17,6 @@
   }
 
   .modal-inner {
-      
+    width: 100%;
   }
 }
