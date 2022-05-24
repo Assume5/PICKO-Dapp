@@ -8,6 +8,7 @@ import {
     sameSite,
     secure,
 } from "../utils/constant";
+import { checkRestaurantExists } from "../models/check.model";
 
 export const authenticateToken = (
     req: UserAuthInfo,
@@ -99,7 +100,27 @@ export const regenerateAccessToken = (
             httpOnly: true,
             sameSite: sameSite,
             secure: secure,
+            maxAge: 7 * 24 * 60 * 60 * 1000,
         });
     }
+    next();
+};
+
+export const authenticateOwner = async (
+    req: UserAuthInfo,
+    res: Response,
+    next: NextFunction
+) => {
+    const id = req.params.id;
+    if (req.user.role !== "owner") {
+        return res.status(403).json({ success: false, error: "unauthorized" });
+    }
+
+    const getRestaurantId = await checkRestaurantExists(req.user.id);
+
+    if (id !== getRestaurantId.id) {
+        return res.status(403).json({ success: false, error: "unauthorized" });
+    }
+
     next();
 };

@@ -6,7 +6,7 @@
   align-items: center;
   flex-wrap: wrap;
   color: $white;
-  
+
   h2,
   label {
     width: 100%;
@@ -38,7 +38,14 @@
 
     .open-close-time {
       display: flex;
+      width: 100%;
+      max-width: 500px;
       gap: 0px 50px;
+
+      .open-time,
+      .close-time {
+        width: 100%;
+      }
 
       @include breakpoint-max(sm) {
         flex-direction: column;
@@ -89,6 +96,55 @@
 
     &.visible {
       display: block;
+    }
+  }
+}
+
+.restaurant-setting-form {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: center;
+  max-width: 400px;
+
+  label {
+    margin-right: $padding3;
+  }
+
+  input:not([type='radio']):not([type='checkbox']) {
+    max-width: 300px;
+  }
+
+  .menu-category-input,
+  .hero-image-upload,
+  .card-image {
+    border: 1px solid $white;
+    border-radius: 10px;
+    margin: $padding4 auto;
+    max-width: 400px;
+    padding: $padding3 $padding4;
+    position: relative;
+
+    .delete-button {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    input[type='text'] {
+      width: 100%;
+      margin: $padding3 auto;
+    }
+  }
+
+  .card-image,
+  .hero-image {
+    margin: $padding5 auto;
+
+    .file-container {
+      margin: $padding4 0;
     }
   }
 }

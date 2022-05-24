@@ -50,7 +50,8 @@ export const Login: React.FC<Props> = ({ role, setAuthState, setAuthModal }) => 
     if (data.success) {
       userCtx.setUser({
         login: true,
-        role: 'owner',
+        name: data.name,
+        role: data.role,
       });
       setAuthModal && setAuthModal(false);
     }
@@ -65,7 +66,9 @@ export const Login: React.FC<Props> = ({ role, setAuthState, setAuthModal }) => 
         <label>Password</label>
         <input type="password" name="password" required />
         {error && <p className="form-error">{error}</p>}
-        <button>Sign in {loading && <FontAwesomeIcon icon={faCircleNotch} className="fa-spin" />}</button>
+        <button className={`${loading && 'loading'}`} disabled={loading}>
+          Sign in {loading && <FontAwesomeIcon icon={faCircleNotch} className="fa-spin" />}
+        </button>
         <p
           className="sign-up-button"
           onClick={() => {

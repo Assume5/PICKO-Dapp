@@ -57,7 +57,8 @@ export const loginCustomer = async (req: Request, res: Response) => {
 
     const user: User = {
         userId: customer.id,
-        role: "owner",
+        name: customer.first_name,
+        role: "customer",
     };
 
     const accessToken = generateAccessToken(user);
@@ -67,15 +68,19 @@ export const loginCustomer = async (req: Request, res: Response) => {
         httpOnly: true,
         sameSite: sameSite,
         secure: secure,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
     res.cookie("refresh_token", refreshToken, {
         httpOnly: true,
         sameSite: sameSite,
         secure: secure,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    return res.status(200).json({ success: true });
+    return res
+        .status(200)
+        .json({ success: true, name: customer.first_name, role: "customer" });
 };
 
 //owner
@@ -109,6 +114,7 @@ export const loginOwner = async (req: Request, res: Response) => {
 
     const user: User = {
         userId: owner.id,
+        name: owner.first_name,
         role: "owner",
     };
 
@@ -119,15 +125,19 @@ export const loginOwner = async (req: Request, res: Response) => {
         httpOnly: true,
         sameSite: sameSite,
         secure: secure,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
     res.cookie("refresh_token", refreshToken, {
         httpOnly: true,
         sameSite: sameSite,
         secure: secure,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    return res.status(200).json({ success: true });
+    return res
+        .status(200)
+        .json({ success: true, name: owner.first_name, role: "owner" });
 };
 
 //driver

@@ -59,7 +59,7 @@ button {
   }
 }
 
-input {
+input:not([type='radio']):not([type='checkbox']) {
   padding: $padding3;
   padding-right: $padding4;
   background-color: $white;
@@ -108,4 +108,59 @@ input {
 .form-error {
   font-size: 14px;
   color: $error;
+}
+
+.file-container {
+  &.hidden {
+    display: none;
+  }
+}
+
+.preview-image-container {
+  position: relative;
+
+  svg {
+    position: absolute;
+    top: -15px;
+    right: -20px;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+  }
+
+  .preview-image {
+    width: 300px;
+    height: auto;
+    margin: $padding3 auto;
+    display: block;
+
+    img {
+      width: 100%;
+    }
+  }
+}
+
+input[type='file'] {
+  opacity: 0;
+  padding: 0 !important;
+  margin: 0 !important;
+  height: 0;
+}
+
+button {
+  &.loading {
+    cursor: not-allowed;
+  }
+}
+
+.page {
+  background-color: $gray;
+  width: 100%;
+  min-height: 100vh;
+  height: 100%;
+  padding: $spacing;
+
+  @include breakpoint-max(lg) {
+    padding: $spacing $padding3;
+  }
 }

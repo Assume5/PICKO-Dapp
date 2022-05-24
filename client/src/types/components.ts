@@ -1,10 +1,11 @@
-import { orderItems } from './componentsPart';
+import { MenuCategory, orderItems } from './componentsPart';
 import { MenuDict } from './index';
 
 export type User = {
   login: boolean;
   name?: string;
   address?: string;
+  restaurant_id?: string;
   role?: string;
 };
 
@@ -99,4 +100,31 @@ export type OrderStatus = {
   driverTips: number;
   deliveryFee: number;
   total: number;
+};
+
+export type StepOneData = {
+  name: string;
+  fullAddress: string;
+  address: string;
+  city: string;
+  state: string;
+  zipcode: string;
+  phone: string;
+  category: string;
+  lat: string;
+  long: string;
+  openTime: string;
+  closeTime: string;
+};
+
+export type StepTwoData = {
+  menuType: string;
+  heroType: string;
+  cardImage: File;
+  menuCategory: MenuCategory[];
+  menuCategoryImages: File[];
+  heroImages: File[];
+  facebook: string;
+  twitter: string;
+  instagram: string;
 };

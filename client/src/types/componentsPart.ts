@@ -24,3 +24,8 @@ export type OptionType = {
   value: string;
   label: string;
 };
+
+export type MenuCategory = {
+  category_name: string;
+  priority: boolean;
+};

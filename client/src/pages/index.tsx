@@ -17,6 +17,7 @@ import { Home as StoreHome } from './Owner/Home/Home';
 import { MenusPage } from './Owner/MenusPage/MenusPage';
 import { Account as OwnerAccount } from './Owner/Account/Account';
 import { SignUp as OwnerSignUp } from './Owner/SignUp/SignUp';
+import { OwnerRestaurant } from './Owner/OwnerRestaurant/OwnerRestaurant';
 
 //components
 import { Footer } from '@src/components/Global/Footer/Footer';
@@ -42,6 +43,7 @@ export const Page = () => {
               <Route path="/owner/menus" element={<MenusPage />} />
               <Route path="/owner/account" element={<OwnerAccount />} />
               <Route path="/owner/sign-up" element={<OwnerSignUp />} />
+              <Route path="/owner/:id" element={<OwnerRestaurant />} />
 
               <Route path="/test-example" element={<TestServer />} />
             </Routes>

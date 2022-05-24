@@ -84,7 +84,9 @@ export const SignUpForm: React.FC<Props> = ({ role, setAuthState }) => {
         <label>Phone Number</label>
         <input type="text" name="phone" required />
         {error && <p className="form-error">{error}</p>}
-        <button>Sign Up {loading && <FontAwesomeIcon icon={faCircleNotch} className="fa-spin" />}</button>
+        <button className={`${loading && 'loading'}`} disabled={loading}>
+          Sign Up {loading && <FontAwesomeIcon icon={faCircleNotch} className="fa-spin" />}
+        </button>
         <p
           className="sign-up-button"
           onClick={() => {

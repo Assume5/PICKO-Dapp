@@ -1,33 +1,9 @@
 .add-meal,
-.edit-meal{
+.edit-meal {
   color: $black;
 
   .close-button {
     cursor: pointer;
-  }
-
-  .preview-image-container {
-    position: relative;
-
-    svg {
-      position: absolute;
-      top: -15px;
-      right: -20px;
-      width: 25px;
-      height: 25px;
-      cursor: pointer;
-    }
-
-    .preview-image {
-      width: 300px;
-      height: auto;
-      margin: $padding3 auto;
-      display: block;
-
-      img {
-        width: 100%;
-      }
-    }
   }
 
   .category-select {
@@ -60,10 +36,6 @@
     width: 100%;
     min-width: 300px;
     border-radius: 0;
-  }
-
-  input[type='file'] {
-    display: none;
   }
 
   .upload-button {
@@ -109,12 +81,6 @@
 
     @include breakpoint-max(sm) {
       width: 95%;
-    }
-  }
-
-  .file-container {
-    &.hidden {
-      display: none;
     }
   }
 }

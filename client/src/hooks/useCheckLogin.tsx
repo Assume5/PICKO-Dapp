@@ -7,7 +7,7 @@ export const useCheckLogin = () => {
 
   useEffect(() => {
     const checkLogin = async () => {
-      const res = await fetch(`${serverUrl}/check-login`, {
+      const res = await fetch(`${serverUrl}/check/login`, {
         method: 'POST',
         mode: 'cors',
         credentials: 'include',
@@ -17,13 +17,13 @@ export const useCheckLogin = () => {
       if (response.success) {
         userCtx.setUser({
           login: true,
+          name: response.name,
           role: response.role,
         });
       } else {
         userCtx.setUser({ login: false });
       }
     };
-
     checkLogin();
   }, []);
 };

@@ -6,6 +6,7 @@ import {
 import {
     deleteExample,
     getExample,
+    getExampleImageFromS3,
     login,
     logout,
     postExample,
@@ -21,6 +22,8 @@ exampleRouter.post("/", postExample);
 exampleRouter.put("/:id", putExample);
 
 exampleRouter.delete("/:id", deleteExample);
+
+exampleRouter.get("/image/:key", getExampleImageFromS3);
 
 //JWT Example
 

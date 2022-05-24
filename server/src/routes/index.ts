@@ -1,10 +1,12 @@
 import { Router } from "express";
-import checkLoginRouter from "./checkLogin/checkLogin.router";
 //routers
 import exampleRouter from "./example/example.router";
 import generateGuestToken from "./generateGuestToken/generateGuestToken.model";
 import loginRouter from "./login/login.route";
 import registerRouter from "./register/register.router";
+import checkRouter from "./check/check.router";
+import logoutRouter from "./logout/logout.router";
+import restaurantRouter from "./restaurant/restaurant.router";
 
 const api = Router();
 
@@ -16,6 +18,10 @@ api.use("/register", registerRouter);
 
 api.use("/login", loginRouter);
 
-api.use("/check-login", checkLoginRouter);
+api.use("/check", checkRouter);
+
+api.use("/logout", logoutRouter);
+
+api.use("/restaurant", restaurantRouter);
 
 export default api;

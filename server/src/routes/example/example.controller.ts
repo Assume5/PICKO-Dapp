@@ -7,6 +7,7 @@ import {
     deleteExampleDB,
     findRow,
 } from "../../models/example.model";
+import { getImage } from "../../services/s3";
 import { CustomJwtPayload, UserAuthInfo } from "../../types/interface";
 import {
     ACCESS_TOKEN_SECRET,
@@ -75,11 +76,13 @@ export const login = (req: Request, res: Response) => {
         httpOnly: true,
         sameSite: sameSite,
         secure: secure,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
     });
     res.cookie("refresh_token", refreshToken, {
         httpOnly: true,
         sameSite: sameSite,
         secure: secure,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
     });
     return res.status(200).json({ ok: true });
 };
@@ -94,4 +97,10 @@ export const logout = (req: Request, res: Response) => {
         secure: secure,
     });
     res.status(200).json({ ok: true });
+};
+
+export const getExampleImageFromS3 = async (req: Request, res: Response) => {
+    const key = req.params.key;
+    const result = await getImage(key);
+    return res.status(200).send(result);
 };

@@ -9,6 +9,8 @@ export const findOwnerExist = async (username: string) => {
         },
         select: {
             id: true,
+            first_name: true,
+            last_name: true,
         },
     });
 };
@@ -37,6 +39,11 @@ export const findDriverExist = async (username: string) => {
         where: {
             username: username,
         },
+        select: {
+            id: true,
+            first_name: true,
+            last_name: true,
+        },
     });
 };
 
@@ -45,6 +52,11 @@ export const findCustomerExist = async (username: string) => {
     return await prisma.customer.findUnique({
         where: {
             username: username,
+        },
+        select: {
+            id: true,
+            first_name: true,
+            last_name: true,
         },
     });
 };

@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie';
 import CryptoJS from 'crypto-js';
 import { AES } from 'crypto-js';
-import { hashKey } from './constants';
+import { hashKey, serverUrl } from './constants';
 
 export const getCookie = (name: string) => {
   if (Cookies.get(name)) {
@@ -25,4 +25,25 @@ export const checkAddress = () => {
     return true;
   }
   return false;
+};
+
+export const logout = async () => {
+  try {
+    const res = await fetch(`${serverUrl}/logout`, {
+      method: 'POST',
+      mode: 'cors',
+      credentials: 'include',
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      return true;
+    }
+
+    return false;
+  } catch (err) {
+    console.error(err);
+    return false;
+  }
 };

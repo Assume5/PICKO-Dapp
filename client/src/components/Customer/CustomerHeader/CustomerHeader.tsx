@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { fakeCartData } from '../../Customer/CartSidebar/fakeCartData';
 import { CartSidebar } from '../../Customer/CartSidebar/CartSidebar';
-import { getCookie } from '@src/helpers';
+import { getCookie, logout } from '@src/helpers';
 import { UserContext, CartContext } from '@src/contexts';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthModal } from '../AuthModal/AuthModal';
@@ -21,6 +21,11 @@ export const CustomerHeader = () => {
   const userCtx = useContext(UserContext);
   const cartCtx = useContext(CartContext);
   if (userCtx === undefined) throw new Error('userCtx Not init');
+
+  useEffect(() => {
+    userCtx.user.role === 'owner' && navigate('/owner');
+    userCtx.user.role === 'driver' && navigate('/driver');
+  }, [userCtx]);
 
   useEffect(() => {
     const listenScroll = () => {
@@ -62,6 +67,15 @@ export const CustomerHeader = () => {
     navigate('/account');
   };
 
+  const onSignOutClick = async () => {
+    const res = await logout();
+    console.log(res);
+    if (res) {
+      userCtx.setUser({ login: false });
+      navigate('/');
+    }
+  };
+
   return (
     <div className="header" ref={navbar}>
       <div className="logo" onClick={() => onLogoClick()}>
@@ -70,8 +84,9 @@ export const CustomerHeader = () => {
       <div className="content">
         {userCtx.user.login ? (
           <>
-            <p>{userCtx.user.address}</p>
+            <p>{userCtx.user.name}</p>
             <button onClick={() => onViewAccountClick()}>View Account</button>
+            <button onClick={() => onSignOutClick()}>Logout</button>
           </>
         ) : (
           <>

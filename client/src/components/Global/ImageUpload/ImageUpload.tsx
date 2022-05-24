@@ -54,7 +54,7 @@ export const ImageUpload: React.FC<Props> = ({ previewImage }) => {
   return (
     <div className="image-upload">
       <div className={`file-container ${files && 'hidden'}`}>
-        <input type="file" onChange={(e) => onFileChange(e)} ref={fileUpload} accept="image/*" />
+        <input type="file" onChange={(e) => onFileChange(e)} ref={fileUpload} accept="image/*" required />
         <button className="upload-button" type="button" onClick={onUploadButtonClick}>
           Select a File
         </button>

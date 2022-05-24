@@ -106,17 +106,21 @@ model owner {
 }
 
 model restaurant {
-  id String @id
+  id String @id @default(uuid())
   owner owner @relation(fields: [owner_id], references: [id])
   owner_id String
   restaurant_name String
+  full_address String
   address String
+  city String
+  state String
+  zipcode String
   phone String
   category String
   lat String
   long String
-  open_time DateTime
-  clost_time DateTime
+  open_time String
+  close_time String
   menu_type  String @default("filter")
   hero_type String @default("image")
   restaurant_card_image String
@@ -126,7 +130,7 @@ model restaurant {
   menus menus[]
   menu_category menu_category[]
   hero_images restaurant_hero[]
-  socal_links restaurant_social[]
+  social_links restaurant_social[]
   orders order[]
   create_at DateTime @default(now())
 }
@@ -138,7 +142,7 @@ model menus {
   restaurant_id String
   price Float
   description String
-  image_url String
+  image String
   category Int
   status String
 }
@@ -148,19 +152,13 @@ model menu_category {
     category_name String
     restaurant restaurant @relation(fields: [restaurant_id], references: [id] )
     restaurant_id String
-    images menu_category_images[]
     priority Boolean
-}
-
-model menu_category_images {
-  id Int @id @default(autoincrement())
-  category menu_category @relation(fields: [category_id], references: [id])
-  category_id Int
-  image_url String
+    image String?
 }
 
 model restaurant_hero {
   id Int @id @default(autoincrement())
+  hero_image String
   restaurant restaurant @relation(fields: [restaurant_id], references: [id])
   restaurant_id String
 }

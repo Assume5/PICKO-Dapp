@@ -7,6 +7,7 @@ import {
     sameSite,
     secure,
 } from "../../utils/constant";
+import { checkRestaurantExists } from "../../models/check.model";
 
 export const checkLogin = (req: UserAuthInfo, res: Response) => {
     const accessToken = req.cookies["access_token"];
@@ -38,7 +39,7 @@ export const checkLogin = (req: UserAuthInfo, res: Response) => {
                     refreshToken,
                     REFRESH_TOKEN_SECRET,
                     (err: VerifyErrors, user: CustomJwtPayload) => {
-                    if (err && err.name === "TokenExpiredError") {
+                        if (err && err.name === "TokenExpiredError") {
                             res.clearCookie("access_token", {
                                 httpOnly: true,
                                 sameSite: sameSite,
@@ -55,6 +56,7 @@ export const checkLogin = (req: UserAuthInfo, res: Response) => {
                         const accessToken = sign(
                             {
                                 userId: user.userId,
+                                name: user.name,
                                 role: user.role,
                             },
                             ACCESS_TOKEN_SECRET,
@@ -66,14 +68,31 @@ export const checkLogin = (req: UserAuthInfo, res: Response) => {
                             httpOnly: true,
                             sameSite: sameSite,
                             secure: secure,
+                            maxAge: 7 * 24 * 60 * 60 * 1000,
                         });
-                        return res
-                            .status(200)
-                            .json({ success: true, role: user.role });
+                        return res.status(200).json({
+                            success: true,
+                            name: user.name,
+                            role: user.role,
+                        });
                     }
                 );
             }
-            return res.status(200).json({ success: true, role: user.role });
+            console.log(user);
+
+            return res
+                .status(200)
+                .json({ success: true, name: user.name, role: user.role });
         }
     );
+};
+
+export const checkRestaurant = async (req: UserAuthInfo, res: Response) => {
+    const result = await checkRestaurantExists(req.user.userId);
+    
+    if (result) {
+        return res.status(200).json({ exists: true, id: result.id });
+    }
+
+    return res.status(200).json({ exists: false });
 };

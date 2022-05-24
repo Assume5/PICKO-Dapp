@@ -17,9 +17,10 @@ interface Props {
   setChangeSuccess?: React.Dispatch<React.SetStateAction<boolean>>;
   setAddressResult?: React.Dispatch<React.SetStateAction<SearchResult<RawResultAddress> | undefined>>;
   setErr?: React.Dispatch<React.SetStateAction<boolean>>;
+  defaultValue?: string;
 }
 
-export const AddressSearch: React.FC<Props> = ({ setChangeSuccess, setAddressResult, setErr }) => {
+export const AddressSearch: React.FC<Props> = ({ setChangeSuccess, setAddressResult, setErr, defaultValue }) => {
   const addressInput = useRef<HTMLInputElement>(null);
   const [address, setAddress] = useState('');
   const [loadingAddress, setLoadingAddress] = useState(false);
@@ -107,6 +108,7 @@ export const AddressSearch: React.FC<Props> = ({ setChangeSuccess, setAddressRes
           placeholder="Address"
           onChange={(e) => onInputChange(e.target.value)}
           ref={addressInput}
+          defaultValue={(defaultValue && defaultValue) || ''}
           required
         />
         <FontAwesomeIcon icon={faArrowCircleRight} className="submit-button" onClick={onSubmitClick} />
