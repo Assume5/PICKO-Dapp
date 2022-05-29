@@ -112,48 +112,49 @@ export const Nav = () => {
   // };
 
   return (
-    <div className="header" ref={navbar}>
-      {/* <div className="logo" onClick={() => onLogoClick()}>
-        <img src={'/imgs/PICKO-logo.png'} alt="logo" />
-      </div>
-      <div className="content">
-        {userCtx.user.login ? (
-          <>
-            <p>{userCtx.user.address}</p>
-            <button onClick={() => onViewAccountClick()}>View Account</button>
-            {location.pathname.includes('/owner') && (
-              <button className="nav-menus-page" onClick={() => navigate('/owner/menus')}>
-                Menus
-              </button>
-            )}
-          </>
-        ) : (
-          <>
-            <button onClick={() => login()}>Sign In</button>
-            {location.pathname.includes('/owner') && (
-              <button className="nav-menus-page" onClick={() => navigate('/owner/menus')}>
-                Menus
-              </button>
-            )}
-          </>
-        )}
-        {!location.pathname.includes('/owner') && !location.pathname.includes('/driver') && (
-          <>
-            <div className={`${cartCtx.cart && !cartCtx.cart.isCartEmpty ? 'has-item' : ''}`}>
-              <FontAwesomeIcon icon={faShoppingCart} onClick={() => setSidebarOpen(!sidebarOpen)} />
-              <div className="dot"></div>
-            </div>
-          </>
-        )}
-      </div>
-      {!location.pathname.includes('/owner') && !location.pathname.includes('/driver') && (
-        <div className={`cart-sidebar-container ${sidebarOpen ? 'visible' : 'hidden'}`} ref={sidebar}>
-          {cartCtx.cart && (
-            <CartSidebar cart={cartCtx.cart} setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
-          )}
-          <div className="overlay"></div>
-        </div>
-      )} */}
-    </div>
+    // <div className="header" ref={navbar}>
+    //   <div className="logo" onClick={() => onLogoClick()}>
+    //     <img src={'/imgs/PICKO-logo.png'} alt="logo" />
+    //   </div>
+    //   <div className="content">
+    //     {userCtx.user.login ? (
+    //       <>
+    //         <p>{userCtx.user.address}</p>
+    //         <button onClick={() => onViewAccountClick()}>View Account</button>
+    //         {location.pathname.includes('/owner') && (
+    //           <button className="nav-menus-page" onClick={() => navigate('/owner/menus')}>
+    //             Menus
+    //           </button>
+    //         )}
+    //       </>
+    //     ) : (
+    //       <>
+    //         <button onClick={() => login()}>Sign In</button>
+    //         {location.pathname.includes('/owner') && (
+    //           <button className="nav-menus-page" onClick={() => navigate('/owner/menus')}>
+    //             Menus
+    //           </button>
+    //         )}
+    //       </>
+    //     )}
+    //     {!location.pathname.includes('/owner') && !location.pathname.includes('/driver') && (
+    //       <>
+    //         <div className={`${cartCtx.cart && !cartCtx.cart.isCartEmpty ? 'has-item' : ''}`}>
+    //           <FontAwesomeIcon icon={faShoppingCart} onClick={() => setSidebarOpen(!sidebarOpen)} />
+    //           <div className="dot"></div>
+    //         </div>
+    //       </>
+    //     )}
+    //   </div>
+    //   {!location.pathname.includes('/owner') && !location.pathname.includes('/driver') && (
+    //     <div className={`cart-sidebar-container ${sidebarOpen ? 'visible' : 'hidden'}`} ref={sidebar}>
+    //       {cartCtx.cart && (
+    //         <CartSidebar cart={cartCtx.cart} setSidebarOpen={setSidebarOpen} sidebarOpen={sidebarOpen} />
+    //       )}
+    //       <div className="overlay"></div>
+    //     </div>
+    //   )}
+    // </div>
+    null
   );
 };
