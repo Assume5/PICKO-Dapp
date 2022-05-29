@@ -7,6 +7,7 @@ export type User = {
   address?: string;
   restaurant_id?: string;
   role?: string;
+  checked: boolean;
 };
 
 export type HeroType = {
@@ -127,4 +128,44 @@ export type StepTwoData = {
   facebook: string;
   twitter: string;
   instagram: string;
+};
+
+export type RestaurantInformation = {
+  status: string;
+  restaurantName: string;
+};
+
+export type RestaurantMenuCategory = {
+  id: number;
+  image?: string;
+  category_name: string;
+  priority: boolean;
+};
+
+export type RestaurantHeroImages = {
+  id: number;
+  hero_image: string;
+};
+
+export type RestaurantSocialLink = {
+  facebook: string;
+  twitter: string;
+  instagram: string;
+};
+
+export type RestaurantSetting = {
+  category: string;
+  close_time: string;
+  full_address: string;
+  open_time: string;
+  phone: string;
+  restaurant_name: string;
+  social_link: RestaurantSocialLink;
+};
+
+export type OwnerSettingMenuCategory = {
+  category_name: string;
+  id: number;
+  image: string | null;
+  priority: boolean;
 };

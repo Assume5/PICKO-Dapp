@@ -14,14 +14,16 @@ export const useCheckLogin = () => {
       });
 
       const response = await res.json();
+
       if (response.success) {
         userCtx.setUser({
           login: true,
           name: response.name,
           role: response.role,
+          checked: true,
         });
       } else {
-        userCtx.setUser({ login: false });
+        userCtx.setUser({ login: false, checked: true });
       }
     };
     checkLogin();

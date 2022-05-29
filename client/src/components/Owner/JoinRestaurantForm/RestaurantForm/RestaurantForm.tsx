@@ -3,8 +3,8 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import type { RawResult } from 'leaflet-geosearch/dist/providers/openStreetMapProvider';
 import type { SearchResult } from 'leaflet-geosearch/dist/providers/provider';
 import Web3 from 'web3';
-import { UserContext } from '../../../contexts/UserContext';
-import { StepOneData } from '../../../types';
+import { UserContext } from '../../../../contexts/UserContext';
+import { StepOneData } from '../../../../types';
 interface RawResultAddress extends RawResult {
   address?: {
     [key: string]: string;

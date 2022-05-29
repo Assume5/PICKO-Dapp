@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { UserContext } from '@src/contexts';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useCheckLogin } from '../../../hooks/useCheckLogin';
 import { logout } from '../../../utils/functions';
 
@@ -9,6 +9,7 @@ export const OwnerHeader = () => {
   const navigate = useNavigate();
   const navbar = useRef<HTMLDivElement>(null);
   const userCtx = useContext(UserContext);
+  const { id } = useParams();
 
   useEffect(() => {
     userCtx.user.role === 'customer' && navigate('/');
@@ -33,13 +34,13 @@ export const OwnerHeader = () => {
   };
 
   const onViewAccountClick = () => {
-    navigate('/owner/account');
+    navigate(`/owner/${id}/account/settings`);
   };
 
   const onSignOutClick = async () => {
     const res = await logout();
     if (res) {
-      userCtx.setUser({ login: false });
+      userCtx.setUser({ login: false, checked: true });
       navigate('/owner');
     }
   };
@@ -50,20 +51,13 @@ export const OwnerHeader = () => {
         <img src={'/imgs/PICKO-logo.png'} alt="logo" />
       </div>
       <div className="content">
-        {userCtx.user.login ? (
+        {userCtx.user.login && (
           <>
             <p>{userCtx.user.name}</p>
-            <button onClick={() => onViewAccountClick()}>View Account</button>
-            <button className="nav-menus-page" onClick={() => navigate('/owner/menus')}>
-              Menus
+            <button onClick={() => onViewAccountClick()} className="view-button">
+              View Account
             </button>
             <button onClick={() => onSignOutClick()}>Logout</button>
-          </>
-        ) : (
-          <>
-            <button className="nav-menus-page" onClick={() => navigate('/owner/menus')}>
-              Menus
-            </button>
           </>
         )}
       </div>

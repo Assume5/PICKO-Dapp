@@ -1,10 +1,11 @@
 import { RawResult } from 'leaflet-geosearch/dist/providers/openStreetMapProvider';
 import { SearchResult } from 'leaflet-geosearch/dist/providers/provider';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { StepOneData, StepTwoData } from '../../../types';
 import { serverUrl } from '../../../utils/constants';
-import { RestaurantForm } from '../RestaurantForm/RestaurantForm';
-import { RestaurantSettingForm } from '../RestaurantSettingForm/RestaurantSettingForm';
+import { RestaurantForm } from './RestaurantForm/RestaurantForm';
+import { RestaurantSettingForm } from './RestaurantSettingForm/RestaurantSettingForm';
 
 interface RawResultAddress extends RawResult {
   address?: {
@@ -22,6 +23,8 @@ export const JoinRestaurantForm: React.FC<Props> = ({ setChecked }) => {
   const [address, setAddress] = useState<SearchResult<RawResultAddress>>();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     onAllFormReady();
@@ -73,7 +76,7 @@ export const JoinRestaurantForm: React.FC<Props> = ({ setChecked }) => {
       }
 
       if (data.success) {
-        setChecked(true);
+        navigate(`./${data.id}`);
       }
       setLoading(false);
     }

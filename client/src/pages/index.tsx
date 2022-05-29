@@ -41,9 +41,9 @@ export const Page = () => {
 
               <Route path="/owner" element={<StoreHome />} />
               <Route path="/owner/menus" element={<MenusPage />} />
-              <Route path="/owner/account" element={<OwnerAccount />} />
               <Route path="/owner/sign-up" element={<OwnerSignUp />} />
               <Route path="/owner/:id" element={<OwnerRestaurant />} />
+              <Route path="/owner/:id/account/:page" element={<OwnerAccount />} />
 
               <Route path="/test-example" element={<TestServer />} />
             </Routes>

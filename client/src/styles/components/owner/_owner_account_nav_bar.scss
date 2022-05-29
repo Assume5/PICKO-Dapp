@@ -1,0 +1,45 @@
+.owner-account-nav-bar {
+  margin: $padding4 0;
+  padding: $padding3 $padding4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0 $padding4;
+  border: 1px solid $white;
+
+  p {
+    color: $white;
+    text-decoration: none;
+    position: relative;
+    display: inline-block;
+    height: 100%;
+    cursor: pointer;
+
+    &.active {
+      &::after {
+        width: 100%;
+        left: 0;
+        right: auto;
+      }
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      width: 0%;
+      height: 3px;
+      bottom: -5px;
+      right: 0;
+      background-color: $white;
+      transition: width 0.3s ease-out;
+    }
+
+    &:hover {
+      &::after {
+        width: 100%;
+        left: 0;
+        right: auto;
+      }
+    }
+  }
+}

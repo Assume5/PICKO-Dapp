@@ -4,9 +4,10 @@ import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 
 interface Props {
   previewImage?: string;
+  required?: boolean;
 }
 
-export const ImageUpload: React.FC<Props> = ({ previewImage }) => {
+export const ImageUpload: React.FC<Props> = ({ previewImage, required }) => {
   const fileUpload = useRef<HTMLInputElement>(null);
   const [files, setFiles] = useState<File | null>(null);
   const [preview, setPreview] = useState('');
@@ -54,7 +55,7 @@ export const ImageUpload: React.FC<Props> = ({ previewImage }) => {
   return (
     <div className="image-upload">
       <div className={`file-container ${files && 'hidden'}`}>
-        <input type="file" onChange={(e) => onFileChange(e)} ref={fileUpload} accept="image/*" required />
+        <input type="file" onChange={(e) => onFileChange(e)} ref={fileUpload} accept="image/*" required={required} />
         <button className="upload-button" type="button" onClick={onUploadButtonClick}>
           Select a File
         </button>

@@ -10,3 +10,31 @@ export const checkRestaurantExists = async (ownerId: string) => {
         },
     });
 };
+
+export const checkRestaurantCategoryExists = async (
+    id: string,
+    categoryName: string
+) => {
+    return await prisma.menu_category.findFirst({
+        where: {
+            restaurant_id: id,
+            category_name: categoryName,
+        },
+    });
+};
+
+export const checkRestaurantCategoryExistsWhenUpdating = async (
+    id: string,
+    categoryName: string,
+    menuId: number
+) => {
+    return await prisma.menu_category.findFirst({
+        where: {
+            restaurant_id: id,
+            category_name: categoryName,
+            NOT: {
+                id: menuId,
+            },
+        },
+    });
+};

@@ -52,6 +52,7 @@ export const Login: React.FC<Props> = ({ role, setAuthState, setAuthModal }) => 
         login: true,
         name: data.name,
         role: data.role,
+        checked: true,
       });
       setAuthModal && setAuthModal(false);
     }

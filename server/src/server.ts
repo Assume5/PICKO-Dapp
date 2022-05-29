@@ -2,8 +2,7 @@ const http = require("http");
 import cookieParser from "cookie-parser";
 import { Server, Socket } from "socket.io";
 import app from "./app";
-import { createDatabaseTable } from "./services/createTable";
-import pool, { prisma } from "./services/db";
+import { prisma } from "./services/db";
 import cookie from "cookie";
 
 // import { createAdapter } from "@socket.io/cluster-adapter";
@@ -52,7 +51,7 @@ io.on("connection", async (socket: Socket) => {
 
     socket.on("disconnect", async () => {
         console.log("Client disconnected: ", socket.id);
-        await prisma.socket_session.delete({ 
+        await prisma.socket_session.delete({
             where: {
                 socket_id: socket.id,
             },
@@ -66,8 +65,6 @@ io.engine.on("connection_error", (err: any) => {
 
 const startServer = async () => {
     try {
-        await pool.connect();
-        createDatabaseTable();
         server.listen(PORT, () => {
             console.log(`Listening on port ${PORT}`);
         });

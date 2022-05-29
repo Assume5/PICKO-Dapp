@@ -1,4 +1,3 @@
-import pool from "../services/db";
 import { prisma } from "../services/db";
 export const findRow = async (id: number) => {
     return await prisma.test.findUnique({

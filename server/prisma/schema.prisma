@@ -130,7 +130,7 @@ model restaurant {
   menus menus[]
   menu_category menu_category[]
   hero_images restaurant_hero[]
-  social_links restaurant_social[]
+  social_links restaurant_social?
   orders order[]
   create_at DateTime @default(now())
 }

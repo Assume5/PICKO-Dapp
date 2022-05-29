@@ -7,13 +7,13 @@ interface contextType {
 }
 
 const contextState = {
-  user: { login: false },
+  user: { login: false, checked: false },
   setUser: () => {},
 };
 
 export const UserContext = createContext<contextType>(contextState);
 
 export const UserContextProvider: React.FC = (props) => {
-  const [user, setUser] = useState<User>({ login: false });
+  const [user, setUser] = useState<User>({ login: false, checked: false });
   return <UserContext.Provider value={{ user, setUser }}>{props.children}</UserContext.Provider>;
 };

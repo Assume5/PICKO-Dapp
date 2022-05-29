@@ -118,7 +118,11 @@ export const authenticateOwner = async (
 
     const getRestaurantId = await checkRestaurantExists(req.user.id);
 
-    if (id !== getRestaurantId.id) {
+    if (!getRestaurantId) {
+        return res.status(403).json({ success: false, error: "unauthorized" });
+    }
+
+    if (id && id !== getRestaurantId.id) {
         return res.status(403).json({ success: false, error: "unauthorized" });
     }
 

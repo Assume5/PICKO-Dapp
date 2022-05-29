@@ -90,6 +90,11 @@ input:not([type='radio']):not([type='checkbox']) {
   justify-content: center;
   color: $black;
 
+  &.show-default {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
   .close-button {
     top: 30px;
     right: 30px;
@@ -163,4 +168,30 @@ button {
   @include breakpoint-max(lg) {
     padding: $spacing $padding3;
   }
+}
+
+.success-modal {
+  pointer-events: initial;
+  opacity: 1;
+
+  .modal-inner {
+    color: $black;
+    padding: $spacing;
+    width: 500px;
+    background-color: $white;
+    border-radius: 10px;
+  }
+}
+
+.fade-in-up {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+  -webkit-animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-name: fadeInUp;
+  -webkit-animation-name: fadeInUp;
+}
+
+p.error {
+  color: $error;
 }

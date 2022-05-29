@@ -7,15 +7,6 @@
     max-width: 100%;
   }
 
-  .fade-in-up {
-    animation-duration: 1s;
-    animation-fill-mode: both;
-    -webkit-animation-duration: 1s;
-    -webkit-animation-fill-mode: both;
-    animation-name: fadeInUp;
-    -webkit-animation-name: fadeInUp;
-  }
-
   .controller {
     display: flex;
 

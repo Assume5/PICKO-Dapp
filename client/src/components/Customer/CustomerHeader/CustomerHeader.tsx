@@ -71,7 +71,7 @@ export const CustomerHeader = () => {
     const res = await logout();
     console.log(res);
     if (res) {
-      userCtx.setUser({ login: false });
+      userCtx.setUser({ login: false, checked: true });
       navigate('/');
     }
   };

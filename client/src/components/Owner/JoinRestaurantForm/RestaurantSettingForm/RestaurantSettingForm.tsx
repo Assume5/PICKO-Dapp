@@ -1,8 +1,8 @@
 import { faCircleNotch, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useRef, useState } from 'react';
-import { MenuCategory, StepTwoData } from '../../../types';
-import { ImageUpload } from '../../Global/ImageUpload/ImageUpload';
+import { MenuCategory, StepTwoData } from '../../../../types';
+import { ImageUpload } from '../../../Global/ImageUpload/ImageUpload';
 
 interface Props {
   setStep: React.Dispatch<React.SetStateAction<number>>;
