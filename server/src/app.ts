@@ -6,6 +6,8 @@ import api from "./routes";
 import cookieParser from "cookie-parser";
 import { Prisma, PrismaClient } from "@prisma/client";
 
+require("dotenv").config();
+
 const prisma = new PrismaClient();
 const app = express();
 const allowOrigin = process.env.ALLOW_ORIGIN || "http://localhost:3000";
@@ -16,7 +18,7 @@ app.use(
     cors({
         origin: allowOrigin,
         credentials: true,
-        methods: ["GET", "POST", "PUT", "DELETE"],
+        methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     })
 );
 app.use(cookieParser());

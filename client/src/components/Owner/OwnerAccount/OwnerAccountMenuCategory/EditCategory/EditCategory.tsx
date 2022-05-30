@@ -58,8 +58,6 @@ export const EditCategory: React.FC<Props> = ({ menuType, setUpdateModal, data, 
       return;
     }
 
-    console.log(response);
-
     if (response.error) {
       console.error(response.error);
     }
@@ -107,7 +105,7 @@ export const EditCategory: React.FC<Props> = ({ menuType, setUpdateModal, data, 
               <img src={data.image} />
             </div>
           ) : (
-            <ImageUpload />
+            menuType === 'aio' && <ImageUpload />
           )}
           {errMessage && <p className="error">{errMessage}</p>}
           <div className="buttons">
