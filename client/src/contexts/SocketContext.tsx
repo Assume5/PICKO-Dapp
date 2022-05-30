@@ -2,6 +2,7 @@ import React, { createContext, useEffect, useState } from 'react';
 import io, { Socket } from 'socket.io-client';
 import { serverUrl } from '@src/constants';
 import Cookies from 'js-cookie';
+import { v4 as uuidv4 } from 'uuid';
 
 interface contextType {
   socket: Socket | null;
@@ -19,8 +20,8 @@ export const SocketContextProvider: React.FC = (props) => {
   const [socket, setSocket] = useState<Socket | null>(null);
   useEffect(() => {
     if (!Cookies.get('socket-cookie')) {
-      const random = [...Array(26)].map((i) => (~~(Math.random() * 36)).toString(36)).join('');
-      Cookies.set('socket-cookie', random, { expires: 365 });
+      const uuid = uuidv4();
+      Cookies.set('socket-cookie', uuid, { expires: 365 });
     }
     const newSocket = io(serverUrl, {
       transports: ['websocket', 'polling'],

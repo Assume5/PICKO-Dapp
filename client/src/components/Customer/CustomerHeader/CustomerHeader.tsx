@@ -85,7 +85,9 @@ export const CustomerHeader = () => {
         {userCtx.user.login ? (
           <>
             <p>{userCtx.user.name}</p>
-            <button onClick={() => onViewAccountClick()}>View Account</button>
+            <button className="view-button" onClick={() => onViewAccountClick()}>
+              View Account
+            </button>
             <button onClick={() => onSignOutClick()}>Logout</button>
           </>
         ) : (
@@ -98,11 +100,6 @@ export const CustomerHeader = () => {
             >
               Sign In
             </button>
-            {location.pathname.includes('/owner') && (
-              <button className="nav-menus-page" onClick={() => navigate('/owner/menus')}>
-                Menus
-              </button>
-            )}
           </>
         )}
         <div className={`${cartCtx.cart && !cartCtx.cart.isCartEmpty ? 'has-item' : ''}`}>

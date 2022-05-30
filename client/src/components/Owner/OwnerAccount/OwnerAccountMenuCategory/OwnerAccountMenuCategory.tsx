@@ -38,7 +38,13 @@ export const OwnerAccountMenuCategory = () => {
       }
 
       if (data.success) {
-        setData(data.category);
+        //sort data category by priority
+        const sortedData = data.category.sort((a: OwnerSettingMenuCategory, b: OwnerSettingMenuCategory) => {
+          return Number(b.priority) - Number(a.priority);
+        }).sort((a: OwnerSettingMenuCategory, b: OwnerSettingMenuCategory) => {
+          a.category_name < b.category_name ? -1 : 1
+        });
+        setData(sortedData);
         setMenuType(data.menu_type);
         setCount(data.category.length);
       }
