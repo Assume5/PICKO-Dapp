@@ -8,6 +8,7 @@ import {
     creatMenuCategory,
     getMenuCategory,
     getOneRestaurant,
+    getRestaurantMenus,
     getRestaurantSettings,
     removeMenuCategory,
     updateMenuCategory,
@@ -93,6 +94,13 @@ restaurantRouter.delete(
     authenticateToken,
     authenticateOwner,
     removeMenuCategory
+);
+
+restaurantRouter.get(
+    "/menus/:id",
+    authenticateToken,
+    authenticateOwner,
+    getRestaurantMenus
 );
 
 export default restaurantRouter;

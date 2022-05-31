@@ -9,6 +9,7 @@ import {
     createRestaurantCategoryDB,
     getRestaurant,
     getRestaurantCategoryFromDB,
+    getRestaurantMenusFromDB,
     getRestaurantSettingsFromDB,
     removeRestaurantCategoryDB,
     updateMenuCategoryDB,
@@ -330,6 +331,18 @@ export const removeMenuCategory = async (req: Request, res: Response) => {
     try {
         await removeRestaurantCategoryDB(+id);
         return res.status(200).json({ success: true });
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ success: false, error: err });
+    }
+};
+
+export const getRestaurantMenus = async (req: Request, res: Response) => {
+    const id = req.params.id;
+
+    try {
+        const data = await getRestaurantMenusFromDB(id);
+        console.log(data);
     } catch (err) {
         console.log(err);
         return res.status(500).json({ success: false, error: err });

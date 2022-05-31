@@ -1,4 +1,9 @@
 [[redirects]]
 from = '/*'
+to = 'https://picko-server.herokuapp.com/:splat'
+status = 200
+
+[[redirects]]
+from = '/*'
 to = '/index.html'
 status = 200

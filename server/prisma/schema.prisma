@@ -143,6 +143,7 @@ model menus {
   price Float
   description String
   image String
+  menu_category menu_category @relation(fields: [category], references: [id])
   category Int
   status String
 }
@@ -153,6 +154,7 @@ model menu_category {
     restaurant restaurant @relation(fields: [restaurant_id], references: [id] )
     restaurant_id String
     priority Boolean
+    menus menus[]
     image String?
 }
 

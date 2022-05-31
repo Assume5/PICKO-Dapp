@@ -6,13 +6,32 @@ import { AddMeal } from '../../AddMeal/AddMeal';
 import { EditMeal } from '../../EditMeal/EditMeal';
 import { MenuItem, OptionType } from '@src/types';
 import { WarningModal } from '../../WarningModal/WarningModal';
+import { serverUrl } from '../../../../utils/constants';
+import { useNavigate, useParams } from 'react-router-dom';
 
 type MenuWithCategory = MenuItem & {
   category: OptionType;
   name: string;
 };
 
+type Menu = {
+  id: number;
+  categoryName: string;
+  priority: boolean;
+  menus: {
+    id: number;
+    menuName: string;
+    price: number;
+    description: string;
+    status: string;
+    image: string;
+  }[];
+};
+
 export const OwnerAccountMenu = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
   const [sortedKey, setSortedKey] = useState<string[]>([]);
   const [search, setSearch] = useState('');
   const [addMealModal, setAddMealModal] = useState(false);
@@ -21,6 +40,31 @@ export const OwnerAccountMenu = () => {
   const [currentCategory, setCurrentCategory] = useState('');
   const [option, setOption] = useState<OptionType[]>([]);
   const [currentSelectedMenu, setCurrentSelectedMenu] = useState<MenuWithCategory>();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch(`${serverUrl}/restaurant/menus/${id}`, {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'include',
+      });
+
+      if (res.status === 403) {
+        navigate('/owner');
+      }
+
+      const data = await res.json();
+
+      if (data.error) {
+        console.error(data.error);
+      }
+
+      if (data.success) {
+      }
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     if (fakeMenu) {
