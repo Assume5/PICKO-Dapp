@@ -7,6 +7,9 @@ import registerRouter from "./register/register.router";
 import checkRouter from "./check/check.router";
 import logoutRouter from "./logout/logout.router";
 import restaurantRouter from "./restaurant/restaurant.router";
+import restaurantSettingRouter from "./restaurant-settings/restaurant-settings.router";
+import restaurantMenuCategorySettingsRouter from "./restaurant-category-settings/restaurant-category-setting.router";
+import restaurantMenuSettingRouter from "./restaurant-menu-settings/restaurant-menu-settings.router";
 
 const api = Router();
 
@@ -23,5 +26,8 @@ api.use("/check", checkRouter);
 api.use("/logout", logoutRouter);
 
 api.use("/restaurant", restaurantRouter);
+api.use("/restaurant", restaurantSettingRouter);
+api.use("/restaurant", restaurantMenuCategorySettingsRouter);
+api.use("/restaurant", restaurantMenuSettingRouter);
 
 export default api;
