@@ -71,6 +71,11 @@
     padding: $spacing 0;
     text-align: left;
 
+    .empty-menu {
+      width: 100%;
+      text-align: center;
+    }
+
     .menu-item {
       width: calc(50% - 10px);
       display: flex;

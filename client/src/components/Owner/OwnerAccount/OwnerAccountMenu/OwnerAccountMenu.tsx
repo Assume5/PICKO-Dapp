@@ -1,45 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { fakeMenu } from '../../../../pages/Customer/Restaurant/MenuFakeData';
 import { AddMeal } from '../../AddMeal/AddMeal';
 import { EditMeal } from '../../EditMeal/EditMeal';
-import { MenuItem, OptionType } from '@src/types';
+import { Menu, MenuItemWithCategory, OptionType, RestaurantMenuItemType } from '@src/types';
 import { WarningModal } from '../../WarningModal/WarningModal';
 import { serverUrl } from '../../../../utils/constants';
 import { useNavigate, useParams } from 'react-router-dom';
 
-type MenuWithCategory = MenuItem & {
-  category: OptionType;
-  name: string;
-};
-
-type Menu = {
-  id: number;
-  categoryName: string;
-  priority: boolean;
-  menus: {
-    id: number;
-    menuName: string;
-    price: number;
-    description: string;
-    status: string;
-    image: string;
-  }[];
-};
 
 export const OwnerAccountMenu = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [sortedKey, setSortedKey] = useState<string[]>([]);
   const [search, setSearch] = useState('');
   const [addMealModal, setAddMealModal] = useState(false);
   const [editMealModal, setEditMealModal] = useState(false);
   const [warningModal, setWarningModal] = useState(false);
   const [currentCategory, setCurrentCategory] = useState('');
+  const [idToRemove, setIdToRemove] = useState(0);
   const [option, setOption] = useState<OptionType[]>([]);
-  const [currentSelectedMenu, setCurrentSelectedMenu] = useState<MenuWithCategory>();
+
+  const [currentSelectedMenu, setCurrentSelectedMenu] = useState<MenuItemWithCategory>();
+  const [menusData, setMenusData] = useState<Menu[]>([]);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,63 +44,36 @@ export const OwnerAccountMenu = () => {
       }
 
       if (data.success) {
+        const storedData = data.data.sort((a: Menu, b: Menu) => Number(b.priority) - Number(a.priority));
+        const arr: OptionType[] = [];
+        storedData.forEach((item: Menu) => {
+          arr.push({ value: item.category_name.toLowerCase(), label: item.category_name, id: +item.id });
+        });
+        setMenusData(storedData);
+        setOption(arr);
+        setLoaded(true);
       }
     };
 
     fetchData();
   }, []);
 
-  useEffect(() => {
-    if (fakeMenu) {
-      const menus = fakeMenu;
-      let priorityMenu: string[] = [];
-
-      Object.keys(fakeMenu).forEach((key) => {
-        if (fakeMenu[key].priority) {
-          priorityMenu.push(key);
-        }
-      });
-
-      const sortedMenusKey = Object.keys(menus).sort((a: string, b: string) => {
-        if (a < b) {
-          return -1;
-        }
-        if (a > b) {
-          return 1;
-        }
-        return 0;
-      });
-      const sortedKey: string[] = Array.from(new Set([...priorityMenu, ...sortedMenusKey]));
-      setSortedKey(sortedKey);
-    }
-  }, [fakeMenu]);
-
-  useEffect(() => {
-    let arr: OptionType[] = [];
-    sortedKey.forEach((key) => {
-      arr.push({ value: key.toLowerCase(), label: key });
-    });
-
-    setOption(arr);
-  }, [sortedKey]);
-
   const onSearchChange = (val: string) => {
     setSearch(val);
   };
 
-  const onMenuItemClick = (category: string, menuKey: string, item: MenuItem) => {
-    if (typeof item === 'object') {
-      const currentItem: MenuWithCategory = {
-        image: item.image,
-        description: item.description,
-        price: item.price,
-        id: item.id,
-        category: { value: category.toLowerCase(), label: category },
-        name: menuKey,
-      };
-      setEditMealModal(!editMealModal);
-      setCurrentSelectedMenu(currentItem);
-    }
+  const onMenuItemClick = (category: string, item: RestaurantMenuItemType) => {
+    const currentItem: MenuItemWithCategory = {
+      image: item.image,
+      description: item.description,
+      price: item.price,
+      id: item.id,
+      category: { value: category.toLowerCase(), label: category, id: item.id },
+      menu_name: item.menu_name,
+      status: 'available',
+    };
+    setEditMealModal(!editMealModal);
+    setCurrentSelectedMenu(currentItem);
   };
 
   const onPlusClick = (category: string) => {
@@ -124,10 +81,15 @@ export const OwnerAccountMenu = () => {
     setAddMealModal(!addMealModal);
   };
 
-  const onTrashClick = (category: string) => {
+  const onTrashClick = (category: string, id: number) => {
     setCurrentCategory(category);
+    setIdToRemove(id);
     setWarningModal(!warningModal);
   };
+
+  if (!loaded) {
+    return null;
+  }
 
   return (
     <>
@@ -135,53 +97,59 @@ export const OwnerAccountMenu = () => {
         <div className="search-category">
           <input type="text" placeholder="Search a Menu Category" onChange={(e) => onSearchChange(e.target.value)} />
         </div>
-
-        {sortedKey.map((key) => {
-          const menus = fakeMenu[key];
+        {menusData.map((menu) => {
+          const menus = menu.menus;
           return (
             <div
               className={`menus-container ${
-                search !== '' && (key.toLowerCase().includes(search.toLowerCase()) ? 'visible' : 'hidden')
-              } `}
-              key={key}
+                search !== '' &&
+                (menu.category_name.toLowerCase().includes(search.toLowerCase()) ? 'visible' : 'hidden')
+              }`}
+              key={menu.category_name}
             >
-              <div className="menu-type" key={key}>
-                <h3>{key}</h3>
+              <div className="menu-type">
+                <h3>{menu.category_name}</h3>
                 <div className="icons">
-                  <FontAwesomeIcon icon={faTrash} className="" onClick={() => onTrashClick(key)} />
-                  <FontAwesomeIcon icon={faPlus} className="" onClick={() => onPlusClick(key)} />
+                  <FontAwesomeIcon
+                    icon={faTrash}
+                    className=""
+                    onClick={() => onTrashClick(menu.category_name, menu.id)}
+                  />
+                  <FontAwesomeIcon icon={faPlus} className="" onClick={() => onPlusClick(menu.category_name)} />
                 </div>
               </div>
               <div className="menu-items">
-                {Object.keys(menus).map((menusKey) => {
-                  const menuItem = menus[menusKey];
-                  if (typeof menuItem === 'object') {
+                {!menus.length ? (
+                  <div className="empty-menu">
+                    <h4>Empty Menu</h4>
+                    <button onClick={() => onPlusClick(menu.category_name)}>Add a Menu</button>
+                  </div>
+                ) : (
+                  menus.map((item) => {
                     return (
                       <div
                         className="menu-item"
-                        key={menusKey}
-                        onClick={() => onMenuItemClick(key, menusKey, menuItem)}
+                        key={item.id}
+                        onClick={() => onMenuItemClick(menu.category_name, item)}
                       >
                         <div className="item-image">
-                          <img src={menuItem && menuItem.image} alt="" />
+                          <img src={item.image} alt="" />
                         </div>
                         <div className="item-text">
                           <div className="heading">
-                            <h4>{menusKey}</h4>
+                            <h4>{item.menu_name}</h4>
                           </div>
                           <div className="desc">
-                            <p>{menuItem && menuItem.description}</p>
+                            <p>{item.description}</p>
                           </div>
                           <div className="price">
-                            <p>{menuItem && menuItem.price} ETH</p>
+                            <p>{item.price} ETH</p>
                           </div>
                         </div>
                       </div>
                     );
-                  } else {
-                    return <></>;
-                  }
-                })}
+                  })
+                )}
               </div>
             </div>
           );
@@ -195,7 +163,12 @@ export const OwnerAccountMenu = () => {
         setCurrent={setCurrentSelectedMenu}
         option={option}
       />
-      <WarningModal modalOpen={warningModal} setModalOpen={setWarningModal} category={currentCategory} />
+      <WarningModal
+        modalOpen={warningModal}
+        setModalOpen={setWarningModal}
+        category={currentCategory}
+        removeId={idToRemove}
+      />
     </>
   );
 };

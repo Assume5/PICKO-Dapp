@@ -7,6 +7,19 @@ export type MenuItem =
     }
   | boolean;
 
+export type RestaurantMenuItemType = {
+  id: number;
+  menu_name: string;
+  price: number;
+  description: string;
+  status: string;
+  image: string;
+};
+
+export type MenuItemWithCategory = RestaurantMenuItemType & {
+  category: OptionType;
+};
+
 export type MenuDict = {
   [key: string]: {
     [key: string]: MenuItem;
@@ -23,6 +36,7 @@ export type orderItems = {
 export type OptionType = {
   value: string;
   label: string;
+  id: number;
 };
 
 export type MenuCategory = {

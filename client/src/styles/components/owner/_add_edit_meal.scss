@@ -28,6 +28,14 @@
     }
   }
 
+  .empty-selected {
+    .category-select {
+      &__control {
+        border: 1px solid $error;
+      }
+    }
+  }
+
   input:not([type='file']) {
     padding: $padding3;
     padding-right: $padding4;

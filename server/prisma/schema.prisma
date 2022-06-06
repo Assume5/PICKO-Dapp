@@ -143,7 +143,7 @@ model menus {
   price Float
   description String
   image String
-  menu_category menu_category @relation(fields: [category], references: [id])
+  menu_category menu_category @relation(fields: [category], references: [id], onDelete: Cascade, onUpdate: Cascade)
   category Int
   status String
 }

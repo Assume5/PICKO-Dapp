@@ -11,7 +11,6 @@ import { useCheckLoginRedirect } from '../../../hooks/useCheckLoginRedirect';
 export const Account = () => {
   useCheckLoginRedirect('owner');
   const { page } = useParams();
-  console.log(page);
   return (
     <>
       <OwnerHeader />

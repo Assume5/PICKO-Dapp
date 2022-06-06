@@ -1,4 +1,4 @@
-import { MenuCategory, orderItems } from './componentsPart';
+import { MenuCategory, orderItems, RestaurantMenuItemType } from './componentsPart';
 import { MenuDict } from './index';
 
 export type User = {
@@ -168,4 +168,11 @@ export type OwnerSettingMenuCategory = {
   id: number;
   image: string | null;
   priority: boolean;
+};
+
+export type Menu = {
+  id: number;
+  category_name: string;
+  priority: boolean;
+  menus: RestaurantMenuItemType[];
 };
