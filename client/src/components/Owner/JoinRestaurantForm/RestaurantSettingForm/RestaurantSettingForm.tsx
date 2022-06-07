@@ -32,7 +32,6 @@ export const RestaurantSettingForm: React.FC<Props> = ({ setStep, setStepTwoData
         const node = child as Element;
         const category = node.querySelector('input[name="category"]') as HTMLInputElement;
         const check = node.querySelector('input[type="checkbox"]') as HTMLInputElement;
-        console.log(category.value, check.checked);
         categoryData.push({ category_name: category.value, priority: check.checked });
       });
 

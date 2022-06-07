@@ -31,7 +31,6 @@ export const OwnerAccountMenuCategory = () => {
       }
 
       const data = await res.json();
-      console.log(data);
 
       if (data.error) {
         console.error(data.error);
@@ -60,7 +59,6 @@ export const OwnerAccountMenuCategory = () => {
 
   const onMenuTypeChange = async (e: FormEvent) => {
     const target = e.target as HTMLInputElement;
-    console.log(target.value);
     const res = await fetch(`${serverUrl}/restaurant/menus-category/menu-type/${id}`, {
       method: 'PUT',
       mode: 'cors',

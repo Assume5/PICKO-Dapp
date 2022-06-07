@@ -12,7 +12,6 @@ export const WarningModal: React.FC<Props> = ({ modalOpen, setModalOpen, categor
   const { id } = useParams();
 
   const onConfirmClick = async () => {
-    console.log(id, removeId);
     const res = await fetch(`${serverUrl}/restaurant/menus/remove-all/${removeId}`, {
       method: 'DELETE',
       mode: 'cors',

@@ -69,7 +69,6 @@ export const CustomerHeader = () => {
 
   const onSignOutClick = async () => {
     const res = await logout();
-    console.log(res);
     if (res) {
       userCtx.setUser({ login: false, checked: true });
       navigate('/');

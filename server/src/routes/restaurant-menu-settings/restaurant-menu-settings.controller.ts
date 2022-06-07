@@ -18,7 +18,6 @@ export const getRestaurantMenus = async (req: Request, res: Response) => {
 
     try {
         const data = await getRestaurantMenusFromDB(id);
-        console.log(data);
         for (const i in data) {
             const menus = data[i].menus;
             for (const j in menus) {
@@ -35,7 +34,6 @@ export const getRestaurantMenus = async (req: Request, res: Response) => {
 };
 
 export const createRestaurantMenu = async (req: Request, res: Response) => {
-    console.log(req.body);
     const file = req.file;
     const buffer = await sharp(file.path).resize({ width: 500 }).toBuffer();
     await sharp(buffer).toFile(file.path);
@@ -75,8 +73,7 @@ export const updateMenuByMenuId = async (req: Request, res: Response) => {
 
         image = uploadFile.Key;
     }
-    console.log(req.body);
-    console.log(req.params);
+    
     const { name, price, description, category_id } = req.body;
     const { menuId } = req.params;
 

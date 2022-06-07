@@ -89,4 +89,32 @@
       }
     }
   }
+
+  .menu-category-input,
+  .hero-image-upload,
+  .card-image {
+    border: 1px solid $white;
+    border-radius: 10px;
+    margin: $padding4 auto;
+    max-width: 400px;
+    padding: $padding3 $padding4;
+    position: relative;
+
+    img {
+      width: 100%;
+    }
+
+    .delete-button {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    input[type='text'] {
+      width: 100%;
+      margin: $padding3 auto;
+    }
+  }
 }

@@ -26,7 +26,6 @@ export const OwnerHome = () => {
         console.error(data.error);
         navigate('/owner');
       }
-      console.log(data);
       setData({
         restaurantName: data.restaurant_name,
         status: data.status,

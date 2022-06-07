@@ -29,7 +29,6 @@ export const OwnerAccountSetting = () => {
       if (data.error) {
         console.error(data.error);
       } else {
-        console.log(data.data);
         setData(data.data);
         setLoaded(true);
       }

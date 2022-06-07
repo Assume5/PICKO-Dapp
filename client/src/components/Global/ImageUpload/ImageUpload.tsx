@@ -46,7 +46,6 @@ export const ImageUpload: React.FC<Props> = ({ previewImage, required }) => {
 
   const clearFile = () => {
     if (fileUpload && fileUpload.current) {
-      console.log(fileUpload.current.value);
       fileUpload.current.value = '';
       setFiles(fileUpload.current.files![0]);
     }

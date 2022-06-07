@@ -16,8 +16,6 @@ const server = http.createServer(app);
 
 const allowOrigin = process.env.ALLOW_ORIGIN || "http://localhost:3000";
 
-console.log(allowOrigin);
-
 const io = new Server(server, {
     cors: {
         origin: allowOrigin,

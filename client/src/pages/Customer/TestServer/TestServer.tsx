@@ -14,7 +14,6 @@ export const TestServer = () => {
       });
       const data = await response.json();
       setData(data);
-      console.log(data);
     };
     getExample();
   }, []);

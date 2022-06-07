@@ -24,7 +24,6 @@ export const RestaurantForm: React.FC<Props> = ({ setStep, stepOneData, setStepO
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const addressInput: HTMLInputElement | null = document.querySelector('.address-search input');
-    console.log(address, addressInput);
     if (addressInput && addressInput.value === address?.label) {
       setErr(false);
       const target = e.target as typeof e.target & {

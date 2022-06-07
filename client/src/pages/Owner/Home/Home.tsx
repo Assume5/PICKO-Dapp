@@ -25,19 +25,20 @@ export const Home = () => {
           });
 
           const data = await res.json();
+
           if (data.exists) {
             navigate(`./${data.id}`);
           } else {
+            setLoaded(true);
             const headerContent: HTMLDivElement | null = document.querySelector('.header .content');
             if (headerContent) {
               (headerContent.querySelector('.view-button') as HTMLButtonElement).style.display = 'none';
               (headerContent.querySelector('.nav-menus-page') as HTMLButtonElement).style.display = 'none';
             }
-            setLoaded(true);
           }
-        } else {
           setLoaded(true);
         }
+        setLoaded(true);
       }
     };
 
@@ -50,8 +51,13 @@ export const Home = () => {
     <>
       <OwnerHeader />
       <div className="owner-home page">
+        {console.log(loaded)}
         {loaded &&
-          (!userCtx.user.login ? <Login role={'owner'} /> : !checked && <JoinRestaurantForm setChecked={setChecked} />)}
+          (!userCtx.user.login ? (
+            <Login role={'owner'} />
+          ) : (
+            checked === false && <JoinRestaurantForm setChecked={setChecked} />
+          ))}
       </div>
     </>
   );

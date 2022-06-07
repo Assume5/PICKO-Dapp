@@ -78,7 +78,6 @@ export const checkLogin = (req: UserAuthInfo, res: Response) => {
                     }
                 );
             }
-            console.log(user);
 
             return res
                 .status(200)
