@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { MenuItem } from '@src/types';
+import { StoreMenus } from '@src/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
 import { AddressSearch } from '../../AddressSearch/AddressSearch';
@@ -8,7 +8,7 @@ import { getCookie } from '@src/helpers';
 interface Props {
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  menuItem: MenuItem | undefined;
+  menuItem: StoreMenus | undefined;
   menuName: string;
 }
 
@@ -55,12 +55,12 @@ export const MenuModal: React.FC<Props> = ({ showModal, setShowModal, menuItem, 
                     <FontAwesomeIcon icon={faPlus} onClick={() => setQuantity(quantity + 1)} />
                   </div>
                   <div className="add-to-cart-button">
-                    <button>Add to cart - {menuItem.price} ETH</button>
+                    <button>Add to cart - ${menuItem.price}</button>
                   </div>
                 </div>
               </>
             ) : (
-              <AddressSearch setChangeSuccess={setAddress}/>
+              <AddressSearch setChangeSuccess={setAddress} />
             )}
           </div>
         </>

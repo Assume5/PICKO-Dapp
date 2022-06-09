@@ -1,40 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { MenuType } from '@src/types';
+import React from 'react';
+import { StoreMenuCategory } from '@src/types';
 import { MenuAllInOneType } from './MenuAllInOneType/MenuAllInOneType';
 import { MenuFilterType } from './MenuFilterType/MenuFilterType';
-import { fakeMenu, allInOneImage } from '../../../pages/Customer/Restaurant/MenuFakeData';
 
-export const Menu = () => {
-  const [menu, setMenu] = useState<MenuType>(null);
+interface Props {
+  menuType: string;
+  menus: StoreMenuCategory[];
+}
 
-  useEffect(() => {
-    //get menu
-    const win: Window = window;
-    const getMenu = async () => {
-      if (win.location.href.includes('china-taste')) {
-        setMenu({
-          type: 'filter',
-          menu: fakeMenu,
-          allInOneImage: allInOneImage,
-        });
-      } else {
-        setMenu({
-          type: 'allInOne',
-          menu: fakeMenu,
-          allInOneImage: allInOneImage,
-        });
-      }
-    };
-
-    getMenu();
-  }, []);
-
+export const Menu: React.FC<Props> = ({ menuType, menus }) => {
   return (
     <div className="menu">
-      {menu && menu.type === 'filter' ? (
-        <MenuFilterType menu={menu}  />
+      {menuType === 'filter' ? (
+        <MenuFilterType menus={menus}  />
       ) : (
-        <MenuAllInOneType menu={menu} />
+        <MenuAllInOneType menus={menus} />
       )}
     </div>
   );

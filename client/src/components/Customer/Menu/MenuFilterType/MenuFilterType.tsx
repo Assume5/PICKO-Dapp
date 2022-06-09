@@ -1,21 +1,26 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { MenuType } from '@src/types';
+import { StoreMenuCategory } from '@src/types';
 import { MenuGrid } from '../MenuGrid/MenuGrid';
-import { useSortMenuKey } from '../../../../hooks/useSortMenuKey';
 
 interface Props {
-  menu: MenuType;
+  menus: StoreMenuCategory[];
 }
 
-export const MenuFilterType: React.FC<Props> = ({ menu }) => {
-  const [sortedKey, setSortedKey] = useSortMenuKey(menu);
+export const MenuFilterType: React.FC<Props> = ({ menus }) => {
   const [containerOverflow, setContainerOverFlow] = useState(false);
   const [activeFilter, setActiveFilter] = useState('');
   const filterContainer = useRef<HTMLDivElement>(null);
+  const [sortedMenus, setSortedMenus] = useState<StoreMenuCategory[]>();
 
   useEffect(() => {
-    setActiveFilter(sortedKey[0]);
-  }, [sortedKey]);
+    setSortedMenus(menus.sort((menu1, menu2) => Number(menu2.priority) - Number(menu1.priority)));
+  }, [menus]);
+
+  useEffect(() => {
+    if (sortedMenus) {
+      setActiveFilter(sortedMenus[0].category_name);
+    }
+  }, [sortedMenus]);
 
   useLayoutEffect(() => {
     if (filterContainer && filterContainer.current) {
@@ -59,31 +64,34 @@ export const MenuFilterType: React.FC<Props> = ({ menu }) => {
     setActiveFilter(category);
   };
 
+  if (!sortedMenus) return null;
+
   return (
     <div className="menu-filter-type">
-      {menu && (
-        <div className="filter">
-          <div className={`scroll-text ${containerOverflow ? 'overflow' : ''}`}>
-            <p> Scroll </p>
-            <div className="scroller"></div>
-          </div>
-
-          <div className={`filter-container ${containerOverflow ? 'overflow' : ''}`} ref={filterContainer}>
-            {sortedKey.map((key, i) => {
-              return (
-                <div className={`filter-item ${activeFilter === key ? 'active' : ''}`} key={i}>
-                  <p date-category={key} onClick={() => onFilterClick(key)}>
-                    {key}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
+      <div className="filter">
+        <div className={`scroll-text ${containerOverflow ? 'overflow' : ''}`}>
+          <p> Scroll </p>
+          <div className="scroller"></div>
         </div>
-      )}
+
+        <div className={`filter-container ${containerOverflow ? 'overflow' : ''}`} ref={filterContainer}>
+          {sortedMenus.map((menu) => {
+            return (
+              <div
+                className={`filter-item ${activeFilter === menu.category_name ? 'active' : ''}`}
+                key={menu.category_name}
+              >
+                <p date-category={menu.category_name} onClick={() => onFilterClick(menu.category_name)}>
+                  {menu.category_name}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
 
       <div className="menu-container">
-        <MenuGrid sortedKey={sortedKey} menu={menu} activeFilter={activeFilter} />
+        <MenuGrid activeFilter={activeFilter} sortedMenus={sortedMenus} />
       </div>
     </div>
   );

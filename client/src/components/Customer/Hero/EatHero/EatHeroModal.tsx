@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { AddressSearch } from '../../AddressSearch/AddressSearch';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -14,6 +14,12 @@ export const EatHeroModal: React.FC<Props> = ({ heroModal, setHeroModal, changeS
   const closeModal = () => {
     setHeroModal(false);
   };
+
+  useEffect(() => {
+    if (changeSuccess) {
+      window.location.reload();
+    }
+  }, [changeSuccess]);
 
   return (
     <div className={`eat-hero-modal ${heroModal && !changeSuccess ? 'modal-up' : ''}`}>

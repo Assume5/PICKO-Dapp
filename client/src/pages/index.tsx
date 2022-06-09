@@ -34,7 +34,7 @@ export const Page = () => {
             <SocketExample />
             <Routes>
               <Route path="/" element={<CustomerHome />} />
-              <Route path="/restaurant/*" element={<Restaurant />} />
+              <Route path="/restaurant/:restaurantName/:restaurantId" element={<Restaurant />} />
               <Route path="/eat" element={<Eat />} />
               <Route path="/account" element={<CustomerAccount />} />
               <Route path="/order/*" element={<CustomerOrder />} />

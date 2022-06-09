@@ -1,4 +1,12 @@
-import { MenuCategory, orderItems, RestaurantMenuItemType } from './componentsPart';
+import {
+  MenuCategory,
+  orderItems,
+  RestaurantMenuItemType,
+  StoreHeroImages,
+  StoreMenuCategory,
+  StoreMenus,
+  StoreSocialLinks,
+} from './componentsPart';
 import { MenuDict } from './index';
 
 export type User = {
@@ -36,10 +44,11 @@ export type RestaurantDetailType = {
   deliveryFee: number;
   minToDeliver: string;
   restaurantName: string;
-  distance: number;
   category: string;
   openTime: string;
-} | null;
+  address: string;
+  status: string;
+};
 
 export type Restaurant = {
   [key: string]: {
@@ -130,6 +139,21 @@ export type StepTwoData = {
   instagram: string;
 };
 
+export type RestaurantType = {
+  id: string;
+  category: string;
+  distance: number;
+  full_address: string;
+  lat: string;
+  long: string;
+  open_time: string;
+  close_time: string;
+  restaurant_name: string;
+  restaurant_card_image: string;
+  view_count: number;
+  status: string;
+};
+
 export type RestaurantInformation = {
   status: string;
   restaurantName: string;
@@ -175,4 +199,24 @@ export type Menu = {
   category_name: string;
   priority: boolean;
   menus: RestaurantMenuItemType[];
+};
+
+export type Store = {
+  address: string;
+  category: string;
+  city: string;
+  close_time: string;
+  hero_images: StoreHeroImages[];
+  hero_type: string;
+  id: string;
+  lat: string;
+  long: string;
+  menu_category: StoreMenuCategory[];
+  menu_type: string;
+  open_time: string;
+  restaurant_name: string;
+  social_links: StoreSocialLinks;
+  state: string;
+  status: string;
+  zipcode: string;
 };

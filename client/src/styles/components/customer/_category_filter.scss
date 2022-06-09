@@ -35,8 +35,8 @@
     gap: $padding4;
     overflow-x: auto;
     scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* Internet Explorer 10+ */
-    
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+
     @include breakpoint-max(lg) {
       gap: $padding3;
     }
@@ -63,6 +63,8 @@
       transition: background-color 0.3s ease-out;
       line-height: 1;
       flex: 1 0 auto;
+      text-align: center;
+      text-transform: capitalize;
 
       @include breakpoint-max(sm) {
         padding: $padding2 $padding3;

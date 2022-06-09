@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Restaurant } from '@src/types';
+import { RestaurantType } from '@src/types';
 import { ContractContext } from '@src/contexts';
 import Web3 from 'web3';
 
 interface Props {
-  restaurants: Restaurant;
+  restaurants: RestaurantType[];
   currentFilter: string[];
 }
 export const RestaurantList: React.FC<Props> = ({ restaurants, currentFilter }) => {
@@ -26,23 +26,23 @@ export const RestaurantList: React.FC<Props> = ({ restaurants, currentFilter }) 
     }
   };
 
-  const onRestaurantCardClick = (key: string, id: number) => {
+  const onRestaurantCardClick = (key: string, id: string) => {
     const keyWithDash = key.trim().replaceAll(' ', '-').toLowerCase();
-    navigate(`/restaurant/${keyWithDash}-${id}`);
+    navigate(`/restaurant/${keyWithDash}/${id}`);
   };
 
   return (
     <div className="restaurant-list">
-      {Object.keys(restaurants).map((key, i) => {
-        const restaurant = restaurants[key];
+      {restaurants.map((restaurant) => {
+        const key = restaurant.restaurant_name;
         const category = restaurant.category.split(', ');
         if (currentFilter.length === 0 || category.some((r) => currentFilter.indexOf(r) >= 0)) {
           return (
             <div
               className="restaurant-card"
               onClick={() => onRestaurantCardClick(key, restaurant.id)}
-              key={i}
-              style={{ backgroundImage: `url(${restaurant.image})` }}
+              key={restaurant.id}
+              style={{ backgroundImage: `url(${restaurant.restaurant_card_image})` }}
             >
               <div className="corner"></div>
               <div className="corner"></div>
@@ -51,22 +51,22 @@ export const RestaurantList: React.FC<Props> = ({ restaurants, currentFilter }) 
               <div className="restaurant-card-content">
                 <div className="restaurant-card-name">
                   <h4>
-                    {key} - {restaurant.address}
+                    {key} - {restaurant.full_address}
                   </h4>
                 </div>
                 <div className="restaurant-card-information">
-                  <p>{restaurant.mile} mi</p>
+                  <p>{restaurant.distance.toFixed(1)} mi</p>
                   <p>|</p>
-                  <p>{restaurant.time}</p>
+                  <p>30 Mins</p>
                 </div>
                 <div className="restaurant-card-fee">
-                  <p>Delivery Fee: {restaurant.fee} ETH</p>
+                  <p>Delivery Fee: $3</p>
                 </div>
               </div>
               <div className="overlay"></div>
             </div>
           );
-        } else return <></>;
+        }
       })}
       <div className="load-more">
         <button onClick={() => runExample()}>Load More</button>

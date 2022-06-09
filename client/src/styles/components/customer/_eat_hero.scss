@@ -22,7 +22,7 @@
   }
 
   @include breakpoint-max(sm) {
-    height: 80vh;
+    height: auto;
     margin: $padding5 0;
   }
 
@@ -117,7 +117,7 @@
         padding: 0px $padding3;
         overflow-x: auto;
         scrollbar-width: none; /* Firefox */
-        -ms-overflow-style: none;  /* Internet Explorer 10+ */
+        -ms-overflow-style: none; /* Internet Explorer 10+ */
 
         &::-webkit-scrollbar {
           width: 0; /* Remove scrollbar space */
@@ -229,7 +229,6 @@
       padding: $padding3;
       width: 100%;
       text-align: center;
-      
     }
 
     &:hover {

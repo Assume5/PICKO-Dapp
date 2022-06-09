@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
-import { MenuType, MenuItem } from '@src/types';
+import { StoreMenuCategory, StoreMenus } from '@src/types';
 import { MenuModal } from '../MenuModal/MenuModal';
 
 interface Props {
-  sortedKey: string[];
-  menu: MenuType;
   activeFilter: String;
+  sortedMenus: StoreMenuCategory[];
 }
 
-export const MenuGrid: React.FC<Props> = ({ sortedKey, menu, activeFilter }) => {
+export const MenuGrid: React.FC<Props> = ({ activeFilter, sortedMenus }) => {
   const [showModal, setShowModal] = useState(false);
-  const [menuItem, setMenuItem] = useState<MenuItem>();
+  const [menuItem, setMenuItem] = useState<StoreMenus>();
   const [menuName, setMenuName] = useState('');
 
-  const onMenuClick = (menuItem: MenuItem, menuName: string) => {
+  const onMenuClick = (menuItem: StoreMenus, menuName: string) => {
     setShowModal(true);
     setMenuItem(menuItem);
     setMenuName(menuName);
@@ -25,39 +24,41 @@ export const MenuGrid: React.FC<Props> = ({ sortedKey, menu, activeFilter }) => 
 
   return (
     <>
-      {menu &&
-        sortedKey.map((key, i) => {
-          const menus = menu.menu[key];
-          return (
-            <div className={`menu-items ${activeFilter === key ? 'active' : ''}`} data-category={key} key={key}>
-              {Object.keys(menus).map((menusKey) => {
-                const menuItem = menus[menusKey];
-                if (typeof menuItem === 'object') {
-                  return (
-                    <div className="menu-item" key={menusKey} onClick={() => onMenuClick(menuItem, menusKey)}>
-                      <div className="item-image">
-                        <img src={menuItem && menuItem.image} alt="" />
-                      </div>
-                      <div className="item-text">
-                        <div className="heading">
-                          <h4>{menusKey}</h4>
-                        </div>
-                        <div className="desc">
-                          <p>{menuItem && menuItem.description}</p>
-                        </div>
-                        <div className="price">
-                          <p>{menuItem && menuItem.price} ETH</p>
-                        </div>
-                      </div>
+      {sortedMenus.map((menu) => {
+        return (
+          <div
+            className={`menu-items ${activeFilter === menu.category_name ? 'active' : ''}`}
+            data-category={menu.category_name}
+            key={menu.category_name}
+          >
+            {!menu.menus.length && <h3 className="empty-menu">Empty Menus</h3>}
+            {menu.menus.map((menuItem) => {
+              return (
+                <div
+                  className="menu-item"
+                  key={menuItem.menu_name}
+                  onClick={() => onMenuClick(menuItem, menuItem.menu_name)}
+                >
+                  <div className="item-image">
+                    <img src={menuItem.image} alt="" />
+                  </div>
+                  <div className="item-text">
+                    <div className="heading">
+                      <h4>{menuItem.menu_name}</h4>
                     </div>
-                  );
-                } else {
-                  return <></>;
-                }
-              })}
-            </div>
-          );
-        })}
+                    <div className="desc">
+                      <p>{menuItem.description}</p>
+                    </div>
+                    <div className="price">
+                      <p>${menuItem.price}</p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        );
+      })}
       <MenuModal showModal={showModal} setShowModal={setShowModal} menuItem={menuItem} menuName={menuName} />
     </>
   );

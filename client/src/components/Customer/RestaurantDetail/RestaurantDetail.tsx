@@ -17,10 +17,10 @@ export const RestaurantDetail: React.FC<Props> = ({ details }) => {
           </div>
           <div className="description">
             <p>
-              <span>Category:</span> {details.category}
+              <span>Status:</span> {details.status}
             </p>
             <p>
-              <span>Distance: </span> {details.distance}mi
+              <span>Category:</span> {details.category}
             </p>
             <p>
               <span>Open: </span> {details.openTime}
@@ -31,12 +31,11 @@ export const RestaurantDetail: React.FC<Props> = ({ details }) => {
               {details.minToDeliver} <span>Minutes</span>
             </p>
             <p>
-              <span>Delivery Fee: </span>
-              {details.deliveryFee} ETH
+              <span>Delivery Fee: </span>$ {details.deliveryFee}
             </p>
           </div>
           <FontAwesomeIcon icon={faLocationArrow} />
-          <p>1234 Chestnut Ridge Road, Buffalo NY, 14228</p>
+          <p>{details.address}</p>
         </div>
       </div>
     );

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
-import { Restaurant } from '@src/types';
+import { Restaurant, RestaurantType } from '@src/types';
 import { getCookie } from '@src/helpers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationArrow } from '@fortawesome/free-solid-svg-icons';
@@ -8,11 +8,12 @@ import { useNavigate } from 'react-router-dom';
 
 interface Props {
   topRestaurants: Restaurant;
+  data: RestaurantType[];
 }
 
-export const EatHero: React.FC<Props> = ({ topRestaurants }) => {
-  const [currentSlide, setCurrentSlide] = useState('');
-  const [slideIndex, setSlideIndex] = useState(0);
+export const EatHero: React.FC<Props> = ({ topRestaurants, data }) => {
+  const [currentSlideData, setCurrentSlideData] = useState('');
+  const [slideIndexData, setSlideIndexData] = useState(0);
   const [currentLocation, setCurrentLocation] = useState('');
   const [heroModal, setHeroModal] = useState(false);
   const [changeSuccess, setChangeSuccess] = useState(false);
@@ -25,26 +26,28 @@ export const EatHero: React.FC<Props> = ({ topRestaurants }) => {
   }, [changeSuccess]);
 
   useEffect(() => {
-    setCurrentSlide(Object.keys(topRestaurants)[0]);
-    setSlideIndex(0);
-  }, [topRestaurants]);
+    if (data.length) {
+      setCurrentSlideData(data[0].restaurant_name);
+      setSlideIndexData(0);
+    }
+  }, [data]);
 
   useEffect(() => {
     if (window.innerWidth >= 768) {
-      const len = Object.keys(topRestaurants).length;
+      const len = data.length;
       const nextSlide = setTimeout(() => {
-        if (slideIndex + 1 === len) {
-          setCurrentSlide(Object.keys(topRestaurants)[0]);
-          setSlideIndex(0);
+        if (slideIndexData + 1 === len) {
+          setCurrentSlideData(data[0].restaurant_name);
+          setSlideIndexData(0);
         } else {
-          setCurrentSlide(Object.keys(topRestaurants)[slideIndex + 1]);
-          setSlideIndex(slideIndex + 1);
+          setCurrentSlideData(data[slideIndexData + 1].restaurant_name);
+          setSlideIndexData(slideIndexData + 1);
         }
       }, 5000);
 
       return () => clearTimeout(nextSlide);
     }
-  }, [slideIndex, currentSlide, topRestaurants]);
+  }, [slideIndexData, currentSlideData, topRestaurants, data]);
 
   useLayoutEffect(() => {
     if (window.innerWidth < 768) {
@@ -81,35 +84,34 @@ export const EatHero: React.FC<Props> = ({ topRestaurants }) => {
   });
 
   const onSliderClick = (key: string, i: number) => {
-    setCurrentSlide(key);
-    setSlideIndex(i);
+    setCurrentSlideData(key);
+    setSlideIndexData(i);
   };
 
   const onModalClick = () => {
     setHeroModal(true);
   };
 
-  const onHeroImageClick = (key: string, id: number) => {
+  const onHeroImageClick = (key: string, id: string) => {
     const keyWithDash = key.trim().replaceAll(' ', '-').toLowerCase();
-    navigate(`/restaurant/${keyWithDash}-${id}`);
+    navigate(`/restaurant/${keyWithDash}/${id}`);
   };
 
   return (
     <div className="eat-hero">
       <div className="top-restaurants">
         <div className="image-container">
-          {Object.keys(topRestaurants).map((key, i) => {
-            const restaurant = topRestaurants[key];
+          {data.map((restaurant) => {
             return (
               <div
-                className={`carousel-item ${currentSlide === key ? 'active' : ''}`}
-                key={i}
-                onClick={() => onHeroImageClick(key, restaurant.id)}
+                className={`carousel-item ${currentSlideData === restaurant.restaurant_name ? 'active' : ''}`}
+                key={restaurant.id}
+                onClick={() => onHeroImageClick(restaurant.restaurant_name, restaurant.id)}
               >
-                <img src={restaurant.image} alt="" />
+                <img src={restaurant.restaurant_card_image} alt="" />
                 <div className="overlay-text">
                   <h2>Top Restaurant at Your Location:</h2>
-                  <p>{key}</p>
+                  <p>{restaurant.restaurant_name}</p>
                 </div>
                 <div className="overlay"></div>
               </div>
@@ -117,16 +119,15 @@ export const EatHero: React.FC<Props> = ({ topRestaurants }) => {
           })}
         </div>
         <div className="slider-lists">
-          {Object.keys(topRestaurants).map((key, i) => {
-            const restaurant = topRestaurants[key];
+          {data.map((restaurant, i) => {
             return (
               <div
-                className={`slider-list ${currentSlide === key ? 'active' : ''}`}
-                key={i}
-                onClick={() => onSliderClick(key, i)}
+                className={`slider-list ${currentSlideData === restaurant.restaurant_name ? 'active' : ''}`}
+                key={restaurant.id}
+                onClick={() => onSliderClick(restaurant.restaurant_name, i)}
               >
-                <img src={restaurant.image} alt="" />
-                <p>{key}</p>
+                <img src={restaurant.restaurant_card_image} alt="" />
+                <p>{restaurant.restaurant_name}</p>
                 <div className="overlay"></div>
               </div>
             );

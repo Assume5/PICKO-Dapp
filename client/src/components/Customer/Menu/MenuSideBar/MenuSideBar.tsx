@@ -1,9 +1,10 @@
 import React, { useLayoutEffect, useState } from 'react';
+import { StoreMenuCategory } from '../../../../types';
 
 interface Props {
-  sortedKey: string[];
+  sortedMenus: StoreMenuCategory[];
 }
-export const MenuSideBar: React.FC<Props> = ({ sortedKey }) => {
+export const MenuSideBar: React.FC<Props> = ({ sortedMenus }) => {
   const [currentPosition, setCurrentPosition] = useState<string>('');
   const [atMenuPosition, setAtMenuPosition] = useState(false);
   const win: Window = window;
@@ -24,12 +25,12 @@ export const MenuSideBar: React.FC<Props> = ({ sortedKey }) => {
         win.scrollY <= menuContainer.offsetTop + menuContainer.offsetHeight
       ) {
         setAtMenuPosition(true);
-        sortedKey.forEach((key) => {
+        sortedMenus.forEach((item) => {
           const target: HTMLDivElement | null = document.querySelector(
-            `.menu-category-container[data-category='${key}']`,
+            `.menu-category-container[data-category='${item.category_name}']`,
           );
           if (target && win.scrollY >= target.offsetTop - 75 && win.scrollY <= target.offsetTop + target.offsetHeight) {
-            setCurrentPosition(key);
+            setCurrentPosition(item.category_name);
           }
         });
       } else {
@@ -40,18 +41,20 @@ export const MenuSideBar: React.FC<Props> = ({ sortedKey }) => {
 
     win.addEventListener('scroll', onScroll);
     return () => win.removeEventListener('scroll', onScroll);
-  }, [sortedKey, currentPosition]);
+  }, [sortedMenus, currentPosition]);
 
   return (
     <div className="menu-sidebar">
-      {sortedKey.map((key, i) => {
+      {sortedMenus.map((menu) => {
         return (
           <div
-            className={`sidebar-item ${currentPosition === key ? 'active' : ''} ${atMenuPosition ? 'at-position' : ''}`}
-            onClick={() => onSidebarClick(key)}
-            key={i}
+            className={`sidebar-item ${currentPosition === menu.category_name ? 'active' : ''} ${
+              atMenuPosition ? 'at-position' : ''
+            }`}
+            onClick={() => onSidebarClick(menu.category_name)}
+            key={menu.category_name}
           >
-            <p>{key}</p>
+            <p>{menu.category_name}</p>
           </div>
         );
       })}

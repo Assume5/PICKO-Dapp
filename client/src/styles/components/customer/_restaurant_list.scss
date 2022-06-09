@@ -4,11 +4,9 @@ $cornerPixel: 15px;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
   padding: $spacing 0px;
-
-  @include breakpoint-max(sm) {
-    width: unset;
-  }
 
   .restaurant-card {
     width: calc(25% - 32px);

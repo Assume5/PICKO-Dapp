@@ -1,75 +1,70 @@
 import React, { useEffect, useState } from 'react';
-import { HeroType, Social, RestaurantDetailType } from '@src/types';
+import { RestaurantDetailType, Store, StoreSocialLinks, StoreHeroImages } from '@src/types';
 import { serverUrl } from '@src/constants';
 
 import { RestaurantHero } from '@src/components/Customer/Hero/RestaurantHero/RestaurantHero';
 import { Menu } from '@src/components//Customer/Menu/Menu';
 import { RestaurantDetail } from '@src/components/Customer/RestaurantDetail/RestaurantDetail';
 import { CustomerHeader } from '../../../components/Customer/CustomerHeader/CustomerHeader';
+import { useNavigate, useParams } from 'react-router-dom';
 
 export const Restaurant = () => {
-  const [hero, setHero] = useState<HeroType>(null);
-  const [social, setSocial] = useState<Social>({ hasSocialMedia: false });
-  const [details, setDetails] = useState<RestaurantDetailType>(null);
+  const [details, setDetails] = useState<RestaurantDetailType>();
+  const [heroData, setHeroData] = useState<StoreHeroImages[]>();
+  const [socialData, setSocialData] = useState<StoreSocialLinks>();
+  const [data, setData] = useState<Store>();
+  const navigate = useNavigate();
 
+  const { restaurantId } = useParams();
   useEffect(() => {
-    //get hero
-    const win: Window = window;
-    const getHeroType = async () => {
-      if (win.location.href.includes('china-taste')) {
-        setHero({
-          type: 'carousel',
-          images:
-            '/imgs/restaurant-hero-holder.jpg,/imgs/restaurant-hero-holder-2.jpg,/imgs/restaurant-hero-holder-3.jpg',
-        });
-      } else {
-        setHero({
-          type: 'image',
-          image: '/imgs/restaurant-hero-holder.jpg',
-        });
+    const fetchData = async () => {
+      const res = await fetch(`${serverUrl}/store/${restaurantId}`, {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'include',
+      });
+
+      const response = await res.json();
+
+      if (response.error) {
+        navigate('/');
+      }
+
+      if (response.success) {
+        const data: Store = response.data;
+        setData(response.data);
+        setSocialData(data.social_links);
+        setHeroData(data.hero_images);
       }
     };
 
-    getHeroType();
+    fetchData();
   }, []);
 
   useEffect(() => {
-    //get Social
-    const getSocial = async () => {
-      setSocial({
-        hasSocialMedia: true,
-        instagram: 'https://www.instagram.com/',
-        facebook: 'https://www.facebook.com/',
-        twitter: 'https://twitter.com/',
-      });
-    };
-
-    getSocial();
-  }, []);
-
-  useEffect(() => {
-    const getRestaurantDetail = async () => {
+    if (data) {
       const details: RestaurantDetailType = {
-        deliveryFee: 1,
-        minToDeliver: '20 - 30',
-        restaurantName: 'PICKO',
-        distance: 1.2,
-        category: 'Fast Food',
-        openTime: '9 am - 9 pm',
+        deliveryFee: 3,
+        minToDeliver: '30',
+        restaurantName: data.restaurant_name,
+        category: data.category,
+        openTime: `${data.open_time} -  ${data.close_time}`,
+        address: `${data.address}, ${data.city}, ${data.state}, ${data.zipcode}`,
+        status: data.status,
       };
       setDetails(details);
-    };
+    }
+  }, [data]);
 
-    getRestaurantDetail();
-  }, []);
+  if (!data || !socialData || !heroData || !details) return null;
 
   return (
     <>
       <CustomerHeader />
       <div className="restaurant">
-        <RestaurantHero hero={hero} social={social} />
+        <RestaurantHero heroImages={heroData} socialData={socialData} heroType={data.hero_type} />
         <RestaurantDetail details={details} />
-        <Menu />
+        <Menu menuType={data.menu_type} menus={data.menu_category} />
       </div>
     </>
   );
