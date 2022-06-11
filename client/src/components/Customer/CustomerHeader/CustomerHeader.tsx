@@ -8,6 +8,7 @@ import { UserContext, CartContext } from '@src/contexts';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthModal } from '../AuthModal/AuthModal';
 import { useCheckLogin } from '../../../hooks/useCheckLogin';
+import Cookies from 'js-cookie';
 
 export const CustomerHeader = () => {
   useCheckLogin();

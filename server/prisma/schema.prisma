@@ -45,7 +45,7 @@ model guest {
 
 model guest_cart {
   id Int @id @default(autoincrement())
-  own_by guest @relation(fields: [guest_cooke_value], references: [cookie_value])
+  own_by guest @relation(fields: [guest_cooke_value], references: [cookie_value], onDelete: Cascade, onUpdate: Cascade)
   guest_cooke_value String
   menu_id Int
   price Float

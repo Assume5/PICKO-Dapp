@@ -1,5 +1,6 @@
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Cookies from 'js-cookie';
 import React, { FormEvent, SetStateAction, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../../contexts';
@@ -54,6 +55,7 @@ export const Login: React.FC<Props> = ({ role, setAuthState, setAuthModal }) => 
         role: data.role,
         checked: true,
       });
+      Cookies.remove('guest_cookie');
       setAuthModal && setAuthModal(false);
     }
   };

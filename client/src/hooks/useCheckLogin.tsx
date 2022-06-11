@@ -1,6 +1,8 @@
+import Cookies from 'js-cookie';
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../contexts';
 import { serverUrl } from '../utils/constants';
+import { v4 as uuidv4 } from 'uuid';
 
 export const useCheckLogin = () => {
   const userCtx = useContext(UserContext);
@@ -22,8 +24,10 @@ export const useCheckLogin = () => {
           role: response.role,
           checked: true,
         });
+        Cookies.remove('guest_cookie');
       } else {
         userCtx.setUser({ login: false, checked: true });
+        if (!Cookies.get('guest_cookie')) Cookies.set('guest_cookie', uuidv4(), { expires: 7 });
       }
     };
     checkLogin();
