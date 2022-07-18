@@ -12,6 +12,7 @@ import restaurantMenuCategorySettingsRouter from "./restaurant-category-settings
 import restaurantMenuSettingRouter from "./restaurant-menu-settings/restaurant-menu-settings.router";
 import restaurantImagesSettingRouter from "./restaurant-images-settings/restaurant-images-settings.router";
 import storeRouter from "./store/store.router";
+import cartRouter from "./cart/cart.router";
 
 const api = Router();
 
@@ -26,6 +27,8 @@ api.use("/login", loginRouter);
 api.use("/check", checkRouter);
 
 api.use("/logout", logoutRouter);
+
+api.use("/cart", cartRouter);
 
 api.use("/restaurant", restaurantRouter);
 api.use("/restaurant", restaurantSettingRouter);

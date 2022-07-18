@@ -1,4 +1,5 @@
 import {
+  CartItem,
   MenuCategory,
   orderItems,
   RestaurantMenuItemType,
@@ -65,16 +66,10 @@ export type Restaurant = {
 
 export type Cart = {
   isCartEmpty: boolean;
-  restaurantID?: number;
+  restaurantID?: string;
   restaurantName?: string;
   deliveryAddress?: string;
-  cartItems?: {
-    [key: string]: {
-      itemID: number;
-      quantity: number;
-      price: number;
-    };
-  };
+  cartItems?: CartItem[];
 };
 
 export type Orders = {

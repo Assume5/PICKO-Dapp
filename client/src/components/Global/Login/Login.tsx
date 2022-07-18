@@ -39,6 +39,7 @@ export const Login: React.FC<Props> = ({ role, setAuthState, setAuthModal }) => 
       body: JSON.stringify({
         username: email.value,
         password: password.value,
+        guestId: Cookies.get('guest_cookie'),
       }),
     });
     const data = await res.json();

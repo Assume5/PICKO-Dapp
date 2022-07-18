@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-import { fakeCartData } from '../../Customer/CartSidebar/fakeCartData';
 import Web3 from 'web3';
 import { CartSidebar } from '../../Customer/CartSidebar/CartSidebar';
 import { getCookie } from '@src/helpers';

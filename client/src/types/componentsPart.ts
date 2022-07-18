@@ -69,3 +69,10 @@ export type StoreMenuCategory = {
 export type StoreHeroImages = {
   hero_image: string;
 };
+
+export type CartItem = {
+  menu_id: number;
+  count: number;
+  price: number;
+  menu_name: string;
+};

@@ -16,9 +16,9 @@ export const CartSidebar: React.FC<Props> = ({ cart, setSidebarOpen, sidebarOpen
   const [tip, setTip] = useState(0.0);
   const [name, setName] = useState('');
 
-  const onRestaurantCardClick = (key: string, id: number) => {
+  const onRestaurantCardClick = (key: string, id: string) => {
     const keyWithDash = key.trim().replaceAll(' ', '-').toLowerCase();
-    navigate(`/restaurant/${keyWithDash}-${id}`);
+    navigate(`/restaurant/${keyWithDash}/${id}`);
     setSidebarOpen(false);
   };
 
@@ -42,16 +42,15 @@ export const CartSidebar: React.FC<Props> = ({ cart, setSidebarOpen, sidebarOpen
         <div className="cart-content">
           <h2 onClick={() => onRestaurantCardClick(cart.restaurantName!, cart.restaurantID!)}>{cart.restaurantName}</h2>
           <p className="delivery-to">Delivery to {cart.deliveryAddress}</p>
-          {Object.keys(cart.cartItems!).map((key) => {
-            const item = cart.cartItems![key];
+          {cart.cartItems!.map((item) => {
             return (
-              <div className="cart-item" key={key}>
+              <div className="cart-item" key={item.menu_name} data-id={item.menu_id}>
                 <div className="item-quantity">
-                  <p>{item.quantity}</p>
+                  <p>{item.count}</p>
                 </div>
                 <div className="item-desc">
-                  <h3>{key}</h3>
-                  <p>{item.price} ETH</p>
+                  <h3>{item.menu_name}</h3>
+                  <p>$ {item.price}</p>
                 </div>
               </div>
             );

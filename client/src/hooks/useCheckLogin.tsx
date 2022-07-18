@@ -27,7 +27,24 @@ export const useCheckLogin = () => {
         Cookies.remove('guest_cookie');
       } else {
         userCtx.setUser({ login: false, checked: true });
-        if (!Cookies.get('guest_cookie')) Cookies.set('guest_cookie', uuidv4(), { expires: 7 });
+        if (!Cookies.get('guest_cookie')) {
+          const guestId = uuidv4();
+          Cookies.set('guest_cookie', guestId, { expires: 7 });
+          const res = await fetch(`${serverUrl}/login/guest`, {
+            method: 'POST',
+            mode: 'cors',
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              guestId: guestId,
+            }),
+          });
+
+          const response = await res.json();
+          console.log(response);
+        }
       }
     };
     checkLogin();

@@ -89,3 +89,14 @@ export const getStoreFromDB = async (restaurantId: string) => {
         },
     });
 };
+
+export const getStoreNameFromDB = async (storeId: string) => {
+    return await prisma.restaurant.findFirst({
+        where: {
+            id: storeId,
+        },
+        select: {
+            restaurant_name: true,
+        },
+    });
+};

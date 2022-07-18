@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-import { fakeCartData } from '../../Customer/CartSidebar/fakeCartData';
 import { CartSidebar } from '../../Customer/CartSidebar/CartSidebar';
 import { getCookie, logout } from '@src/helpers';
 import { UserContext, CartContext } from '@src/contexts';
@@ -41,15 +40,6 @@ export const CustomerHeader = () => {
 
     return () => document.removeEventListener('scroll', listenScroll);
   }, []);
-
-  useEffect(() => {
-    const tempFake = fakeCartData;
-    if (getCookie('address_details')) {
-      tempFake.deliveryAddress = getCookie('address_details').home;
-    }
-
-    cartCtx.setCart(tempFake);
-  }, [sidebarOpen]);
 
   useEffect(() => {
     const body: HTMLBodyElement | null = document.querySelector('body');

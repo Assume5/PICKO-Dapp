@@ -1,7 +1,9 @@
 import { Request, Response } from "express";
 import {
+    createGuestDB,
     getCustomerPassword,
     getOwnerPassword,
+    removeGuestDB,
 } from "../../models/login.model";
 import { findCustomerExist, findOwnerExist } from "../../models/register.model";
 import { sign } from "jsonwebtoken";
@@ -29,7 +31,7 @@ export const generateRefreshToken = (user: User) => {
 //customer
 
 export const loginCustomer = async (req: Request, res: Response) => {
-    const { username, password } = req.body;
+    const { username, password, guestId } = req.body;
     if (!username || !password) {
         return res
             .status(400)
@@ -78,9 +80,39 @@ export const loginCustomer = async (req: Request, res: Response) => {
         maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
+    if (guestId) {
+        try {
+            removeGuestDB(guestId);
+            return res.status(200).json({
+                success: true,
+                name: customer.first_name,
+                role: "customer",
+            });
+        } catch (err) {
+            return res.status(500).json({ success: false, error: err });
+        }
+    }
+
     return res
         .status(200)
         .json({ success: true, name: customer.first_name, role: "customer" });
+};
+
+export const createGuest = async (req: Request, res: Response) => {
+    const { guestId } = req.body;
+
+    if (!guestId) {
+        return res
+            .status(400)
+            .json({ success: false, error: "Missing GuestID" });
+    }
+
+    try {
+        createGuestDB(guestId);
+        return res.status(200).json({ success: true });
+    } catch (err) {
+        return res.status(500).json({ success: false, error: err });
+    }
 };
 
 //owner

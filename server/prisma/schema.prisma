@@ -45,9 +45,11 @@ model guest {
 
 model guest_cart {
   id Int @id @default(autoincrement())
-  own_by guest @relation(fields: [guest_cooke_value], references: [cookie_value], onDelete: Cascade, onUpdate: Cascade)
-  guest_cooke_value String
+  own_by guest @relation(fields: [guest_cookie_value], references: [cookie_value], onDelete: Cascade, onUpdate: Cascade)
+  guest_cookie_value String
+  restaurant_id String
   menu_id Int
+  menu_name String
   price Float
   count Int
 }
@@ -69,6 +71,7 @@ model cart {
   id Int @id @default(autoincrement())
   customer customer @relation(fields: [customer_id], references: [id])
   customer_id String
+  restaurant_id String
   menu_id Int
   menu_name String
   price Float
@@ -168,7 +171,7 @@ model restaurant_hero {
 model restaurant_social {
   id Int @id @default(autoincrement())
   restaurant restaurant @relation(fields: [restaurant_id], references: [id])
-  restaurant_id String
+  restaurant_id String @unique
   twitter_url String
   facebook_url String
   instagram_url String
