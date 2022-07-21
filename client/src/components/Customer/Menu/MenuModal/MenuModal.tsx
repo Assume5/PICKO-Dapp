@@ -8,17 +8,23 @@ import Cookies from 'js-cookie';
 import { serverUrl } from '../../../../utils/constants';
 import { CartContext } from '../../../../contexts';
 import { useParams } from 'react-router-dom';
+import { WarningModal } from '../../../Global/WarningModal/WarningModal';
 
 interface Props {
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   menuItem: StoreMenus | undefined;
   menuName: string;
+  isUpdate?: boolean;
 }
 
-export const MenuModal: React.FC<Props> = ({ showModal, setShowModal, menuItem, menuName }) => {
+export const MenuModal: React.FC<Props> = ({ showModal, setShowModal, menuItem, menuName, isUpdate }) => {
   const [quantity, setQuantity] = useState(1);
   const [address, setAddress] = useState(false);
+  const [onRemoveConfirm, setonRemoveConfirm] = useState(false);
+  const [warningModal, setWarningModal] = useState(false);
+  const [warningText, setWarningText] = useState('');
+
   const cartCtx = useContext(CartContext);
   const { restaurantId, restaurantName } = useParams();
 
@@ -47,6 +53,12 @@ export const MenuModal: React.FC<Props> = ({ showModal, setShowModal, menuItem, 
     checkExists();
   }, [cartCtx, showModal]);
 
+  useEffect(() => {
+    if (onRemoveConfirm) {
+      addMenuItem();
+    }
+  }, [onRemoveConfirm]);
+
   const onCloseButtonClick = () => {
     setShowModal(false);
     setQuantity(1);
@@ -59,8 +71,6 @@ export const MenuModal: React.FC<Props> = ({ showModal, setShowModal, menuItem, 
   const updateMenuItem = async () => {
     if (!menuItem) return;
     if (!cartCtx.cart) return;
-
-    console.log(quantity);
 
     const guest = Cookies.get('guest_cookie');
     const endpoint = `${serverUrl}/cart${guest ? `/guest/${guest}` : ''}`;
@@ -79,7 +89,6 @@ export const MenuModal: React.FC<Props> = ({ showModal, setShowModal, menuItem, 
         guestId: guest,
       }),
     });
-    console.log(res);
     const response = await res.json();
 
     if (response.error) {
@@ -104,11 +113,40 @@ export const MenuModal: React.FC<Props> = ({ showModal, setShowModal, menuItem, 
     }
   };
 
+  const removeAllMenuItems = async () => {
+    const guest = Cookies.get('guest_cookie');
+    const endpoint = `${serverUrl}/cart/remove-all${guest ? `/guest/${guest}` : ''}`;
+    const res = await fetch(endpoint, {
+      method: 'DELETE',
+      mode: 'cors',
+      credentials: 'include',
+    });
+
+    const response = await res.json();
+
+    if (response.error) {
+      console.error(response.error);
+    }
+  };
+
   const addMenuItem = async () => {
     if (!menuItem) return;
 
-    //check if already exists in cartContext if yes method should be put, else POST
     if (!cartCtx.cart) return;
+
+    if (restaurantId && cartCtx.cart.restaurantID && restaurantId !== cartCtx.cart.restaurantID && onRemoveConfirm) {
+      await removeAllMenuItems();
+    } else if (
+      restaurantId &&
+      cartCtx.cart.restaurantID &&
+      restaurantId !== cartCtx.cart.restaurantID &&
+      !onRemoveConfirm
+    ) {
+      const text = `Your already has order from ${cartCtx.cart.restaurantName}, do you want to remove the order from ${cartCtx.cart.restaurantName}?`;
+      setWarningText(text);
+      setWarningModal(true);
+      return;
+    }
 
     const { id, price, menu_name } = menuItem;
     const existsItems = cartCtx.cart.cartItems;
@@ -147,6 +185,8 @@ export const MenuModal: React.FC<Props> = ({ showModal, setShowModal, menuItem, 
 
       if (response.success) {
         let cart = cartCtx.cart;
+        const home = getCookie('address_details').home;
+
         const addedItem: CartItem = {
           menu_id: id,
           count: quantity,
@@ -154,8 +194,6 @@ export const MenuModal: React.FC<Props> = ({ showModal, setShowModal, menuItem, 
           price: price,
         };
         if (cart.isCartEmpty) {
-          const home = getCookie('address_details').home;
-
           const update: Cart = {
             isCartEmpty: false,
             deliveryAddress: home,
@@ -169,45 +207,107 @@ export const MenuModal: React.FC<Props> = ({ showModal, setShowModal, menuItem, 
 
           cart = update;
         } else {
-          cart.cartItems?.push(addedItem);
+          if (onRemoveConfirm) {
+            const update: Cart = {
+              isCartEmpty: false,
+              deliveryAddress: home,
+              restaurantID: restaurantId,
+              restaurantName: restaurantName!
+                .split('-')
+                .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+                .join(' '),
+              cartItems: [addedItem],
+            };
+
+            cart = update;
+          } else {
+            cart.cartItems?.push(addedItem);
+          }
         }
 
         cartCtx.setCart(cart);
         setShowModal(false);
       }
     }
+    setonRemoveConfirm(false);
+  };
+
+  const removeMenuItem = async (menuId: number) => {
+    const guest = Cookies.get('guest_cookie');
+    const endpoint = `${serverUrl}/cart${guest ? `/guest/${guest}` : ''}/${menuId}`;
+    const res = await fetch(endpoint, {
+      method: 'DELETE',
+      mode: 'cors',
+      credentials: 'include',
+    });
+
+    const response = await res.json();
+
+    if (response.error) {
+      console.error(response.error);
+      return;
+    }
+
+    const cart = cartCtx.cart;
+
+    if (cart?.cartItems?.length === 1) {
+      cartCtx.setCart({ isCartEmpty: true });
+    } else {
+      const update = cart!.cartItems!.filter((item) => item.menu_id !== menuId);
+      cart!.cartItems = update;
+      cartCtx.setCart(cart);
+    }
+
+    setShowModal(false);
   };
 
   return (
-    <div className={`menu-modal ${showModal ? 'visible' : 'hidden'}`}>
-      {menuItem && (
-        <>
-          <div className={`modal-inner ${!address && 'address-false'}`}>
-            <div className="close-button">
-              <FontAwesomeIcon icon={faTimes} onClick={onCloseButtonClick} className="close-button" />
+    <>
+      <div className={`menu-modal ${showModal ? 'visible' : 'hidden'}`}>
+        {menuItem && (
+          <>
+            <div className={`modal-inner ${!address && 'address-false'}`}>
+              <div className="close-button">
+                <FontAwesomeIcon icon={faTimes} onClick={onCloseButtonClick} className="close-button" />
+              </div>
+              {address ? (
+                <>
+                  <h2>{menuName}</h2>
+                  <p>{menuItem.description}</p>
+                  <img src={menuItem.image} alt="" />
+                  <div className="add-to-cart">
+                    <div className="quantity">
+                      <FontAwesomeIcon icon={faMinus} onClick={() => quantity > 1 && setQuantity(quantity - 1)} />
+                      <p>{quantity}</p>
+                      <FontAwesomeIcon icon={faPlus} onClick={() => setQuantity(quantity + 1)} />
+                    </div>
+                    <div className="add-to-cart-button">
+                      {isUpdate ? (
+                        <button onClick={() => addMenuItem()}>Update Cart - ${menuItem.price}</button>
+                      ) : (
+                        <button onClick={() => addMenuItem()}>Add to cart - ${menuItem.price}</button>
+                      )}
+                    </div>
+                    {isUpdate && (
+                      <button className="remove-button" onClick={() => removeMenuItem(menuItem.id)}>
+                        Remove Menu
+                      </button>
+                    )}
+                  </div>
+                </>
+              ) : (
+                <AddressSearch setChangeSuccess={setAddress} />
+              )}
             </div>
-            {address ? (
-              <>
-                <h2>{menuName}</h2>
-                <p>{menuItem.description}</p>
-                <img src={menuItem.image} alt="" />
-                <div className="add-to-cart">
-                  <div className="quantity">
-                    <FontAwesomeIcon icon={faMinus} onClick={() => quantity > 1 && setQuantity(quantity - 1)} />
-                    <p>{quantity}</p>
-                    <FontAwesomeIcon icon={faPlus} onClick={() => setQuantity(quantity + 1)} />
-                  </div>
-                  <div className="add-to-cart-button">
-                    <button onClick={() => addMenuItem()}>Add to cart - ${menuItem.price}</button>
-                  </div>
-                </div>
-              </>
-            ) : (
-              <AddressSearch setChangeSuccess={setAddress} />
-            )}
-          </div>
-        </>
-      )}
-    </div>
+          </>
+        )}
+      </div>
+      <WarningModal
+        modalOpen={warningModal}
+        setModalOpen={setWarningModal}
+        setConfirm={setonRemoveConfirm}
+        text={warningText}
+      />
+    </>
   );
 };

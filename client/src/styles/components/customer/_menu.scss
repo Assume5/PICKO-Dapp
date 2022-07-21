@@ -402,143 +402,154 @@
       }
     }
   }
+}
 
-  .menu-modal {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: $mineShaftBackground;
-    z-index: 9999;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease-out;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: $black;
+.menu-modal {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: $mineShaftBackground;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $black;
 
-    &.visible {
-      opacity: 1;
-      pointer-events: auto;
+  &.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .modal-inner {
+    max-width: 30%;
+    max-height: 80%;
+    overflow-x: hidden;
+    background-color: $white;
+    border-radius: 20px;
+    padding: $padding4 $padding4;
+    padding-bottom: $padding5;
+    position: relative;
+
+    @include breakpoint-max(xl) {
+      max-width: 100%;
+      width: 50%;
     }
 
-    .modal-inner {
-      max-width: 30%;
-      max-height: 80%;
-      overflow-x: hidden;
-      background-color: $white;
-      border-radius: 20px;
-      padding: $padding4 $padding4;
-      padding-bottom: $padding5;
-      position: relative;
+    @include breakpoint-max(lg) {
+      width: 60%;
+    }
 
-      @include breakpoint-max(xl) {
-        max-width: 100%;
-        width: 50%;
+    @include breakpoint-max(md) {
+      width: 70%;
+    }
+
+    @include breakpoint-max(sm) {
+      width: 95%;
+    }
+
+    &.address-false {
+      min-height: 80%;
+      min-width: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-y: hidden;
+
+      .address-search {
+        margin: 0;
+        width: 100%;
+
+        input {
+          border: 2px solid $black;
+        }
       }
 
-      @include breakpoint-max(lg) {
-        width: 60%;
+      .error-message {
+        top: 50%;
       }
 
-      @include breakpoint-max(md) {
-        width: 70%;
+      .address-search-result {
+        top: calc(50% + 45px);
+
+        &.has-result {
+          border: 1px solid $black;
+        }
+
+        @include breakpoint-max(lg) {
+          width: 95%;
+        }
       }
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+      border-radius: 15px;
+    }
+
+    .remove-button {
+      background-color: $error;
+      width: 100%;
+      margin-top: $padding3;
+    }
+
+    .add-to-cart {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding-top: $spacing;
+      flex-wrap: wrap;
 
       @include breakpoint-max(sm) {
-        width: 95%;
-      }
-
-      &.address-false {
-        min-height: 80%;
-        min-width: 50%;
-        display: flex;
+        flex-direction: column;
         justify-content: center;
-        align-items: center;
-        overflow-y: hidden;
-
-        .address-search {
-          margin: 0;
-          width: 100%;
-
-          input {
-            border: 2px solid $black;
-          }
-        }
-
-        .error-message {
-          top: 50%;
-        }
-
-        .address-search-result {
-          top: calc(50% + 45px);
-
-          &.has-result {
-            border: 1px solid $black;
-          }
-
-          @include breakpoint-max(lg) {
-            width: 95%;
-          }
-        }
       }
 
-      img {
-        width: 100%;
-        height: auto;
-        border-radius: 15px;
+      button {
+        padding: $padding3;
       }
 
-      .add-to-cart {
+      .quantity {
         display: flex;
         align-items: center;
-        justify-content: center;
-        padding-top: $spacing;
+        padding-right: $padding4;
 
         @include breakpoint-max(sm) {
-          flex-direction: column;
-          justify-content: center;
+          padding-right: 0;
+          margin-bottom: $padding3;
         }
 
-        .quantity {
+        p {
+          padding: 0 $padding3;
+          margin: 0px $padding3;
+          background-color: $gray;
+          border-radius: 10px;
+          height: 40px;
+          color: $white;
           display: flex;
           align-items: center;
-          padding-right: $padding4;
-
-          @include breakpoint-max(sm) {
-            padding-right: 0;
-            margin-bottom: $padding3;
-          }
-
-          p {
-            padding: 0 $padding3;
-            margin: 0px $padding3;
-            background-color: $gray;
-            border-radius: 10px;
-            height: 40px;
-            color: $white;
-            display: flex;
-            align-items: center;
-            line-height: 1;
-          }
-        }
-
-        svg {
-          cursor: pointer;
+          line-height: 1;
         }
       }
-    }
 
-    .close-button {
       svg {
-        font-size: 25px;
-        position: absolute;
-        top: 30px;
-        right: 30px;
         cursor: pointer;
       }
+    }
+  }
+
+  .close-button {
+    svg {
+      font-size: 25px;
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      cursor: pointer;
     }
   }
 }

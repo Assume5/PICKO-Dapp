@@ -1,108 +1,71 @@
 import { prisma } from "../services/db";
 
-type guest_cartWhereUniqueInput = {
-    id_guestCookieValue_menuId?: guest_cartCompoundUniqueInput | null;
-};
-
-type guest_cartCompoundUniqueInput = {
-    id: number;
-    guest_cookie_value: string;
-    menu_id: number;
-};
-
-export const checkMenuExistsInCart = async (
+export const createCartDB = async (
     table: string,
     id: string,
-    menuId: number
-) => {
-    let res;
-    if (table === "guest_cart") {
-        res = await prisma.guest_cart.findMany({
-            where: {},
-        });
-    } else {
-        res = await prisma.cart.findMany({
-            where: {
-                customer_id: id,
-                menu_id: menuId,
-            },
-        });
-    }
-
-    return res.length > 0;
-};
-
-export const updateMenuInCart = async (
-    table: string,
-    id: string,
-    menuId: number,
-    count: number
-) => {
-    let res;
-    if (table === "guest_cart") {
-        res = await prisma.guest_cart.updateMany({
-            where: {
-                guest_cookie_value: id,
-                menu_id: menuId,
-            },
-            data: {
-                count: {
-                    increment: count,
-                },
-            },
-        });
-    } else {
-        res = await prisma.cart.updateMany({
-            where: {
-                customer_id: id,
-                menu_id: menuId,
-            },
-            data: {
-                count: {
-                    increment: count,
-                },
-            },
-        });
-    }
-
-    return res;
-};
-
-export const createGuestCartDB = async (
-    guestId: string,
     menuId: number,
     price: number,
     menu_name: string,
     count: number,
     restaurantId: string
 ) => {
-    const res = await prisma.guest_cart.create({
+    const data = {
         data: {
-            guest_cookie_value: guestId,
+            customer_id: id,
             restaurant_id: restaurantId,
             menu_id: menuId,
             menu_name,
             price,
             count,
         },
-    });
+    };
+    if (table === "guest_cart") {
+        return await prisma.guest_cart.create(data);
+    }
 
-    return res;
+    if (table === "cart") {
+        return await prisma.cart.create(data);
+    }
 };
 
-export const getGuestCartDB = async (guestId: string) => {
-    const firstItem = await prisma.guest_cart.findFirst({
+export const updateCartDB = async (
+    table: string,
+    id: string,
+    menuId: number,
+    count: number
+) => {
+    const data = {
         where: {
-            guest_cookie_value: guestId,
+            customer_id: id,
+            menu_id: menuId,
+        },
+        data: {
+            count: count,
+        },
+    };
+
+    if (table === "guest_cart") {
+        return await prisma.guest_cart.updateMany(data);
+    }
+
+    if (table === "cart") {
+        return await prisma.cart.updateMany(data);
+    }
+};
+
+export const getCartDB = async (table: string, id: string) => {
+    const firstItemData = {
+        where: {
+            customer_id: id,
         },
         select: {
             restaurant_id: true,
         },
-    });
-    console.log(firstItem);
-    const res = await prisma.guest_cart.findMany({
+    };
+
+    const findData = {
         where: {
-            guest_cookie_value: guestId,
+            customer_id: id,
         },
         select: {
             menu_id: true,
@@ -110,23 +73,53 @@ export const getGuestCartDB = async (guestId: string) => {
             price: true,
             count: true,
         },
-    });
+    };
 
-    return [firstItem, res] as const;
+    if (table === "guest_cart") {
+        const firstItem = await prisma.guest_cart.findFirst(firstItemData);
+        const res = await prisma.guest_cart.findMany(findData);
+        return [firstItem, res] as const;
+    }
+
+    if (table === "cart") {
+        const firstItem = await prisma.cart.findFirst(firstItemData);
+        const res = await prisma.cart.findMany(findData);
+        return [firstItem, res] as const;
+    }
 };
 
-export const updateGuestCartDB = async (
-    guestId: string,
-    menuId: number,
-    count: number
+export const deleteCartDB = async (
+    table: string,
+    id: string,
+    menuId: number
 ) => {
-    return await prisma.guest_cart.updateMany({
+    const removeData = {
         where: {
-            guest_cookie_value: guestId,
+            customer_id: id,
             menu_id: menuId,
         },
-        data: {
-            count: count,
+    };
+    if (table === "guest_cart") {
+        return await prisma.guest_cart.deleteMany(removeData);
+    }
+
+    if (table === "cart") {
+        return await prisma.cart.deleteMany(removeData);
+    }
+};
+
+export const deleteAllCartDB = async (table: string, id: string) => {
+    const removeData = {
+        where: {
+            customer_id: id,
         },
-    });
+    };
+
+    if (table === "guest_cart") {
+        return await prisma.guest_cart.deleteMany(removeData);
+    }
+
+    if (table === "cart") {
+        return await prisma.cart.deleteMany(removeData);
+    }
 };

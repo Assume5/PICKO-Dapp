@@ -98,9 +98,20 @@
         gap: 0px $padding4;
         align-items: center;
         border-bottom: 1px solid $white;
+        cursor: pointer;
+        transition: transform 0.2s linear;
+        padding: 0 $padding1;
 
         &:last-child {
           border-bottom: 0px;
+        }
+
+        &:hover {
+          transform: scale(1.05);
+        }
+
+        &:active {
+          transform: scale(1);
         }
 
         .item-quantity {

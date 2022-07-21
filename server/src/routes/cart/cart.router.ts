@@ -3,7 +3,11 @@ import { authenticateToken } from "../../middleware/auth.middleware";
 import {
     createCustomerCart,
     createGuestCart,
+    getCustomerCart,
     getGuestCart,
+    removeAllCustomerCart,
+    removeAllGuestCart,
+    removeCustomerCart,
     removeGuestCart,
     updateCustomerCart,
     updateGuestCart,
@@ -12,15 +16,18 @@ import {
 const cartRouter = Router();
 
 cartRouter.get("/guest/:guestId", getGuestCart);
-cartRouter.get("/", authenticateToken);
+cartRouter.get("/", authenticateToken, getCustomerCart);
 
 cartRouter.post("/guest/:guestId", createGuestCart);
 cartRouter.post("/", authenticateToken, createCustomerCart);
 
 cartRouter.put("/guest/:guestId", updateGuestCart);
-cartRouter.put("/", authenticateToken);
+cartRouter.put("/", authenticateToken, updateCustomerCart);
 
-cartRouter.delete("/guest/:guestId", removeGuestCart);
-cartRouter.delete("/", authenticateToken);
+cartRouter.delete("/guest/:guestId/:menuId", removeGuestCart);
+cartRouter.delete("/:menuId", authenticateToken, removeCustomerCart);
+
+cartRouter.delete("/remove-all/guest/:guestId", removeAllGuestCart);
+cartRouter.delete("/remove-all", removeAllCustomerCart);
 
 export default cartRouter;
