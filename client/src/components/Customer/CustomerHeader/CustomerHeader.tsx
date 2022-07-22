@@ -7,11 +7,9 @@ import { UserContext, CartContext } from '@src/contexts';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthModal } from '../AuthModal/AuthModal';
 import { useCheckLogin } from '../../../hooks/useCheckLogin';
-import Cookies from 'js-cookie';
 
 export const CustomerHeader = () => {
   useCheckLogin();
-  const location = useLocation();
   const navigate = useNavigate();
   const navbar = useRef<HTMLDivElement>(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -62,6 +60,7 @@ export const CustomerHeader = () => {
     const res = await logout();
     if (res) {
       userCtx.setUser({ login: false, checked: true });
+      cartCtx.setCart({ isCartEmpty: true });
       navigate('/');
     }
   };

@@ -1,5 +1,44 @@
 import { prisma } from "../services/db";
 
+export const findFirstGuestCartItemDB = async (id: string, menuId: number) => {
+    return await prisma.guest_cart.findFirst({
+        where: {
+            customer_id: id,
+            menu_id: menuId,
+        },
+    });
+};
+
+export const findFirstCustomerCartItemDB = async (
+    id: string,
+    menuId: number
+) => {
+    return await prisma.cart.findFirst({
+        where: {
+            customer_id: id,
+            menu_id: menuId,
+        },
+    });
+};
+
+export const mergeGuestCartDB = async (
+    id: string,
+    menuId: number,
+    count: number
+) => {
+    return await prisma.cart.updateMany({
+        where: {
+            customer_id: id,
+            menu_id: menuId,
+        },
+        data: {
+            count: {
+                increment: count,
+            },
+        },
+    });
+};
+
 export const createCartDB = async (
     table: string,
     id: string,

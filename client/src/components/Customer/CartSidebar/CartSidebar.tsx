@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Cart, StoreMenus } from '@src/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartArrowDown, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
 import { serverUrl } from '../../../utils/constants';
 import { MenuModal } from '../Menu/MenuModal/MenuModal';
+import { AuthModal } from '../AuthModal/AuthModal';
+import { UserContext } from '../../../contexts';
 
 interface Props {
   cart: Cart;
@@ -19,6 +21,9 @@ export const CartSidebar: React.FC<Props> = ({ cart, setSidebarOpen, sidebarOpen
   const [name, setName] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [menuItem, setMenuItem] = useState<StoreMenus>();
+  const [authModal, setAuthModal] = useState(false);
+  const [authState, setAuthState] = useState('login');
+  const userCtx = useContext(UserContext);
 
   const onRestaurantCardClick = (key: string, id: string) => {
     const keyWithDash = key.trim().replaceAll(' ', '-').toLowerCase();
@@ -43,6 +48,12 @@ export const CartSidebar: React.FC<Props> = ({ cart, setSidebarOpen, sidebarOpen
       const data: StoreMenus = response.data;
       setMenuItem(data);
       setShowModal(true);
+    }
+  };
+
+  const onCheckOutClick = () => {
+    if (!userCtx.user.login) {
+      setAuthModal(true);
     }
   };
 
@@ -89,30 +100,11 @@ export const CartSidebar: React.FC<Props> = ({ cart, setSidebarOpen, sidebarOpen
             })}
           </div>
         )}
-        <div className="checkout-button">
-          {step === 'checkout' && <button onClick={() => setStep('name')}>Checkout</button>}
-          {step === 'name' && (
-            <>
-              <p>Enter your name</p>
-              <input type="text" onChange={(e) => setName(e.target.value)} />{' '}
-              <button onClick={() => setStep('tip')}>Next Step</button>
-            </>
-          )}
-          {step === 'tip' && (
-            <>
-              <p>Enter a tip</p>
-              <input type="number" min="0" step="0.1" onChange={(e) => setTip(parseFloat(e.target.value))} />
-              <button
-                onClick={() => {
-                  navigate('/order');
-                  setSidebarOpen(false);
-                }}
-              >
-                Complete Checkout
-              </button>
-            </>
-          )}
-        </div>
+        {!cart.isCartEmpty && (
+          <div className="checkout-button">
+            <button onClick={() => onCheckOutClick()}>Checkout</button>
+          </div>
+        )}
       </div>
 
       {menuItem && (
@@ -124,6 +116,7 @@ export const CartSidebar: React.FC<Props> = ({ cart, setSidebarOpen, sidebarOpen
           isUpdate={true}
         />
       )}
+      {authModal && <AuthModal authState={authState} setAuthState={setAuthState} setAuthModal={setAuthModal} />}
     </>
   );
 };

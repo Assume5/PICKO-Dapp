@@ -9,8 +9,7 @@
 ALTER TABLE "guest_cart" DROP CONSTRAINT "guest_cart_guest_cookie_value_fkey";
 
 -- AlterTable
-ALTER TABLE "guest_cart" DROP COLUMN "guest_cookie_value",
-ADD COLUMN     "customer_id" TEXT NOT NULL;
+ALTER TABLE "guest_cart" RENAME COLUMN "guest_cookie_value" TO "customer_id";
 
 -- AddForeignKey
 ALTER TABLE "guest_cart" ADD CONSTRAINT "guest_cart_customer_id_fkey" FOREIGN KEY ("customer_id") REFERENCES "guest"("cookie_value") ON DELETE CASCADE ON UPDATE CASCADE;

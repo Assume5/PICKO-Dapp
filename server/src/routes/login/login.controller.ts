@@ -15,6 +15,14 @@ import {
     secure,
 } from "../../utils/constant";
 import { User } from "../../types";
+import {
+    createCartDB,
+    deleteAllCartDB,
+    findFirstCustomerCartItemDB,
+    findFirstGuestCartItemDB,
+    getCartDB,
+    mergeGuestCartDB,
+} from "../../models/cart.modal";
 
 export const generateAccessToken = (user: User) => {
     return sign(user, ACCESS_TOKEN_SECRET, {
@@ -29,6 +37,29 @@ export const generateRefreshToken = (user: User) => {
 };
 
 //customer
+
+export const mergeGuestCartToCustomer = async (
+    guestId: string,
+    userId: string
+) => {
+    const cartItems = await getCartDB("guest_cart", guestId);
+    if (cartItems[1].length) {
+        await deleteAllCartDB("cart", userId);
+        for (let i = 0; i < cartItems[1].length; i++) {
+            const item = cartItems[1][i];
+            const data = await findFirstGuestCartItemDB(guestId, item.menu_id);
+            await createCartDB(
+                "cart",
+                userId,
+                data.menu_id,
+                data.price,
+                data.menu_name,
+                data.count,
+                data.restaurant_id
+            );
+        }
+    }
+};
 
 export const loginCustomer = async (req: Request, res: Response) => {
     const { username, password, guestId } = req.body;
@@ -82,7 +113,8 @@ export const loginCustomer = async (req: Request, res: Response) => {
 
     if (guestId) {
         try {
-            removeGuestDB(guestId);
+            await mergeGuestCartToCustomer(guestId, customer.id);
+            await removeGuestDB(guestId);
             return res.status(200).json({
                 success: true,
                 name: customer.first_name,

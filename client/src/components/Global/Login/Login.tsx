@@ -56,8 +56,10 @@ export const Login: React.FC<Props> = ({ role, setAuthState, setAuthModal }) => 
         role: data.role,
         checked: true,
       });
+
       Cookies.remove('guest_cookie');
       setAuthModal && setAuthModal(false);
+      window.location.reload();
     }
   };
 
