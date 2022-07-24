@@ -23,6 +23,7 @@ import { OwnerRestaurant } from './Owner/OwnerRestaurant/OwnerRestaurant';
 import { Footer } from '@src/components/Global/Footer/Footer';
 import { ScrollToTop } from '@src/components/Global/ScrollToTop/ScrollToTop';
 import { SocketExample } from '@src/components/Global/SocketExample/SocketExample';
+import { Checkout } from './Customer/Checkout/Checkout';
 
 export const Page = () => {
   return (
@@ -37,6 +38,7 @@ export const Page = () => {
               <Route path="/restaurant/:restaurantName/:restaurantId" element={<Restaurant />} />
               <Route path="/eat" element={<Eat />} />
               <Route path="/account" element={<CustomerAccount />} />
+              <Route path="/checkout" element={<Checkout />} />
               <Route path="/order/*" element={<CustomerOrder />} />
 
               <Route path="/owner" element={<StoreHome />} />

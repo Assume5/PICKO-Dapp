@@ -19,10 +19,6 @@ export const SocketContext = createContext<contextType>(contextState);
 export const SocketContextProvider: React.FC = (props) => {
   const [socket, setSocket] = useState<Socket | null>(null);
   useEffect(() => {
-    if (!Cookies.get('socket-cookie')) {
-      const uuid = uuidv4();
-      Cookies.set('socket-cookie', uuid, { expires: 365 });
-    }
     const newSocket = io(serverUrl, {
       transports: ['websocket', 'polling'],
       withCredentials: true,

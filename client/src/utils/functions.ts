@@ -38,6 +38,7 @@ export const logout = async () => {
     const data = await res.json();
 
     if (data.success) {
+      Cookies.remove('socket-cookie');
       return true;
     }
 

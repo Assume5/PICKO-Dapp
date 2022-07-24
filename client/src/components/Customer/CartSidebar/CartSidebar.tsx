@@ -54,6 +54,8 @@ export const CartSidebar: React.FC<Props> = ({ cart, setSidebarOpen, sidebarOpen
   const onCheckOutClick = () => {
     if (!userCtx.user.login) {
       setAuthModal(true);
+    } else {
+      navigate('/checkout');
     }
   };
 

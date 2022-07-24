@@ -30,12 +30,12 @@ const io = new Server(server, {
 // setupWorker(io);
 
 io.on("connection", async (socket: Socket) => {
-    const socketCookie: string = socket.handshake.query[
-        "socket-cookie"
-    ] as string;
+    const socketCookie = socket.handshake.query["socket-cookie"] as string;
+    const refreshToken = socket.handshake.query["refresh_token"] as string;
     console.log("Client connected: ", socket.id);
     socket.leave(socket.id);
     socket.join(socketCookie);
+
     await prisma.socket_session.create({
         data: {
             socket_id: socket.id,

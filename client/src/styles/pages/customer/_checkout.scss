@@ -1,0 +1,154 @@
+.checkout-page {
+  min-height: 100vh;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: $mineShaft;
+  justify-content: space-between;
+  color: $white;
+  padding: $padding6;
+
+  @include breakpoint-max(xxl) {
+    padding: $padding6 $padding4;
+  }
+
+  @include breakpoint-max(lg) {
+    padding: $padding6 $padding2;
+  }
+
+  .empty-checkout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    flex-direction: column;
+    gap: $padding4 0;
+  }
+
+  .modal {
+    &.show {
+      opacity: 1;
+      pointer-events: initial;
+    }
+
+    &-inner {
+      width: 50%;
+      max-width: 500px;
+
+      @include breakpoint-max(md) {
+        width: 100%;
+      }
+
+      .submit-button {
+        margin-top: 0;
+      }
+
+      .address-search {
+        margin: 0;
+        width: 100%;
+
+        &-result {
+          left: 50%;
+          transform: translate(-50%, 0);
+        }
+      }
+
+      .error-message {
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+
+  .checkout-details {
+    width: 35%;
+    padding: 0 $padding3;
+
+    @include breakpoint-max(xxl) {
+      width: 50%;
+    }
+
+    @include breakpoint-max(md) {
+      width: 100%;
+    }
+
+    .link {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    .address {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      svg {
+        margin-right: $padding3;
+      }
+
+      button {
+        padding: $padding2 $padding4;
+        border-radius: 100px;
+
+        @include breakpoint-max(sm) {
+          padding: $padding2 $padding3;
+        }
+      }
+    }
+
+    .order-items {
+      .order-item {
+        transition: transform 0.2s ease-out;
+        cursor: pointer;
+        border-top: 1px solid $white;
+
+        &:last-child {
+          border-bottom: 1px solid $white;
+        }
+
+        &:hover {
+          transform: scale(1.01);
+        }
+      }
+    }
+  }
+
+  .checkout-price {
+    width: 35%;
+    padding: 0 $padding3;
+
+    @include breakpoint-max(md) {
+      width: 100%;
+      margin-top: $spacing;
+    }
+
+    .leaflet-map {
+      margin-bottom: $padding4;
+    }
+
+    .text {
+      display: flex;
+      justify-content: space-between;
+
+      border-bottom: 1px solid $white;
+      padding-bottom: $padding3;
+    }
+
+    button {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: $padding4;
+
+      img {
+        width: 40px;
+        height: 40px;
+        margin-left: $padding4;
+      }
+    }
+  }
+
+  .content div {
+    display: none;
+  }
+}

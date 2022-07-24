@@ -3,6 +3,7 @@ import {
     createGuestDB,
     getCustomerPassword,
     getOwnerPassword,
+    getSocket,
     removeGuestDB,
 } from "../../models/login.model";
 import { findCustomerExist, findOwnerExist } from "../../models/register.model";
@@ -23,6 +24,7 @@ import {
     getCartDB,
     mergeGuestCartDB,
 } from "../../models/cart.modal";
+import { getStoreNameFromDB } from "../../models/store.model";
 
 export const generateAccessToken = (user: User) => {
     return sign(user, ACCESS_TOKEN_SECRET, {
@@ -111,6 +113,7 @@ export const loginCustomer = async (req: Request, res: Response) => {
         maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
+    const cookie = await getSocket(username, "customer");
     if (guestId) {
         try {
             await mergeGuestCartToCustomer(guestId, customer.id);
@@ -119,15 +122,19 @@ export const loginCustomer = async (req: Request, res: Response) => {
                 success: true,
                 name: customer.first_name,
                 role: "customer",
+                socketCookie: cookie,
             });
         } catch (err) {
             return res.status(500).json({ success: false, error: err });
         }
     }
 
-    return res
-        .status(200)
-        .json({ success: true, name: customer.first_name, role: "customer" });
+    return res.status(200).json({
+        success: true,
+        name: customer.first_name,
+        role: "customer",
+        socketCookie: cookie,
+    });
 };
 
 export const createGuest = async (req: Request, res: Response) => {

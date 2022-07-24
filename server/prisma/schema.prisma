@@ -22,182 +22,184 @@ model Post {
   content   String?
   published Boolean  @default(false)
   viewCount Int      @default(0)
-  author    User?    @relation(fields: [authorId], references: [id])
   authorId  Int?
+  author    User?    @relation(fields: [authorId], references: [id])
 }
 
 model test {
-  id      Int     @id @default(autoincrement())
-  fname   String
-  lname   String
+  id    Int    @id @default(autoincrement())
+  fname String
+  lname String
 }
 
 model socket_session {
-  socket_id String @id
+  socket_id     String @id
   socket_cookie String
 }
 
 model guest {
-  cookie_value String @id 
-  carts guest_cart[]
-  create_at DateTime @default(now())
+  cookie_value String       @id
+  create_at    DateTime     @default(now())
+  carts        guest_cart[]
 }
 
 model guest_cart {
-  id Int @id @default(autoincrement())
-  own_by guest @relation(fields: [customer_id], references: [cookie_value], onDelete: Cascade, onUpdate: Cascade)
-  customer_id String
+  id            Int    @id @default(autoincrement())
+  menu_id       Int
+  price         Float
+  count         Int
   restaurant_id String
-  menu_id Int
-  menu_name String
-  price Float
-  count Int
+  menu_name     String
+  customer_id   String
+  own_by        guest  @relation(fields: [customer_id], references: [cookie_value], onDelete: Cascade)
 }
 
 model customer {
-  id String  @id @default(uuid())
-  username String @unique
-  password String
-  first_name String
-  last_name String
-  phone String
+  id               String   @id @default(uuid())
+  username         String   @unique
+  password         String
+  first_name       String
+  last_name        String
+  phone            String
   metamask_address String?
-  carts cart[]
-  orders order[]
-  created_at DateTime @default(now())
+  created_at       DateTime @default(now())
+  socket_cookie    String   @default(uuid())
+  carts            cart[]
+  orders           order[]
 }
 
 model cart {
-  id Int @id @default(autoincrement())
-  customer customer @relation(fields: [customer_id], references: [id])
-  customer_id String
+  id            Int      @id @default(autoincrement())
+  customer_id   String
+  menu_id       Int
+  price         Float
+  count         Int
+  menu_name     String
   restaurant_id String
-  menu_id Int
-  menu_name String
-  price Float
-  count Int
+  customer      customer @relation(fields: [customer_id], references: [id])
 }
 
-
 model driver {
-  id String  @id @default(uuid())
-  username String @unique
-  password String
-  first_name String
-  last_name String
-  address String
-  driver_license String
-  phone String
+  id               String   @id @default(uuid())
+  username         String   @unique
+  password         String
+  first_name       String
+  last_name        String
+  address          String
+  driver_license   String
+  phone            String
   metamask_address String?
-  lat String
-  long String
-  status String
-  orders order[]
-  created_at DateTime @default(now())
+  lat              String
+  long             String
+  status           String
+  created_at       DateTime @default(now())
+  socket_cookie    String   @default(uuid())
+  orders           order[]
 }
 
 model owner {
-  id String @id @default(uuid())
-  username String @unique
-  password String
-  first_name String
-  last_name String
-  phone String
+  id               String       @id @default(uuid())
+  username         String       @unique
+  password         String
+  first_name       String
+  last_name        String
+  phone            String
   metamask_address String?
-  created_at DateTime @default(now())
-  restaurants restaurant[]
+  created_at       DateTime     @default(now())
+  socket_cookie    String       @default(uuid())
+  restaurants      restaurant[]
 }
 
 model restaurant {
-  id String @id @default(uuid())
-  owner owner @relation(fields: [owner_id], references: [id])
-  owner_id String
-  restaurant_name String
-  full_address String
-  address String
-  city String
-  state String
-  zipcode String
-  phone String
-  category String
-  lat String
-  long String
-  open_time String
-  close_time String
-  menu_type  String @default("filter")
-  hero_type String @default("image")
+  id                    String             @id @default(uuid())
+  owner_id              String
+  restaurant_name       String
+  address               String
+  phone                 String
+  category              String
+  lat                   String
+  long                  String
+  menu_type             String             @default("filter")
+  hero_type             String             @default("image")
   restaurant_card_image String
-  view_count Int @default(0)
-  order_count Int @default(0)
-  status String @default("close")
-  menus menus[]
-  menu_category menu_category[]
-  hero_images restaurant_hero[]
-  social_links restaurant_social?
-  orders order[]
-  create_at DateTime @default(now())
+  open_time             String
+  view_count            Int                @default(0)
+  order_count           Int                @default(0)
+  status                String             @default("close")
+  create_at             DateTime           @default(now())
+  city                  String
+  close_time            String
+  full_address          String
+  state                 String
+  zipcode               String
+  owner                 owner              @relation(fields: [owner_id], references: [id])
+  menu_category         menu_category[]
+  menus                 menus[]
+  orders                order[]
+  hero_images           restaurant_hero[]
+  social_links          restaurant_social?
 }
 
 model menus {
-  id Int @id @default(autoincrement())
-  menu_name String
-  restaurant restaurant @relation(fields: [restaurant_id], references: [id])
+  id            Int           @id @default(autoincrement())
+  menu_name     String
   restaurant_id String
-  price Float
-  description String
-  image String
-  menu_category menu_category @relation(fields: [category], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  category Int
-  status String
+  price         Float
+  description   String
+  category      Int
+  status        String
+  image         String
+  menu_category menu_category @relation(fields: [category], references: [id], onDelete: Cascade)
+  restaurant    restaurant    @relation(fields: [restaurant_id], references: [id])
 }
 
 model menu_category {
-    id Int @id @default(autoincrement())
-    category_name String
-    restaurant restaurant @relation(fields: [restaurant_id], references: [id] )
-    restaurant_id String
-    priority Boolean
-    menus menus[]
-    image String?
+  id            Int        @id @default(autoincrement())
+  category_name String
+  restaurant_id String
+  priority      Boolean
+  image         String?
+  restaurant    restaurant @relation(fields: [restaurant_id], references: [id])
+  menus         menus[]
 }
 
 model restaurant_hero {
-  id Int @id @default(autoincrement())
-  hero_image String
-  restaurant restaurant @relation(fields: [restaurant_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  id            Int        @id @default(autoincrement())
   restaurant_id String
+  hero_image    String
+  restaurant    restaurant @relation(fields: [restaurant_id], references: [id], onDelete: Cascade)
 }
 
 model restaurant_social {
-  id Int @id @default(autoincrement())
-  restaurant restaurant @relation(fields: [restaurant_id], references: [id])
-  restaurant_id String @unique
-  twitter_url String
-  facebook_url String
+  id            Int        @id @default(autoincrement())
+  restaurant_id String     @unique
+  twitter_url   String
+  facebook_url  String
   instagram_url String
+  restaurant    restaurant @relation(fields: [restaurant_id], references: [id])
 }
 
 model order {
-  id String @id
-  customer customer @relation(fields: [customer_id], references: [id])
-  customer_id String
-  restaurant restaurant @relation(fields: [restaurant_id], references: [id])
+  id            String          @id
+  customer_id   String
   restaurant_id String
-  driver driver? @relation(fields: [driver_id], references: [id])
-  driver_id String
-  order_date DateTime @default(now())
-  deliver_fee Float
-  driver_tip Float
-  total_items Int
-  status String
-  sub_total Float
-  details order_details[]
+  driver_id     String
+  order_date    DateTime        @default(now())
+  deliver_fee   Float
+  driver_tip    Float
+  total_items   Int
+  status        String
+  sub_total     Float
+  customer      customer        @relation(fields: [customer_id], references: [id])
+  driver        driver          @relation(fields: [driver_id], references: [id])
+  restaurant    restaurant      @relation(fields: [restaurant_id], references: [id])
+  details       order_details[]
 }
 
 model order_details {
-  id Int @id @default(autoincrement())
-  order order @relation(fields: [order_id], references: [id])
+  id       Int    @id @default(autoincrement())
   order_id String
-  menu_id Int
-  count Int
+  menu_id  Int
+  count    Int
+  order    order  @relation(fields: [order_id], references: [id])
 }

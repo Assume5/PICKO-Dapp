@@ -3,8 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Cookies from 'js-cookie';
 import React, { FormEvent, SetStateAction, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from '../../../contexts';
+import { CartContext, UserContext } from '../../../contexts';
 import { serverUrl } from '../../../utils/constants';
+import { getCookie } from '../../../utils/functions';
 
 interface Props {
   role: string;
@@ -17,6 +18,7 @@ export const Login: React.FC<Props> = ({ role, setAuthState, setAuthModal }) => 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const userCtx = useContext(UserContext);
+  const cartCtx = useContext(CartContext);
 
   const onFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -56,9 +58,9 @@ export const Login: React.FC<Props> = ({ role, setAuthState, setAuthModal }) => 
         role: data.role,
         checked: true,
       });
-
       Cookies.remove('guest_cookie');
       setAuthModal && setAuthModal(false);
+      Cookies.set('socket-cookie', data.socketCookie, { expires: 365 });
       window.location.reload();
     }
   };

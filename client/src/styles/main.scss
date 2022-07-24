@@ -15,6 +15,7 @@
 @import 'components/customer/auth_modal';
 @import 'components/customer/cart_sidebar';
 @import 'components/customer/category_filter';
+@import 'components/customer/checkout';
 @import 'components/customer/eat_hero';
 @import 'components/customer/footer';
 @import 'components/customer/home_hero';
@@ -40,6 +41,7 @@
 
 //pages
 @import 'pages/customer/account';
+@import 'pages/customer/checkout';
 @import 'pages/customer/eat';
 @import 'pages/customer/home';
 @import 'pages/customer/order';

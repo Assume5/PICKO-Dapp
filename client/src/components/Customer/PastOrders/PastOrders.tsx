@@ -36,7 +36,7 @@ export const PastOrders: React.FC<Props> = ({ orders }) => {
                     <div className="order-item" key={item}>
                       <p className="item-quantity">{orderItem.quantity}</p>
                       <p>{item}</p>
-                      <p className="price">{orderItem.price}</p>
+                      <p className="price">${orderItem.price}</p>
                     </div>
                   );
                 })}

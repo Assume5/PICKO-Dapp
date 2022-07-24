@@ -57,36 +57,36 @@
         text-decoration: underline;
         cursor: pointer;
       }
+    }
+  }
+}
 
-      .order-item {
-        display: flex;
-        align-items: center;
-        width: auto;
-        border-bottom: 1px solid $white;
+.order-item {
+  display: flex;
+  align-items: center;
+  width: auto;
+  border-bottom: 1px solid $white;
 
-        &:last-child {
-          border-bottom: 0px;
-        }
+  &:last-child {
+    border-bottom: 0px;
+  }
 
-        p {
-          padding: 0px $padding3;
+  p {
+    padding: 0px $padding3;
 
-          &.item-quantity {
-            padding: 0 $padding3;
-            background-color: $gray;
-            border-radius: 10px;
-            height: 40px;
-            color: $white;
-            display: flex;
-            align-items: center;
-            line-height: 1;
-          }
+    &.item-quantity {
+      padding: 0 $padding3;
+      background-color: $gray;
+      border-radius: 10px;
+      height: 40px;
+      color: $white;
+      display: flex;
+      align-items: center;
+      line-height: 1;
+    }
 
-          &.price {
-            margin-left: auto;
-          }
-        }
-      }
+    &.price {
+      margin-left: auto;
     }
   }
 }
