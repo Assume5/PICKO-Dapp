@@ -67,7 +67,7 @@
       width: 50%;
     }
 
-    @include breakpoint-max(md) {
+    @include breakpoint-max(lg) {
       width: 100%;
     }
 
@@ -116,9 +116,53 @@
     width: 35%;
     padding: 0 $padding3;
 
-    @include breakpoint-max(md) {
+    @include breakpoint-max(lg) {
       width: 100%;
       margin-top: $spacing;
+    }
+
+    .tip {
+      border-bottom: 1px solid $white;
+      padding-bottom: $padding3;
+
+      .text {
+        border: none;
+      }
+
+      input[type='radio'] {
+        position: fixed;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      label {
+        display: inline-block;
+        cursor: pointer;
+        padding: $padding2 $padding3;
+        transition: all 0.2s ease-out;
+      }
+
+      input[type='radio']:checked + label {
+        font-weight: bold;
+        color: lighten($aqua, 30%);
+      }
+
+      .radio-group {
+        border: 1px solid $white;
+      }
+
+      .radios {
+        overflow: hidden;
+        width: 100%;
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+      }
+
+      .custom-tip {
+        width: 90%;
+        margin: $padding2 auto;
+      }
     }
 
     .leaflet-map {

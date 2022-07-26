@@ -7,6 +7,7 @@ import { UserContext, CartContext } from '@src/contexts';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthModal } from '../AuthModal/AuthModal';
 import { useCheckLogin } from '../../../hooks/useCheckLogin';
+import { SocketContext } from '../../../contexts/SocketContext';
 
 export const CustomerHeader = () => {
   useCheckLogin();
@@ -18,6 +19,7 @@ export const CustomerHeader = () => {
   const sidebar = useRef(null);
   const userCtx = useContext(UserContext);
   const cartCtx = useContext(CartContext);
+  const socketCtx = useContext(SocketContext);
   if (userCtx === undefined) throw new Error('userCtx Not init');
 
   useEffect(() => {
@@ -61,6 +63,7 @@ export const CustomerHeader = () => {
     if (res) {
       userCtx.setUser({ login: false, checked: true });
       cartCtx.setCart({ isCartEmpty: true });
+      socketCtx && socketCtx.socket && socketCtx.socket.emit('logout');
       navigate('/');
     }
   };

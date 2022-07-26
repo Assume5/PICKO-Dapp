@@ -162,3 +162,65 @@ export const deleteAllCartDB = async (table: string, id: string) => {
         return await prisma.cart.deleteMany(removeData);
     }
 };
+
+// prisma.order.findUnique({
+//     where: {
+//         id: "1",
+//     },
+//     select: {
+//         restaurant: {
+//             select: {
+//                 restaurant_name: true,
+//                 id: true,
+//             },
+//         },
+//         status: true,
+//         order_date: true,
+//         deliver_fee: true,
+//         sub_total: true,
+//         driver_tip: true,
+//         details: {
+//             select: {
+//                 count: true,
+//                 menus: {
+//                     select: {
+//                         menu_name: true,
+//                         price: true,
+//                     },
+//                 },
+//             },
+//         },
+//     },
+// });
+
+// prisma.customer.findUnique({
+//     where: {
+//         id: "1",
+//     },
+//     select: {
+//         orders: {
+//             select: {
+//                 restaurant: {
+//                     select: {
+//                         restaurant_name: true,
+//                         restaurant_card_image: true,
+//                         id: true,
+//                     },
+//                 },
+//                 order_date: true,
+//                 sub_total: true,
+//                 details: {
+//                     select: {
+//                         count: true,
+//                         menus: {
+//                             select: {
+//                                 menu_name: true,
+//                                 price: true,
+//                             },
+//                         },
+//                     },
+//                 },
+//             },
+//         },
+//     },
+// });

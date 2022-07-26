@@ -215,3 +215,4 @@ export type Store = {
   status: string;
   zipcode: string;
 };
+

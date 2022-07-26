@@ -151,6 +151,7 @@ model menus {
   image         String
   menu_category menu_category @relation(fields: [category], references: [id], onDelete: Cascade)
   restaurant    restaurant    @relation(fields: [restaurant_id], references: [id])
+  order_detials order_details[]
 }
 
 model menu_category {
@@ -190,6 +191,7 @@ model order {
   total_items   Int
   status        String
   sub_total     Float
+  socket_cookies String?
   customer      customer        @relation(fields: [customer_id], references: [id])
   driver        driver          @relation(fields: [driver_id], references: [id])
   restaurant    restaurant      @relation(fields: [restaurant_id], references: [id])
@@ -199,6 +201,7 @@ model order {
 model order_details {
   id       Int    @id @default(autoincrement())
   order_id String
+  menus menus @relation(fields: [menu_id], references: [id])
   menu_id  Int
   count    Int
   order    order  @relation(fields: [order_id], references: [id])

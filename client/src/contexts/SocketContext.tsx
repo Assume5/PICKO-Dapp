@@ -32,8 +32,15 @@ export const SocketContextProvider: React.FC = (props) => {
   }, [setSocket]);
 
   useEffect(() => {
+    if (!Cookies.get('socket-cookie')) return;
     socket && socket.emit('JOIN', Cookies.get('socket-cookie'));
+
+    return () => {
+      socket?.off('JOIN');
+    };
   }, [socket]);
+
+  // socket && socket.emit('JOIN', Cookies.get('socket-cookie'));
 
   socket?.on('message', (arg) => {
     console.log(arg);
@@ -42,5 +49,6 @@ export const SocketContextProvider: React.FC = (props) => {
   socket?.on('hello', (arg) => {
     console.log('Some one joined with ID: ', arg);
   });
+
   return <SocketContext.Provider value={{ socket, setSocket }}>{props.children}</SocketContext.Provider>;
 };

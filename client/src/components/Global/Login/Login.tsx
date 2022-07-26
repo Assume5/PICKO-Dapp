@@ -18,7 +18,6 @@ export const Login: React.FC<Props> = ({ role, setAuthState, setAuthModal }) => 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const userCtx = useContext(UserContext);
-  const cartCtx = useContext(CartContext);
 
   const onFormSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -52,14 +51,7 @@ export const Login: React.FC<Props> = ({ role, setAuthState, setAuthModal }) => 
     }
 
     if (data.success) {
-      userCtx.setUser({
-        login: true,
-        name: data.name,
-        role: data.role,
-        checked: true,
-      });
       Cookies.remove('guest_cookie');
-      setAuthModal && setAuthModal(false);
       Cookies.set('socket-cookie', data.socketCookie, { expires: 365 });
       window.location.reload();
     }
