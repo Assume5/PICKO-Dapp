@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker } from 'react-leaflet';
+import React, { useEffect, useRef, useState } from 'react';
+import { MapContainer, TileLayer, Marker, TileLayerProps } from 'react-leaflet';
 import 'leaflet-routing-machine';
 
 import L, { IconOptions } from 'leaflet';
@@ -7,21 +7,34 @@ import { icon } from '@fortawesome/fontawesome-svg-core';
 
 export const Map = () => {
   const [latLong, setLatLong] = useState<[number, number]>();
+  const [destLatLong, setDestLatLong] = useState<[number, number]>([42.99667, -78.80063]);
   const [map, setMap] = useState<L.Map>();
   const [status, setStatus] = useState<string | null>('');
   const [instance, setInstance] = useState<L.Routing.Control | null>(null);
-  const clientDot = L.icon({
-    iconUrl: '/imgs/dot.svg',
-    iconSize: [32, 16],
-  });
-  const storeIcon = L.icon({
-    iconUrl: '/imgs/restaurant-icon.svg',
-    iconSize: [32, 32],
-  });
-  const driverIcon = L.icon({
-    iconUrl: '/imgs/driver-car-icon.svg',
-    iconSize: [32, 20],
-  });
+  const [color, setColor] = useState(localStorage.getItem('map-color') ? localStorage.getItem('map-color') : 'dark');
+  const ref = useRef<any>(null);
+
+  const lightLayer = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png';
+  const darkLayer = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png';
+
+  useEffect(() => {
+    if (!localStorage.getItem('map-color')) {
+      localStorage.setItem('map-color', 'dark');
+      return;
+    }
+    if (!color) return;
+    localStorage.setItem('map-color', color);
+  }, [color]);
+
+  useEffect(() => {
+    if (!ref.current) return;
+    if (color === 'dark') {
+      ref.current.setUrl(darkLayer);
+    } else {
+      ref.current.setUrl(lightLayer);
+    }
+  }, [color]);
+
   useEffect(() => {
     if (!navigator.geolocation) {
       setStatus('Geolocation is not supported by your browser');
@@ -43,7 +56,7 @@ export const Map = () => {
   useEffect(() => {
     if (!latLong) return;
     if (!map) return;
-    const waypoints = [L.latLng(latLong[0], latLong[1]), L.latLng(42.9920483, -78.8195213)];
+    const waypoints = [L.latLng(latLong[0], latLong[1]), L.latLng(destLatLong[0], destLatLong[1])];
 
     if (instance) {
       instance.setWaypoints(waypoints);
@@ -56,8 +69,19 @@ export const Map = () => {
     if (!map) return;
     if (!latLong) return;
 
-    const waypoints = [L.latLng(latLong[0], latLong[1]), L.latLng(42.9920483, -78.8195213)];
-
+    const waypoints = [L.latLng(latLong[0], latLong[1]), L.latLng(destLatLong[0], destLatLong[1])];
+    const clientDot = L.icon({
+      iconUrl: `/imgs/dot${color === 'light' ? '-dark' : ''}.svg`,
+      iconSize: [32, 16],
+    });
+    const storeIcon = L.icon({
+      iconUrl: `/imgs/restaurant-icon${color === 'light' ? '-dark' : ''}.svg`,
+      iconSize: [32, 32],
+    });
+    const driverIcon = L.icon({
+      iconUrl: `/imgs/driver-car-icon${color === 'light' ? '-dark' : ''}.svg`,
+      iconSize: [32, 20],
+    });
     const plan = new L.Routing.Plan(waypoints, {
       createMarker: (i, wp, nWps) => {
         let icon: L.Icon<IconOptions> | null = null;
@@ -73,21 +97,23 @@ export const Map = () => {
         });
       },
     });
-    const instance = new L.Routing.Control({
+
+    const formatter = new L.Routing.Formatter({
+      units: 'imperial',
+      distanceTemplate: `{value} {unit}`,
+    });
+
+    const instance = L.Routing.control({
       waypoints: waypoints,
       routeWhileDragging: false,
       addWaypoints: false,
       lineOptions: {
-        styles: [{ color: 'white', opacity: 1, weight: 3 }],
-        missingRouteStyles: [
-          { color: 'black', opacity: 0.15, weight: 7 },
-          { color: 'white', opacity: 0.6, weight: 4 },
-          { color: 'gray', opacity: 0.8, weight: 2, dashArray: '7,12' },
-        ],
+        styles: [{ color: `${color === 'dark' ? 'white' : 'black'}`, opacity: 1, weight: 5 }],
         addWaypoints: false,
         extendToWaypoints: true,
         missingRouteTolerance: 0,
       },
+      formatter,
       plan,
     }).addTo(map);
 
@@ -96,12 +122,12 @@ export const Map = () => {
     return () => {
       map.removeControl(instance);
     };
-  }, [map]);
+  }, [map, color]);
 
   if (!latLong) return null;
 
   return (
-    <div className="leaflet-map" id="mapid" style={{ height: '100vh' }}>
+    <div className={`leaflet-map driver-map ${color}`} id="mapid" style={{ height: '100vh' }}>
       <MapContainer
         center={[latLong[0], latLong[1]]}
         zoom={20}
@@ -111,9 +137,27 @@ export const Map = () => {
       >
         <TileLayer
           attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
-          url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"
+          url={color && color === 'dark' ? darkLayer : lightLayer}
+          ref={ref}
         />
       </MapContainer>
+      <button
+        className="open-google-map map-button"
+        onClick={() => {
+          window.open(`https://maps.google.com/?q=${destLatLong[0]},${destLatLong[1]}`, '_blank');
+        }}
+      >
+        Open in Google Map
+      </button>
+
+      <button
+        className="map-button layer-button"
+        onClick={() => {
+          color === 'dark' ? setColor('light') : setColor('dark');
+        }}
+      >
+        {color === 'dark' ? 'White Layer' : 'Dark Layer'}
+      </button>
     </div>
   );
 };

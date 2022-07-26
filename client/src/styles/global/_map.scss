@@ -1,0 +1,78 @@
+.driver-map {
+  .map-button {
+    color: $black;
+    z-index: 10000;
+
+    @include breakpoint-max(sm) {
+      padding: $padding3;
+    }
+  }
+
+  &.dark {
+    color: $white;
+
+    .map-button {
+      background-color: $white;
+      color: $black;
+    }
+  }
+
+  &.light {
+    color: $black;
+
+    .map-button {
+      background-color: $black;
+      color: $white;
+    }
+  }
+
+  .layer-button {
+    position: absolute;
+    bottom: 50px;
+    left: 10px;
+  }
+
+  .open-google-map {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .leaflet-right {
+    width: 100%;
+  }
+
+  .leaflet-routing-container {
+    border: none;
+    width: 100%;
+    margin: 0;
+    margin-top: 80px;
+
+    .leaflet-routing-alt {
+      display: flex;
+      flex-direction: column-reverse;
+      justify-content: center;
+      align-items: center;
+
+      h2 {
+        display: none;
+      }
+
+      tbody {
+        tr {
+          display: none;
+          font-size: 14px;
+          font-weight: bold;
+
+          &:first-child {
+            display: block;
+          }
+        }
+      }
+      &-minimized {
+        display: none;
+      }
+    }
+  }
+}
