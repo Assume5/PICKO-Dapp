@@ -9,6 +9,7 @@ export const Map = () => {
   const [latLong, setLatLong] = useState<[number, number]>();
   const [map, setMap] = useState<L.Map>();
   const [status, setStatus] = useState<string | null>('');
+  const [instance, setInstance] = useState<L.Routing.Control | null>(null);
   const clientDot = L.icon({
     iconUrl: '/imgs/dot.svg',
     iconSize: [32, 16],
@@ -44,6 +45,19 @@ export const Map = () => {
     if (!map) return;
     const waypoints = [L.latLng(latLong[0], latLong[1]), L.latLng(42.9920483, -78.8195213)];
 
+    if (instance) {
+      instance.setWaypoints(waypoints);
+    }
+
+    map.flyTo([latLong[0], latLong[1]]);
+  }, [latLong]);
+
+  useEffect(() => {
+    if (!map) return;
+    if (!latLong) return;
+
+    const waypoints = [L.latLng(latLong[0], latLong[1]), L.latLng(42.9920483, -78.8195213)];
+
     const plan = new L.Routing.Plan(waypoints, {
       createMarker: (i, wp, nWps) => {
         let icon: L.Icon<IconOptions> | null = null;
@@ -59,7 +73,6 @@ export const Map = () => {
         });
       },
     });
-
     const instance = new L.Routing.Control({
       waypoints: waypoints,
       routeWhileDragging: false,
@@ -78,11 +91,12 @@ export const Map = () => {
       plan,
     }).addTo(map);
 
-    map.flyTo([latLong[0], latLong[1]]);
+    setInstance(instance);
+
     return () => {
       map.removeControl(instance);
     };
-  }, [latLong]);
+  }, [map]);
 
   if (!latLong) return null;
 
