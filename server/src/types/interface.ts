@@ -10,4 +10,5 @@ export interface CustomJwtPayload extends JwtPayload {
 export interface UserAuthInfo extends Request {
     user: CustomJwtPayload;
     accessToken: string;
+    refreshToken: string;
 }

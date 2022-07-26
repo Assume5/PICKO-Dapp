@@ -24,6 +24,7 @@ import { Footer } from '@src/components/Global/Footer/Footer';
 import { ScrollToTop } from '@src/components/Global/ScrollToTop/ScrollToTop';
 import { SocketExample } from '@src/components/Global/SocketExample/SocketExample';
 import { Checkout } from './Customer/Checkout/Checkout';
+import { Map } from './Customer/Map/Map';
 
 export const Page = () => {
   return (
@@ -48,6 +49,7 @@ export const Page = () => {
               <Route path="/owner/:id/account/:page" element={<OwnerAccount />} />
 
               <Route path="/test-example" element={<TestServer />} />
+              <Route path="/map" element={<Map />} />
             </Routes>
             <Footer />
           </BrowserRouter>
