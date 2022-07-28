@@ -1,5 +1,10 @@
 import { Router } from "express";
-import { loginCustomer, loginOwner, createGuest } from "./login.controller";
+import {
+    loginCustomer,
+    loginOwner,
+    createGuest,
+    loginDriver,
+} from "./login.controller";
 
 const loginRouter = Router();
 
@@ -8,6 +13,6 @@ loginRouter.post("/guest", createGuest);
 
 loginRouter.post("/owner", loginOwner);
 
-loginRouter.post("/driver");
+loginRouter.post("/driver", loginDriver);
 
 export default loginRouter;

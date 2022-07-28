@@ -15,6 +15,7 @@ import storeRouter from "./store/store.router";
 import cartRouter from "./cart/cart.router";
 import menuRouter from "./menu/menu.router";
 import orderRouter from "./order/order.router";
+import userRouter from "./driver/user.router";
 
 const api = Router();
 
@@ -37,6 +38,8 @@ api.use("/menus", menuRouter);
 api.use("/order", orderRouter);
 
 api.use("/store", storeRouter);
+
+api.use("/user", userRouter);
 
 api.use("/restaurant", restaurantRouter);
 api.use("/restaurant", restaurantSettingRouter);

@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../contexts';
 import { serverUrl } from '../utils/constants';
 import { v4 as uuidv4 } from 'uuid';
+import { User } from '../types';
 
 export const useCheckLogin = () => {
   const userCtx = useContext(UserContext);
@@ -18,15 +19,21 @@ export const useCheckLogin = () => {
       const response = await res.json();
 
       if (response.success) {
-        userCtx.setUser({
+        const data: User = {
           login: true,
           name: response.name,
           role: response.role,
           checked: true,
-        });
+        };
+
+        if (response.role === 'driver') {
+          data.driverStatus = response.status;
+        }
+        userCtx.setUser(data);
         Cookies.remove('guest_cookie');
       } else {
         userCtx.setUser({ login: false, checked: true });
+        Cookies.set('role', 'customer', { expires: 365 });
         if (!Cookies.get('guest_cookie')) {
           const guestId = uuidv4();
           Cookies.set('guest_cookie', guestId, { expires: 7 });

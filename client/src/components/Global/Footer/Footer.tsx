@@ -28,7 +28,7 @@ export const Footer = () => {
           <Link to="/owner">Become a Restaurant Partner</Link>
         </p>
         <p className="footer-link">
-          <a href="#">Become a PICKO Driver</a>
+          <Link to="/driver">Become a PICKO Driver</Link>
         </p>
       </div>
 

@@ -1,13 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '@src/contexts';
-import { OwnerHome } from '@src/components/Owner/OwnerHome/OwnerHome';
-import { RestaurantDetails } from '@src/components/Owner/RestaurantDetails/RestaurantDetails';
 import { Login } from '../../../components/Global/Login/Login';
 import { OwnerHeader } from '../../../components/Owner/OwnerHeader/OwnerHeader';
 import { JoinRestaurantForm } from '../../../components/Owner/JoinRestaurantForm/JoinRestaurantForm';
 import { serverUrl } from '../../../utils/constants';
 import { useNavigate } from 'react-router-dom';
-import { useCheckLoginRedirect } from '../../../hooks/useCheckLoginRedirect';
+
 export const Home = () => {
   const userCtx = useContext(UserContext);
   const navigate = useNavigate();
@@ -51,7 +49,6 @@ export const Home = () => {
     <>
       <OwnerHeader />
       <div className="owner-home page">
-        {console.log(loaded)}
         {loaded &&
           (!userCtx.user.login ? (
             <Login role={'owner'} />

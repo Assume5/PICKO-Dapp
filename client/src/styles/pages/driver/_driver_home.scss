@@ -1,0 +1,23 @@
+.driver-home {
+  padding: 0;
+
+  &.driver-not-login {
+    padding: $spacing;
+
+    @include breakpoint-max(lg) {
+      padding: $spacing $padding3;
+    }
+  }
+
+  .driver-map {
+    width: 100%;
+    top: 90px;
+    position: relative;
+    height: calc(100vh - 90px) !important;
+
+    @include breakpoint-max(sm) {
+      top: 74px;
+      height: calc(100vh - 74px) !important;
+    }
+  }
+}

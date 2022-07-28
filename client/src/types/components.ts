@@ -17,6 +17,7 @@ export type User = {
   restaurant_id?: string;
   role?: string;
   checked: boolean;
+  driverStatus?: string; // 0 = offline 1 = online 2 = has order
 };
 
 export type HeroType = {
@@ -215,4 +216,3 @@ export type Store = {
   status: string;
   zipcode: string;
 };
-

@@ -1,12 +1,11 @@
 import { Request, Response } from "express";
 import {
     createGuestDB,
-    getCustomerPassword,
-    getOwnerPassword,
+    getAccountPassword,
     getSocket,
     removeGuestDB,
 } from "../../models/login.model";
-import { findCustomerExist, findOwnerExist } from "../../models/register.model";
+import { findAccountExist } from "../../models/register.model";
 import { sign } from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import {
@@ -19,18 +18,15 @@ import { User } from "../../types";
 import {
     createCartDB,
     deleteAllCartDB,
-    findFirstCustomerCartItemDB,
-    findFirstGuestCartItemDB,
+    findFirstGuestCartItemDB, 
     getCartDB,
-    mergeGuestCartDB,
 } from "../../models/cart.modal";
-import { getStoreNameFromDB } from "../../models/store.model";
 
 export const generateAccessToken = (user: User) => {
-    return sign(user, ACCESS_TOKEN_SECRET, {
-        expiresIn: "20m",
+    return sign(user, ACCESS_TOKEN_SECRET, { 
+        expiresIn: "15s",
     });
-};
+}; 
 
 export const generateRefreshToken = (user: User) => {
     return sign(user, REFRESH_TOKEN_SECRET, {
@@ -71,7 +67,7 @@ export const loginCustomer = async (req: Request, res: Response) => {
             .json({ success: false, error: "Missing Property" });
     }
 
-    const customer = await findCustomerExist(username);
+    const customer = await findAccountExist(username, "customer");
 
     if (!customer) {
         return res.status(401).json({
@@ -80,7 +76,7 @@ export const loginCustomer = async (req: Request, res: Response) => {
         });
     }
 
-    const customerPassword = await getCustomerPassword(username);
+    const customerPassword = await getAccountPassword(username, "customer");
     const result = await bcrypt.compare(password, customerPassword);
 
     if (!result) {
@@ -164,7 +160,7 @@ export const loginOwner = async (req: Request, res: Response) => {
             .json({ success: false, error: "Missing Property" });
     }
 
-    const owner = await findOwnerExist(username);
+    const owner = await findAccountExist(username, "owner");
 
     if (!owner) {
         return res.status(401).json({
@@ -173,7 +169,7 @@ export const loginOwner = async (req: Request, res: Response) => {
         });
     }
 
-    const ownerPassword = await getOwnerPassword(username);
+    const ownerPassword = await getAccountPassword(username, "owner");
     const result = await bcrypt.compare(password, ownerPassword);
 
     if (!result) {
@@ -217,3 +213,63 @@ export const loginOwner = async (req: Request, res: Response) => {
 };
 
 //driver
+
+export const loginDriver = async (req: Request, res: Response) => {
+    const { username, password } = req.body;
+    if (!username || !password) {
+        return res
+            .status(400)
+            .json({ success: false, error: "Missing Property" });
+    }
+
+    const driver = await findAccountExist(username, "driver");
+
+    if (!driver) {
+        return res.status(401).json({
+            success: false,
+            error: "Invalid username or password",
+        });
+    }
+
+    const driverPassword = await getAccountPassword(username, "driver");
+    const result = await bcrypt.compare(password, driverPassword);
+
+    if (!result) {
+        return res.status(401).json({
+            success: false,
+            error: "Invalid username or password",
+        });
+    }
+
+    const user: User = {
+        userId: driver.id,
+        name: driver.first_name,
+        role: "driver",
+    };
+
+    const accessToken = generateAccessToken(user);
+    const refreshToken = generateRefreshToken(user);
+
+    res.cookie("access_token", accessToken, {
+        httpOnly: true,
+        sameSite: sameSite,
+        secure: secure,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    res.cookie("refresh_token", refreshToken, {
+        httpOnly: true,
+        sameSite: sameSite,
+        secure: secure,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+
+    const cookie = await getSocket(username, "driver");
+
+    return res.status(200).json({
+        success: true,
+        name: driver.first_name,
+        role: "driver",
+        socketCookie: cookie,
+    });
+};

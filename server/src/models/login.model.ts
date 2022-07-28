@@ -1,29 +1,24 @@
 import { prisma } from "../services/db";
 
-export const getOwnerPassword = async (username: string) => {
-    const res = await prisma.owner.findUnique({
+export const getAccountPassword = async (username: string, table: string) => {
+    const data = {
         where: {
             username,
         },
         select: {
             password: true,
         },
-    });
-
-    return res.password;
-};
-
-export const getCustomerPassword = async (username: string) => {
-    const res = await prisma.customer.findUnique({
-        where: {
-            username,
-        },
-        select: {
-            password: true,
-        },
-    });
-
-    return res.password;
+    };
+    if (table === "customer") {
+        const res = await prisma.customer.findUnique(data);
+        return res.password;
+    } else if (table === "owner") {
+        const res = await prisma.owner.findUnique(data);
+        return res.password;
+    } else {
+        const res = await prisma.driver.findUnique(data);
+        return res.password;
+    }
 };
 
 export const getSocket = async (username: string, table: string) => {

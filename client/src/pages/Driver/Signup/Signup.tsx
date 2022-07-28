@@ -1,13 +1,13 @@
 import React from 'react';
+import { DriverHeader } from '../../../components/Driver/DriverHeader/DriverHeader';
 import { SignUpForm } from '../../../components/Global/SignUpForm/SignUpForm';
-import { OwnerHeader } from '../../../components/Owner/OwnerHeader/OwnerHeader';
 
-export const SignUp = () => {
+export const Signup = () => {
   return (
     <>
-      <OwnerHeader />
+      <DriverHeader />
       <div className="sign-up">
-        <SignUpForm role={'owner'} />
+        <SignUpForm role={'driver'} />
       </div>
     </>
   );

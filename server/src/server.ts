@@ -28,6 +28,8 @@ const io = new Server(server, {
     allowEIO3: true,
 });
 
+app.set("socket", io);
+
 // io.adapter(createAdapter());
 // setupWorker(io);
 

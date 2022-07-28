@@ -53,6 +53,7 @@ export const Login: React.FC<Props> = ({ role, setAuthState, setAuthModal }) => 
     if (data.success) {
       Cookies.remove('guest_cookie');
       Cookies.set('socket-cookie', data.socketCookie, { expires: 365 });
+      Cookies.set('role', role, { expires: 365 });
       window.location.reload();
     }
   };

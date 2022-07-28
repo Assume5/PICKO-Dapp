@@ -63,7 +63,7 @@ export const authenticateToken = (
                             },
                             ACCESS_TOKEN_SECRET,
                             {
-                                expiresIn: "20m",
+                                expiresIn: "15s",
                             }
                         );
                         req.accessToken = access_token;

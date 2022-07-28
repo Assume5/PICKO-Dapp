@@ -19,10 +19,13 @@ import { Account as OwnerAccount } from './Owner/Account/Account';
 import { SignUp as OwnerSignUp } from './Owner/SignUp/SignUp';
 import { OwnerRestaurant } from './Owner/OwnerRestaurant/OwnerRestaurant';
 
+//pages driver
+import { Home as DriverHome } from './Driver/Home/Home';
+import { Signup as DriverSignup } from './Driver/Signup/Signup';
+
 //components
 import { Footer } from '@src/components/Global/Footer/Footer';
 import { ScrollToTop } from '@src/components/Global/ScrollToTop/ScrollToTop';
-import { SocketExample } from '@src/components/Global/SocketExample/SocketExample';
 import { Checkout } from './Customer/Checkout/Checkout';
 import { Map } from './Customer/Map/Map';
 
@@ -33,7 +36,6 @@ export const Page = () => {
         <CartContextProvider>
           <BrowserRouter>
             <ScrollToTop />
-            <SocketExample />
             <Routes>
               <Route path="/" element={<CustomerHome />} />
               <Route path="/restaurant/:restaurantName/:restaurantId" element={<Restaurant />} />
@@ -47,6 +49,9 @@ export const Page = () => {
               <Route path="/owner/sign-up" element={<OwnerSignUp />} />
               <Route path="/owner/:id" element={<OwnerRestaurant />} />
               <Route path="/owner/:id/account/:page" element={<OwnerAccount />} />
+
+              <Route path="/driver" element={<DriverHome />} />
+              <Route path="/driver/sign-up" element={<DriverSignup />} />
 
               <Route path="/test-example" element={<TestServer />} />
               <Route path="/map" element={<Map />} />

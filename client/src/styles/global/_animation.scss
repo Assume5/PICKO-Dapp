@@ -93,3 +93,17 @@
     transform: scale(0.8);
   }
 }
+
+@keyframes dash-left-right {
+  0% {
+    left: 0;
+    width: 25px;
+  }
+  50% {
+    width: 50px;
+  }
+  100% {
+    left: 100%;
+    width: 25px;
+  }
+}

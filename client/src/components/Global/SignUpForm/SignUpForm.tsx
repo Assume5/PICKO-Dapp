@@ -3,11 +3,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { serverUrl } from '../../../utils/constants';
+import { AddressSearch } from '../../Customer/AddressSearch/AddressSearch';
 
 interface Props {
   role: string;
   setAuthState?: React.Dispatch<React.SetStateAction<string>>;
 }
+
+type body = {
+  email: string;
+  password: string;
+  fname: string;
+  lname: string;
+  phone: string;
+  address?: string;
+  license?: string;
+};
 
 export const SignUpForm: React.FC<Props> = ({ role, setAuthState }) => {
   const navigate = useNavigate();
@@ -23,25 +34,34 @@ export const SignUpForm: React.FC<Props> = ({ role, setAuthState }) => {
       fname: { value: string };
       lname: { value: string };
       phone: { value: string };
+      address: { value: string };
+      license: { value: string };
     };
 
     setError(null);
 
     const { email, password, fname, lname, phone } = target;
 
+    const body: body = {
+      email: email.value,
+      password: password.value,
+      fname: fname.value,
+      lname: lname.value,
+      phone: phone.value,
+    };
+
+    if (role === 'driver') {
+      const { address, license } = target;
+      body.address = address.value;
+      body.license = license.value;
+    }
     const res = await fetch(`${serverUrl}/register/${role}`, {
       method: 'POST',
       mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        email: email.value,
-        password: password.value,
-        fname: fname.value,
-        lname: lname.value,
-        phone: phone.value,
-      }),
+      body: JSON.stringify(body),
     });
 
     const data = await res.json();
@@ -53,7 +73,7 @@ export const SignUpForm: React.FC<Props> = ({ role, setAuthState }) => {
     setLoading(false);
 
     if (data.success) {
-      setAuthState ? setAuthState('login') : navigate('/owner');
+      setAuthState ? setAuthState('login') : navigate(`/${role}`);
     }
   };
   return (
@@ -81,6 +101,19 @@ export const SignUpForm: React.FC<Props> = ({ role, setAuthState }) => {
             <input type="text" name="lname" required />
           </div>
         </div>
+        {role === 'driver' && (
+          <>
+            <div>
+              <label>Address</label>
+              <input type="text" name="address" required />
+            </div>
+            <div>
+              <label>Driver License Number</label>
+              <input type="text" name="license" required />
+            </div>
+          </>
+        )}
+
         <label>Phone Number</label>
         <input type="text" name="phone" required />
         {error && <p className="form-error">{error}</p>}

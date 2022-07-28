@@ -8,6 +8,7 @@ import {
     secure,
 } from "../../utils/constant";
 import { checkRestaurantExists } from "../../models/check.model";
+import { getDriverStatus } from "../../models/user.modal";
 
 export const checkLogin = (req: UserAuthInfo, res: Response) => {
     const accessToken = req.cookies["access_token"];
@@ -18,7 +19,7 @@ export const checkLogin = (req: UserAuthInfo, res: Response) => {
     verify(
         accessToken,
         ACCESS_TOKEN_SECRET,
-        (err: VerifyErrors, user: CustomJwtPayload) => {
+        async (err: VerifyErrors, user: CustomJwtPayload) => {
             if (err && err.name === "TokenExpiredError") {
                 const refreshToken = req.cookies["refresh_token"];
                 if (!refreshToken) {
@@ -78,17 +79,32 @@ export const checkLogin = (req: UserAuthInfo, res: Response) => {
                     }
                 );
             }
-
-            return res
-                .status(200)
-                .json({ success: true, name: user.name, role: user.role });
+            if (user && user.role) {
+                if (user.role === "driver") {
+                    const data = await getDriverStatus(user.userId);
+                    return res.status(200).json({
+                        success: true,
+                        name: user.name,
+                        role: user.role,
+                        status: data.status,
+                    });
+                } else {
+                    return res.status(200).json({
+                        success: true,
+                        name: user.name,
+                        role: user.role,
+                    });
+                }
+            } else {
+                return res.status(200).json({ success: false });
+            }
         }
     );
 };
 
 export const checkRestaurant = async (req: UserAuthInfo, res: Response) => {
     const result = await checkRestaurantExists(req.user.userId);
-    
+
     if (result) {
         return res.status(200).json({ exists: true, id: result.id });
     }

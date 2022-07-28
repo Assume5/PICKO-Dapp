@@ -1,8 +1,9 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Cart } from '@src/types';
 import { serverUrl } from '../../utils/constants';
 import Cookies from 'js-cookie';
 import { getCookie } from '../../utils/functions';
+import { UserContext } from '../UserContext';
 
 type contextType = {
   cart: Cart | undefined;
@@ -21,7 +22,7 @@ export const CartContextProvider: React.FC = (props) => {
 
   useEffect(() => {
     const initCart = async () => {
-      if (!getCookie('address_details')) {
+      if (!getCookie('address_details') || Cookies.get('role') === 'owner' || Cookies.get('role') === 'driver') {
         setCart({ isCartEmpty: true });
         return;
       }

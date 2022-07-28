@@ -162,7 +162,7 @@ export const CheckoutPrice: React.FC<Props> = ({ cartCtx, address }) => {
         <button onClick={() => onCheckoutClick('card')}>
           Place Order - $ {(total + tip).toFixed(2)} <img src="/imgs/credit-card.svg" alt="" />
         </button>
-        <button onClick={() => onCheckoutClick('metamask')}>
+        <button className="disable-button" type="button" disabled={true}>
           Place Order - ETH {((total + tip) / etherNow).toFixed(3)} <img src="/imgs/MetaMask_Fox.svg" alt="" />
         </button>
       </div>

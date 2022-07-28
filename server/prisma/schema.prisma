@@ -191,6 +191,12 @@ model order {
   total_items   Int
   status        String
   sub_total     Float
+  restaurant_lat  Float?
+  restaurant_long Float?
+  destination_lat Float?
+  destination_long Float?
+  driver_lat  Float?
+  driver_long Float?
   socket_cookies String?
   customer      customer        @relation(fields: [customer_id], references: [id])
   driver        driver          @relation(fields: [driver_id], references: [id])

@@ -196,4 +196,6 @@ p.error {
   color: $error;
 }
 
-
+.disable-button {
+  cursor: not-allowed;
+}

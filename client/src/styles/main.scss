@@ -8,6 +8,7 @@
 @import 'global/nav';
 @import 'global/leaflet';
 @import 'global/map';
+@import 'global/signup';
 
 //components
 @import 'components/global/login_sign_up_form';
@@ -52,4 +53,5 @@
 @import 'pages/owner/account';
 @import 'pages/owner/home';
 @import 'pages/owner/menus';
-@import 'pages/owner/signup';
+
+@import 'pages/driver/driver_home';
