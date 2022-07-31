@@ -3,6 +3,9 @@
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
+    "engines": {
+        "node": "16.13.2"
+    },
     "scripts": {
         "install-server": "npm install --prefix server",
         "install-client": "npm install --prefix client",
