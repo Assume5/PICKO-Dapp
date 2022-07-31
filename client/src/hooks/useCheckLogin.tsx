@@ -27,7 +27,21 @@ export const useCheckLogin = () => {
         };
 
         if (response.role === 'driver') {
-          data.driverStatus = response.status;
+          const res = await fetch(`${serverUrl}/check/driver/status`, {
+            method: 'GET',
+            mode: 'cors',
+            credentials: 'include',
+          });
+
+          const response = await res.json();
+
+          if (response.error) {
+            console.error(response.error);
+          }
+
+          if (response.success) {
+            data.driverStatus = response.status;
+          }
         }
         userCtx.setUser(data);
         Cookies.remove('guest_cookie');

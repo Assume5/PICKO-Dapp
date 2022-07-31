@@ -19,7 +19,7 @@ export const checkLogin = (req: UserAuthInfo, res: Response) => {
     verify(
         accessToken,
         ACCESS_TOKEN_SECRET,
-        async (err: VerifyErrors, user: CustomJwtPayload) => {
+        (err: VerifyErrors, user: CustomJwtPayload) => {
             if (err && err.name === "TokenExpiredError") {
                 const refreshToken = req.cookies["refresh_token"];
                 if (!refreshToken) {
@@ -80,21 +80,11 @@ export const checkLogin = (req: UserAuthInfo, res: Response) => {
                 );
             }
             if (user && user.role) {
-                if (user.role === "driver") {
-                    const data = await getDriverStatus(user.userId);
-                    return res.status(200).json({
-                        success: true,
-                        name: user.name,
-                        role: user.role,
-                        status: data.status,
-                    });
-                } else {
-                    return res.status(200).json({
-                        success: true,
-                        name: user.name,
-                        role: user.role,
-                    });
-                }
+                return res.status(200).json({
+                    success: true,
+                    name: user.name,
+                    role: user.role,
+                });
             } else {
                 return res.status(200).json({ success: false });
             }
@@ -110,4 +100,13 @@ export const checkRestaurant = async (req: UserAuthInfo, res: Response) => {
     }
 
     return res.status(200).json({ exists: false });
+};
+
+export const checkDriverStatus = async (req: UserAuthInfo, res: Response) => {
+    try {
+        const data = await getDriverStatus(req.user.userId);
+        return res.status(200).json({ success: true, status: data.status });
+    } catch (err) {
+        return res.status(500).json({ success: false, error: err });
+    }
 };

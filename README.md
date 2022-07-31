@@ -101,6 +101,7 @@
     npm run watch
 
 ### Init DB
+
     cd server
     npm install
     npm run init-db

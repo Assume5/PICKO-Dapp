@@ -94,6 +94,7 @@ model driver {
   status           String
   created_at       DateTime @default(now())
   socket_cookie    String   @default(uuid())
+  current_order    String?
   orders           order[]
 }
 

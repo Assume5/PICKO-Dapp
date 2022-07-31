@@ -58,7 +58,7 @@ export const deleteExample = async (req: Request, res: Response) => {
 
 const generateAccessToken = (user: any) => {
     return sign(user, ACCESS_TOKEN_SECRET, {
-        expiresIn: "15s",
+        expiresIn: "20m",
     });
 };
 

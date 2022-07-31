@@ -1,6 +1,15 @@
 .driver-home {
   padding: 0;
 
+  .before-locating {
+    color: $white;
+    position: absolute;
+    z-index: 1;
+    top: calc(50% + 45px);
+    width: 100%;
+    text-align: center;
+  }
+  
   &.driver-not-login {
     padding: $spacing;
 

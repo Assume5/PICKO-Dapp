@@ -24,7 +24,7 @@ import {
 
 export const generateAccessToken = (user: User) => {
     return sign(user, ACCESS_TOKEN_SECRET, { 
-        expiresIn: "15s",
+        expiresIn: "20m",
     });
 }; 
 

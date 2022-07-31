@@ -21,12 +21,22 @@
 
       &.online {
         &.active {
+          button {
+            background-color: $black;
+            color: $white;
+          }
+
           .order-item {
             border-color: $black;
+          }
 
-            button {
-              background-color: $black;
-              color: $white;
+          .vertical-line {
+            border-left: 2px solid $black;
+          }
+
+          .item-container {
+            .item {
+              border: 1px solid $black;
             }
           }
         }
@@ -50,12 +60,22 @@
 
       &.online {
         &.active {
+          button {
+            background-color: $white;
+            color: $black;
+          }
+
           .order-item {
             border-color: $white;
+          }
 
-            button {
-              background-color: $white;
-              color: $black;
+          .vertical-line {
+            border-left: 2px solid $white;
+          }
+
+          .item-container {
+            .item {
+              border: 1px solid $white;
             }
           }
         }
@@ -149,6 +169,43 @@
 
           p {
             font-size: 14px;
+          }
+
+          .button-container {
+            display: flex;
+            gap: 0 $padding2;
+
+            @include breakpoint-max(md) {
+              flex-direction: column;
+              gap: $padding2 0;
+            }
+          }
+
+          &.step-two {
+            svg {
+              margin-right: $padding3;
+            }
+
+            .vertical-line {
+              height: 50px;
+              width: 2px;
+              margin: $padding3 auto;
+            }
+
+            .item-container {
+              .item {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                margin: $padding3 0;
+                padding: $padding3;
+              }
+            }
+
+            button {
+              width: 100%;
+              border-radius: 0;
+            }
           }
         }
 

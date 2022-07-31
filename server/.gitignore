@@ -13,6 +13,7 @@
 /build
 /client/build
 /dist
+/public
 
 # misc
 .DS_Store

@@ -16,7 +16,6 @@ export const Home = () => {
     };
     initCheck();
   }, [navigate]);
-
   return (
     <>
       <CustomerHeader />
