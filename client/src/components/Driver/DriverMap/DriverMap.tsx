@@ -58,7 +58,7 @@ export const DriverMap: React.FC<Props> = ({ userCtx }) => {
       userCtx.user.checked &&
       userCtx.user.login &&
       userCtx.user.role === 'driver' &&
-      (userCtx.user.driverStatus === '1' || userCtx.user.driverStatus === '2')
+      userCtx.user.driverStatus !== '0'
     ) {
       const res = await fetch(`${serverUrl}/user/driver/update-location`, {
         method: 'PUT',
@@ -88,7 +88,8 @@ export const DriverMap: React.FC<Props> = ({ userCtx }) => {
           setStatus(null);
           setMessageClass('');
           setLatLong([position.coords.latitude, position.coords.longitude]);
-          updateDriverLocation(position.coords.latitude, position.coords.longitude);
+          await updateDriverLocation(position.coords.latitude, position.coords.longitude);
+          console.log(position);
         },
         () => {
           setStatus('Unable to retrieve your location');
