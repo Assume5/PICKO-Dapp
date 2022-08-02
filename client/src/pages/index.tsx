@@ -42,7 +42,7 @@ export const Page = () => {
               <Route path="/eat" element={<Eat />} />
               <Route path="/account" element={<CustomerAccount />} />
               <Route path="/checkout" element={<Checkout />} />
-              <Route path="/order/*" element={<CustomerOrder />} />
+              <Route path="/order/:id" element={<CustomerOrder />} />
 
               <Route path="/owner" element={<StoreHome />} />
               <Route path="/owner/menus" element={<MenusPage />} />

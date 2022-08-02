@@ -46,6 +46,11 @@ export const CheckoutDetails: React.FC<Props> = ({ cartCtx, setAddressModal }) =
     }
   };
 
+  const onRestaurantLinkClick = (key: string, id: string) => {
+    const keyWithDash = key.trim().replaceAll(' ', '-').toLowerCase();
+    navigate(`/restaurant/${keyWithDash}/${id}`);
+  };
+
   useEffect(() => {
     if (!address || !cart) return;
     const home = getCookie('address_details').home;
@@ -56,7 +61,9 @@ export const CheckoutDetails: React.FC<Props> = ({ cartCtx, setAddressModal }) =
   return (
     <>
       <div className="checkout-details">
-        <h2 className="link">{cart?.restaurantName}</h2>
+        <h2 className="link" onClick={() => onRestaurantLinkClick(cart!.restaurantName!, cart!.restaurantID!)}>
+          {cart?.restaurantName}
+        </h2>
         <p className="address">
           <div>
             <FontAwesomeIcon icon={faLocationArrow} />

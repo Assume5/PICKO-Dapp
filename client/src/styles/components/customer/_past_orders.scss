@@ -1,5 +1,6 @@
 .past-orders {
   width: 50%;
+  min-height: 100vh;
   margin: 0 auto;
 
   @include breakpoint-max(xl) {

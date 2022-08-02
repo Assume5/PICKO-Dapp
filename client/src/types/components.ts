@@ -91,6 +91,18 @@ export type Orders = {
   };
 };
 
+type OwnerOrderItems = {
+  id: string;
+  order_date: string;
+};
+
+export type Details = {
+  count: number;
+  menu_id: number;
+  menu_name: string;
+  price: number;
+};
+
 export type OrderStatus = {
   orderID: number;
   orderFrom: string;
@@ -106,6 +118,58 @@ export type OrderStatus = {
   driverTips: number;
   deliveryFee: number;
   total: number;
+};
+
+export type OrderDetails = {
+  deliver_fee: number;
+  delivery_address: string;
+  destination_lat: number;
+  destination_long: number;
+  details: Details[];
+  driver_lat: number | null;
+  driver_long: number | null;
+  driver_tip: number;
+  id: string;
+  order_date: string;
+  payment_method: string;
+  restaurant: {
+    restaurant_name: string;
+    restaurant_card_image: string;
+    id: string;
+  };
+  restaurant_lat: number;
+  restaurant_long: number;
+  status: string;
+  sub_total: number;
+  sub_total_eth: number;
+  total_items: number;
+};
+
+export type OwnerOrderDetails = {
+  id: string;
+  order_date: string;
+  customer: {
+    first_name: string;
+    last_name: string;
+    phone: string;
+  };
+  driver: {
+    first_name: string;
+    last_name: string;
+    phone: string;
+  };
+  details: Details[];
+  payment_method: string;
+  status: string;
+  sub_total: number;
+  sub_total_eth: number;
+  total_items: number;
+};
+
+export type orderSocketArgs = {
+  status: string;
+  driverLat?: number;
+  driverLong?: number;
 };
 
 export type StepOneData = {

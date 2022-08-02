@@ -4,7 +4,10 @@ import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import { getCookie } from '../../../../utils/functions';
 import { SocketContext } from '../../../../contexts/SocketContext';
-import { etherscanAPI } from '../../../../utils/constants';
+import { etherscanAPI, serverUrl } from '../../../../utils/constants';
+import { v4 as uuidv4 } from 'uuid';
+import { useNavigate } from 'react-router-dom';
+import { CartContext } from '../../../../contexts';
 
 type contextType = {
   cart: Cart | undefined;
@@ -28,7 +31,7 @@ export const CheckoutPrice: React.FC<Props> = ({ cartCtx, address }) => {
   const [tipType, setTipType] = useState('15');
   const [etherNow, setEtherNow] = useState(0);
   const socketCtx = useContext(SocketContext);
-
+  const navigate = useNavigate();
   const clientDot = L.icon({
     iconUrl: '/imgs/dot.svg',
     iconSize: [32, 16],
@@ -39,8 +42,6 @@ export const CheckoutPrice: React.FC<Props> = ({ cartCtx, address }) => {
       try {
         const res = await fetch(`https://api.etherscan.io/api?module=stats&action=ethprice&apikey=${etherscanAPI}`);
         const data = await res.json();
-        console.log(data.result.ethusd);
-        console.log(data);
         setEtherNow(+data.result.ethusd);
       } catch (err) {
         console.error('EtherScan Error: ', err);
@@ -73,17 +74,64 @@ export const CheckoutPrice: React.FC<Props> = ({ cartCtx, address }) => {
     setLatLong(latLong);
   }, [address]);
 
-  const createOrder = async () => {
-    socketCtx &&
-      socketCtx.socket &&
-      cartCtx &&
-      cartCtx.cart &&
-      socketCtx.socket.emit('customer-place-order', cartCtx.cart.restaurantID);
+  const createOrder = async (payment_method: string) => {
+    if (!cartCtx.cart) return;
+    console.log(cartCtx.cart);
+
+    const { cartItems, deliveryAddress, restaurantID, restaurantName } = cartCtx.cart;
+    const deliver_fee = 3;
+    const driver_tip = tip;
+    const total_items = cartItems?.length;
+    const sub_total = (total + tip).toFixed(2);
+    const sub_total_eth = ((total + tip) / etherNow).toFixed(3);
+    const destination_lat = latLong?.lat;
+    const destination_long = latLong?.long;
+    const order_number = uuidv4();
+
+    const res = await fetch(`${serverUrl}/order`, {
+      method: 'POST',
+      credentials: 'include',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        cartItems,
+        delivery_address: deliveryAddress,
+        restaurantID,
+        restaurantName,
+        deliver_fee,
+        driver_tip,
+        total_items,
+        sub_total,
+        sub_total_eth,
+        destination_lat,
+        destination_long,
+        order_number,
+        payment_method,
+      }),
+    });
+
+    const response = await res.json();
+
+    if (response.error) {
+      console.error(response.error);
+    }
+
+    if (response.success) {
+      socketCtx &&
+        socketCtx.socket &&
+        cartCtx &&
+        cartCtx.cart &&
+        socketCtx.socket.emit('customer-place-order', cartCtx.cart.restaurantID);
+      cartCtx.setCart({ isCartEmpty: true });
+      navigate(`/order/${order_number}`);
+    }
   };
 
   const onCheckoutClick = async (type: string) => {
     if (type === 'card') {
-      createOrder();
+      createOrder(type);
     } else {
       // trigger metamask
     }
@@ -127,7 +175,7 @@ export const CheckoutPrice: React.FC<Props> = ({ cartCtx, address }) => {
           </>
         )}
         <p className="subtotal text">
-          Subtotal: <strong>$ {total}</strong>
+          Subtotal: <strong>$ {(total - 3).toFixed(2)}</strong>
         </p>
         <p className="delivery-fee text">
           Delivery Fee & Services Fee: <strong>$ 3.00</strong>

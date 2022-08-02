@@ -61,7 +61,7 @@ export const Login: React.FC<Props> = ({ role, setAuthState, setAuthModal }) => 
   return (
     <div className={`login ${setAuthState && 'fade-in-up'}`}>
       <form onSubmit={(e) => onFormSubmit(e)}>
-        <h2>Sign In</h2>
+        <h2>{role} Sign In</h2>
         <label>Email</label>
         <input type="email" name="email" required />
         <label>Password</label>

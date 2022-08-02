@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Orders } from '@src/types';
+import { OrderDetails, Orders } from '@src/types';
+import { serverUrl } from '../../../utils/constants';
+import { formatDate } from '../../../utils/functions';
 
 interface Props {
   orders: Orders;
@@ -8,43 +10,76 @@ interface Props {
 
 export const PastOrders: React.FC<Props> = ({ orders }) => {
   const navigate = useNavigate();
+  const [pastOrders, setPastOrders] = useState<OrderDetails[]>();
 
-  const onRedirectClick = (key: string, id: number) => {
+  useEffect(() => {
+    const fetchOrders = async () => {
+      const res = await fetch(`${serverUrl}/order/customer`, {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'include',
+      });
+
+      const response = await res.json();
+
+      if (response.error) {
+        console.error(response.error);
+      }
+
+      if (response.success) {
+        console.log(response.data);
+        setPastOrders(response.data);
+      }
+    };
+
+    fetchOrders();
+  }, []);
+
+  if (!pastOrders) return null;
+
+  const onRedirectClick = (key: string, id: string) => {
     const keyWithDash = key.trim().replaceAll(' ', '-').toLowerCase();
-    navigate(`/restaurant/${keyWithDash}-${id}`);
+    navigate(`/restaurant/${keyWithDash}/${id}`);
   };
 
   return (
-    <div className="past-orders">
-      {Object.keys(orders).map((key) => {
-        const order = orders[key];
-        return (
-          <div className="order-details" key={key}>
-            <div className="order-details-image">
-              <img onClick={() => onRedirectClick(key, order.storeID)} src={order.storeImage} alt="" />
-            </div>
-            <div className="order-details-desc">
-              <h2 onClick={() => onRedirectClick(key, order.storeID)}>{key}</h2>
-              <p>
-                Total {order.totalItems} Items for {order.totalPrice} ETH at {order.orderDate}
-              </p>
-              <p onClick={() => navigate(`/order/${order.orderID}`)} className="receipt">View Receipt</p>
-              <div className="order-items">
-                {Object.keys(order.orderItems).map((item) => {
-                  const orderItem = order.orderItems[item];
-                  return (
-                    <div className="order-item" key={item}>
-                      <p className="item-quantity">{orderItem.quantity}</p>
-                      <p>{item}</p>
-                      <p className="price">${orderItem.price}</p>
-                    </div>
-                  );
-                })}
+    <>
+        {pastOrders.map((order) => {
+          return (
+            <div className="order-details" key={order.id}>
+              <div className="order-details-image">
+                <img
+                  onClick={() => onRedirectClick(order.restaurant.restaurant_name, order.restaurant.id)}
+                  src={order.restaurant.restaurant_card_image}
+                  alt=""
+                />
+              </div>
+              <div className="order-details-desc">
+                <h2 onClick={() => onRedirectClick(order.restaurant.restaurant_name, order.restaurant.id)}>
+                  {order.restaurant.restaurant_name}
+                </h2>
+                <h4>{formatDate(order.order_date)}</h4>
+                <p>
+                  Total {order.total_items} Items for $ {order.sub_total}
+                </p>
+                <p onClick={() => navigate(`/order/${order.id}`)} className="receipt">
+                  View Receipt
+                </p>
+                <div className="order-items">
+                  {order.details.map((item) => {
+                    return (
+                      <div className="order-item" key={item.menu_id}>
+                        <p className="item-quantity">{item.count}</p>
+                        <p>{item.menu_name}</p>
+                        <p className="price">${item.price.toFixed(2)}</p>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </div>
-          </div>
-        );
-      })}
-    </div>
+          );
+        })}
+    </>
   );
 };

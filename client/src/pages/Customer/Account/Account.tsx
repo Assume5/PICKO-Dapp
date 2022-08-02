@@ -15,7 +15,9 @@ export const Account = () => {
       <>
         <CustomerHeader />
         <div className="account">
-          <PastOrders orders={orders} />
+          <div className="past-orders">
+            <PastOrders orders={orders} />
+          </div>
         </div>
       </>
     );

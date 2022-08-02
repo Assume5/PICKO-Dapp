@@ -103,6 +103,10 @@ input:not([type='radio']):not([type='checkbox']) {
     width: 30px;
     height: 30px;
     cursor: pointer;
+
+    @include breakpoint-max(sm) {
+      right: 15px;
+    }
   }
 
   .submit-button {

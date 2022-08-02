@@ -9,7 +9,8 @@ export const getRestaurant = async (id: string) => {
         select: {
             status: true,
             restaurant_name: true,
-
+            lat: true,
+            long: true,
             orders: true,
         },
     });

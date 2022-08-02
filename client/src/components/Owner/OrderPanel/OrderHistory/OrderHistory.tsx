@@ -1,12 +1,16 @@
 import React from 'react';
 import { faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { OwnerOrderDetails } from '../../../../types';
+import { formatDate } from '../../../../utils/functions';
 
 interface Props {
   setOrderModal: React.Dispatch<React.SetStateAction<boolean>>;
+  orders: OwnerOrderDetails[];
+  setDetails: React.Dispatch<React.SetStateAction<OwnerOrderDetails | null>>;
 }
 
-export const OrderHistory: React.FC<Props> = ({ setOrderModal }) => {
+export const OrderHistory: React.FC<Props> = ({ setOrderModal, orders, setDetails }) => {
   return (
     <div className="order-history fade-in-up">
       <div className="top-bar">
@@ -20,58 +24,45 @@ export const OrderHistory: React.FC<Props> = ({ setOrderModal }) => {
           <th className="courier-name">Courier</th>
           <th className="total">Subtotal</th>
         </tr>
-        <tr onClick={() => setOrderModal(true)}>
-          <td className="status-container">
-            <FontAwesomeIcon icon={faCheckCircle} className="success" />
-            <div className="status">
-              <p>Completed</p>
-              <p>May 14, 2022 - 12:00 PM</p>
-            </div>
-          </td>
-          <td>1</td>
-          <td>Chenyi Z.</td>
-          <td>Chenyi Z</td>
-          <td>$1000</td>
-        </tr>
-        <tr onClick={() => setOrderModal(true)}>
-          <td className="status-container">
-            <FontAwesomeIcon icon={faCheckCircle} className="success" />
-            <div className="status">
-              <p>Completed</p>
-              <p>May 14, 2022 - 12:00 PM</p>
-            </div>
-          </td>
-          <td>1</td>
-          <td>Chenyi Z.</td>
-          <td>Chenyi Z</td>
-          <td>$1000</td>
-        </tr>
-        <tr onClick={() => setOrderModal(true)}>
-          <td className="status-container">
-            <FontAwesomeIcon icon={faTimesCircle} className="fail" />
-            <div className="status">
-              <p>Cancelled</p>
-              <p>May 14, 2022 - 12:00 PM</p>
-            </div>
-          </td>
-          <td>1</td>
-          <td>Chenyi Z.</td>
-          <td>Chenyi Z</td>
-          <td>$1000</td>
-        </tr>
-        <tr onClick={() => setOrderModal(true)}>
-          <td className="status-container">
-            <FontAwesomeIcon icon={faTimesCircle} className="fail" />
-            <div className="status">
-              <p>Cancelled</p>
-              <p>May 14, 2022 - 12:00 PM</p>
-            </div>
-          </td>
-          <td>1</td>
-          <td>Chenyi Z.</td>
-          <td>Chenyi Z</td>
-          <td>$1000</td>
-        </tr>
+        {orders.map((item) => {
+          if (item.status !== '4' && item.status !== '-1') return;
+
+          return (
+            <>
+              <tr
+                onClick={() => {
+                  setOrderModal(true);
+                  setDetails(item);
+                }}
+                key={item.id}
+              >
+                <td className="status-container">
+                  {item.status === '4' ? (
+                    <FontAwesomeIcon icon={faCheckCircle} className="success" />
+                  ) : (
+                    <FontAwesomeIcon icon={faTimesCircle} className="fail" />
+                  )}
+                  <div className="status">
+                    <p>{item.status === '4' ? 'Completed' : 'Cancelled'}</p>
+                    <p>{formatDate(item.order_date)}</p>
+                  </div>
+                </td>
+                <td>{item.id}</td>
+                <td>
+                  {item.customer.first_name} {item.customer.last_name[0]}.
+                </td>
+
+                <td>
+                  {item.driver &&
+                    item.driver.first_name &&
+                    item.driver.last_name &&
+                    `${item.driver.first_name} ${item.driver.last_name[0]}.`}
+                </td>
+                <td>$ {item.sub_total}</td>
+              </tr>
+            </>
+          );
+        })}
       </table>
     </div>
   );

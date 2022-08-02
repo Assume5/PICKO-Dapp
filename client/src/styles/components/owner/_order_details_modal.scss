@@ -19,6 +19,13 @@
       padding: $spacingMobile;
     }
 
+    .order-number {
+      padding-right: $padding4;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
     .order-info,
     .order-items,
     .summary {
@@ -30,18 +37,7 @@
 
       .item {
         display: flex;
-
-        h3 {
-          width: 30%;
-        }
-
-        h4 {
-          width: 50%;
-        }
-
-        p {
-          width: 20%;
-        }
+        justify-content: space-between;
       }
     }
 

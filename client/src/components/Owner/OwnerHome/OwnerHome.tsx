@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { RestaurantInformation } from '../../../types';
+import { OwnerOrderDetails, RestaurantInformation } from '../../../types';
 import { serverUrl } from '../../../utils/constants';
 import { Menus } from '../Menus/Menus';
+import { NewOrderModal } from '../NewOrderModal/NewOrderModal';
 import { OrderPanel } from '../OrderPanel/OrderPanel';
 import { RestaurantDetails } from '../RestaurantDetails/RestaurantDetails';
 
@@ -10,6 +11,8 @@ export const OwnerHome = () => {
   const [loaded, setLoaded] = useState(false);
   const { id } = useParams();
   const [data, setData] = useState<RestaurantInformation | null>(null);
+  const [orders, setOrders] = useState<OwnerOrderDetails[] | null>(null);
+  const [newOrderModal, setNewOrderModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -33,7 +36,32 @@ export const OwnerHome = () => {
       setLoaded(true);
     };
 
+    const fetchOrders = async () => {
+      const res = await fetch(`${serverUrl}/order/owner`, {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'include',
+      });
+
+      const response = await res.json();
+      if (response.error) {
+        console.error(response.error);
+      }
+
+      if (response.success) {
+        const data: OwnerOrderDetails[] = response.data;
+        for (const i of data) {
+          if (i.status === '0') {
+            setNewOrderModal(true);
+            break;
+          }
+        }
+        setOrders(data);
+      }
+    };
+
     fetchData();
+    fetchOrders();
   }, []);
 
   if (!loaded && !data) return <></>;
@@ -41,7 +69,8 @@ export const OwnerHome = () => {
   return (
     <>
       <RestaurantDetails data={data!} />
-      <OrderPanel />
+      {orders && <OrderPanel orders={orders} setOrders={setOrders} />}
+      <NewOrderModal setNewOrderModal={setNewOrderModal} newOrderModal={newOrderModal} disableNav={true} />
     </>
   );
 };

@@ -123,7 +123,7 @@ export const SignUpForm: React.FC<Props> = ({ role, setAuthState }) => {
         <p
           className="sign-up-button"
           onClick={() => {
-            setAuthState ? setAuthState('login') : navigate('/owner');
+            setAuthState ? setAuthState('login') : navigate(`/${role}`);
           }}
         >
           Login

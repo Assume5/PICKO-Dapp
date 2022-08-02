@@ -1,11 +1,14 @@
 import React from 'react';
+import { Details, OwnerOrderDetails } from '../../../../types';
+import { formatDate } from '../../../../utils/functions';
 
 interface Props {
   setOrderModal: React.Dispatch<React.SetStateAction<boolean>>;
+  orders: OwnerOrderDetails[];
+  setDetails: React.Dispatch<React.SetStateAction<OwnerOrderDetails | null>>;
 }
 
-export const NewOrders: React.FC<Props> = ({ setOrderModal }) => {
-  //fetch all
+export const NewOrders: React.FC<Props> = ({ setOrderModal, orders, setDetails }) => {
   return (
     <div className="new-orders fade-in-up">
       <div className="new-order info-bar">
@@ -14,21 +17,25 @@ export const NewOrders: React.FC<Props> = ({ setOrderModal }) => {
         <p className="order-time">Ordered at</p>
       </div>
 
-      <div className="new-order" onClick={() => setOrderModal(true)}>
-        <p className="order-number">1</p>
-        <p className="customer-name">Chenyi Z.</p>
-        <p className="order-time">12:00PM</p>
-      </div>
-      <div className="new-order" onClick={() => setOrderModal(true)}>
-        <p className="order-number">2</p>
-        <p className="customer-name">Random Z.</p>
-        <p className="order-time">12:01PM</p>
-      </div>
-      <div className="new-order" onClick={() => setOrderModal(true)}>
-        <p className="order-number">3</p>
-        <p className="customer-name">LongLongRandomFirstName Z.</p>
-        <p className="order-time">12:03PM</p>
-      </div>
+      {orders.map((item) => {
+        if (item.status !== '0') return;
+        return (
+          <div
+            className="new-order"
+            onClick={() => {
+              setOrderModal(true);
+              setDetails(item);
+            }}
+            key={item.id}
+          >
+            <p className="order-number">{item.id}</p>
+            <p className="customer-name">
+              {item.customer.first_name} {item.customer.last_name[0]}.
+            </p>
+            <p className="order-time">{formatDate(item.order_date).split(' - ')[1]}</p>
+          </div>
+        );
+      })}
     </div>
   );
 };

@@ -30,6 +30,9 @@ export const Footer = () => {
         <p className="footer-link">
           <Link to="/driver">Become a PICKO Driver</Link>
         </p>
+        <p className="footer-link">
+          <Link to="/">Customer</Link>
+        </p>
       </div>
 
       <div className="footer-col">

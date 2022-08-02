@@ -1,13 +1,56 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { OwnerOrderDetails } from '../../../types';
+import { formatDate } from '../../../utils/functions';
+import { serverUrl } from '../../../utils/constants';
 
 interface Props {
   setOrderModal: React.Dispatch<React.SetStateAction<boolean>>;
+  details: OwnerOrderDetails;
+  orders: OwnerOrderDetails[];
+  setOrders: React.Dispatch<React.SetStateAction<OwnerOrderDetails[] | null>>;
 }
 
-export const OrderDetailModal: React.FC<Props> = ({ setOrderModal }) => {
-  //fetch, different status has different layout
+export const OrderDetailModal: React.FC<Props> = ({ setOrderModal, details, orders, setOrders }) => {
+  const [total, setTotal] = useState(0);
+  useEffect(() => {
+    let tempTotal = 0;
+    details.details.forEach((item) => {
+      tempTotal += item.price;
+    });
+
+    setTotal(+tempTotal.toFixed(2));
+  }, []);
+
+  const updateStatus = async (status: string) => {
+    const res = await fetch(`${serverUrl}/order/${details.id}`, {
+      method: 'PUT',
+      credentials: 'include',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        status,
+      }),
+    });
+
+    const response = await res.json();
+
+    console.log(response);
+    if (response.success) {
+      const newState = orders.map((item) => {
+        if (item.id === details.id) {
+          return { ...item, status: status };
+        }
+        return item;
+      });
+      setOrders(newState);
+      setOrderModal(false);
+    }
+  };
+
   return (
     <div className="order-details-modal modal fade-in">
       <div className="close-button">
@@ -16,52 +59,46 @@ export const OrderDetailModal: React.FC<Props> = ({ setOrderModal }) => {
       <div className="modal-inner">
         <div className="order-info">
           <p className="order-number">
-            Order number: <strong>1</strong>
+            Order number: <strong>{details.id}</strong>
           </p>
           <p className="customer-name">
-            Order from: <strong>Chenyi Z</strong>
+            Order from:{' '}
+            <strong>
+              {details.customer.first_name} {details.customer.last_name[0]}
+            </strong>
           </p>
           <p className="customer-phone">
-            Phone number: <strong>1-123-123-1234</strong>
+            Phone number: <strong>{details.customer.phone}</strong>
           </p>
           <p className="order-date">
-            Order at: <strong>05/13/2022 - 12:00PM</strong>
+            Order at: <strong>{formatDate(details.order_date)}</strong>
           </p>
         </div>
         <div className="order-items">
-          <div className="item">
-            <h3>1</h3>
-            <h4>Ramen</h4>
-            <p>$100</p>
-          </div>
-          <div className="item">
-            <h3>5</h3>
-            <h4>Ramen</h4>
-            <p>$100</p>
-          </div>
-          <div className="item">
-            <h3>3</h3>
-            <h4>Ramen</h4>
-            <p>$100</p>
-          </div>
+          {details.details.map((item) => {
+            return (
+              <div className="item" key={item.menu_id}>
+                <p>{item.count}</p>
+                <p>{item.menu_name}</p>
+                <p>$ {item.price.toFixed(2)}</p>
+              </div>
+            );
+          })}
         </div>
-        <div className="summary">Total: 1000</div>
+        <div className="summary">
+          Total: <strong>$ {total}</strong>
+        </div>
         <div className="action-button">
-          {/* {status === 'new-order' && (
+          {details.status === '0' && (
             <div>
-              <button>CANCEL</button>
-              <button>CONFIRM</button>
+              <button className="cancel-button" onClick={() => updateStatus('-1')}>
+                CANCEL
+              </button>
+              <button className="button" onClick={() => updateStatus('1')}>
+                CONFIRM
+              </button>
             </div>
           )}
-
-          {status === 'in-progress' && (
-            <div>
-              <button>READY FOR PICKUP</button>
-            </div>
-          )} */}
-
-          <button className="cancel-button">CANCEL</button>
-          <button className="button">CONFIRM</button>
         </div>
       </div>
     </div>

@@ -6,6 +6,10 @@
   align-items: center;
   justify-content: center;
 
+  h2 {
+    text-transform: capitalize;
+  }
+
   form {
     width: 500px;
     margin: 0 auto;

@@ -185,13 +185,15 @@ model order {
   id            String          @id
   customer_id   String
   restaurant_id String
-  driver_id     String
+  driver_id     String?
   order_date    DateTime        @default(now())
   deliver_fee   Float
   driver_tip    Float
   total_items   Int
   status        String
   sub_total     Float
+  sub_total_eth Float
+  payment_method String
   restaurant_lat  Float?
   restaurant_long Float?
   destination_lat Float?
@@ -199,8 +201,12 @@ model order {
   driver_lat  Float?
   driver_long Float?
   socket_cookies String?
+  delivery_address String
+  confirm_at    String?
+  ready_at      String?
+  compelete_at  String?
   customer      customer        @relation(fields: [customer_id], references: [id])
-  driver        driver          @relation(fields: [driver_id], references: [id])
+  driver        driver?          @relation(fields: [driver_id], references: [id])
   restaurant    restaurant      @relation(fields: [restaurant_id], references: [id])
   details       order_details[]
 }
@@ -211,5 +217,7 @@ model order_details {
   menus menus @relation(fields: [menu_id], references: [id])
   menu_id  Int
   count    Int
+  price    Float
+  menu_name String
   order    order  @relation(fields: [order_id], references: [id])
 }

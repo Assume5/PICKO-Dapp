@@ -22,3 +22,25 @@ export type RestaurantEat = {
     long: string;
     distance: number;
 };
+
+export type order = {
+    order_number: string;
+    customer_id: string;
+    payment_method: string;
+    cartItems: {
+        menu_id: number;
+        menu_name: string;
+        price: number;
+        count: number;
+    }[];
+    delivery_address: string;
+    restaurantID: string;
+    restaurantName: string;
+    deliver_fee: number;
+    driver_tip: number;
+    total_items: number;
+    sub_total: number;
+    sub_total_eth: number;
+    destination_lat: number;
+    destination_long: number;
+};

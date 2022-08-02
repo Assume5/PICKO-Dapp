@@ -6,10 +6,17 @@ import { InProgressOrders } from './InProgressOrders/InProgressOrders';
 import { ReadyForPickUp } from './ReadyForPickUp/ReadyForPickUp';
 import { OrderHistory } from './OrderHistory/OrderHistory';
 import { OrderDetailModal } from '../OrderDetailModal/OrderDetailModal';
+import { OwnerOrderDetails } from '../../../types';
 
-export const OrderPanel = () => {
+interface Props {
+  orders: OwnerOrderDetails[];
+  setOrders: React.Dispatch<React.SetStateAction<OwnerOrderDetails[] | null>>;
+}
+
+export const OrderPanel: React.FC<Props> = ({ orders, setOrders }) => {
   const [activeController, setActiveController] = useState('new-orders');
   const [orderModal, setOrderModal] = useState(false);
+  const [details, setDetails] = useState<OwnerOrderDetails | null>(null);
 
   return (
     <>
@@ -41,13 +48,23 @@ export const OrderPanel = () => {
           </div>
         </div>
         <div className="content">
-          {activeController === 'new-orders' && <NewOrders setOrderModal={setOrderModal} />}
-          {activeController === 'in-progress-orders' && <InProgressOrders setOrderModal={setOrderModal} />}
-          {activeController === 'ready-for-pickup-orders' && <ReadyForPickUp setOrderModal={setOrderModal} />}
-          {activeController === 'order-history' && <OrderHistory setOrderModal={setOrderModal} />}
+          {activeController === 'new-orders' && (
+            <NewOrders setOrderModal={setOrderModal} setDetails={setDetails} orders={orders} />
+          )}
+          {activeController === 'in-progress-orders' && (
+            <InProgressOrders setOrderModal={setOrderModal} setDetails={setDetails} orders={orders} />
+          )}
+          {activeController === 'ready-for-pickup-orders' && (
+            <ReadyForPickUp setOrderModal={setOrderModal} setDetails={setDetails} orders={orders} />
+          )}
+          {activeController === 'order-history' && (
+            <OrderHistory setOrderModal={setOrderModal} setDetails={setDetails} orders={orders} />
+          )}
         </div>
       </div>
-      {orderModal && <OrderDetailModal setOrderModal={setOrderModal} />}
+      {orderModal && details && (
+        <OrderDetailModal setOrderModal={setOrderModal} details={details} orders={orders} setOrders={setOrders} />
+      )}
     </>
   );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { MapContainer, TileLayer, Marker, TileLayerProps } from 'react-leaflet';
 import 'leaflet-routing-machine';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,6 +10,7 @@ import { DriverStepZero } from '../DriverPhase/DriverStepZero';
 import { DriverStepOne } from '../DriverPhase/DriverStepOne';
 import { DriverStepTwo } from '../DriverPhase/DriverStepTwo';
 import { DriverStepThree } from '../DriverPhase/DriverStepThree';
+import { SocketContext } from '../../../contexts/SocketContext';
 
 interface contextType {
   user: User;
