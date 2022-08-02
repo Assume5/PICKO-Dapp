@@ -1,10 +1,9 @@
 # PICKO Dapp
 
-## Front end Demo Link: https://poetic-pothos-edd2df.netlify.app/
+## Front end Demo Link: https://picko-app.herokuapp.com/
 
 ## Requirement
 
-##### Ganache
 
 ##### Node version >= 16.13.2
 
@@ -13,7 +12,7 @@
 ## Optional
 
 ##### Truffle
-
+##### Ganache
 ##### MetaMask
 
 ## Installation
@@ -83,17 +82,11 @@
     // outside the development console..
     truffle test
 
-### Server
+### Using the App
 
     npm install
-    npm run server
-
-### Client
-
-##### We are using React typescript for client side. Smart contract changes must be manually recompile and migrated.
-
-    npm install
-    npm run client
+    npm run pre-deploy
+    npm run start
 
 ### Watch CSS, Client, and Server
 
