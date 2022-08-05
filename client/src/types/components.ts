@@ -199,6 +199,30 @@ export type DriverOrder = {
   compelete_at: string;
 };
 
+export type DriverPastOrders = {
+  id: string;
+  restaurant: {
+    restaurant_name: string;
+    address: string;
+    city: string;
+    state: string;
+    zipcode: string;
+  };
+  customer: {
+    first_name: string;
+    last_name: string;
+  };
+  driver_tip: number;
+  restaurant_lat: number;
+  restaurant_long: number;
+  pickup_at: string;
+  ready_at: string;
+  compelete_at: string;
+  status: string;
+  total_items: true;
+  details: Details[];
+};
+
 export type orderSocketArgs = {
   id: string;
   status: string;

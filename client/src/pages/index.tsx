@@ -22,6 +22,7 @@ import { OwnerRestaurant } from './Owner/OwnerRestaurant/OwnerRestaurant';
 //pages driver
 import { Home as DriverHome } from './Driver/Home/Home';
 import { Signup as DriverSignup } from './Driver/Signup/Signup';
+import { Account as DriverAccount } from './Driver/Account/Account';
 
 //components
 import { Footer } from '@src/components/Global/Footer/Footer';
@@ -54,6 +55,7 @@ export const Page = () => {
 
                 <Route path="/driver" element={<DriverHome />} />
                 <Route path="/driver/sign-up" element={<DriverSignup />} />
+                <Route path="/driver/account" element={<DriverAccount />} />
 
                 <Route path="/test-example" element={<TestServer />} />
                 <Route path="/map" element={<Map />} />

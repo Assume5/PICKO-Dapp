@@ -6,6 +6,7 @@ import {
     clearDriverCurrentOrderDB,
     createOrderDB,
     getDriverCurrentOrderDetailsDB,
+    getDriverOrderDB,
     getNearByDriverDB,
     getNearByOrderDB,
     getOrderCustomerDB,
@@ -61,6 +62,11 @@ export const getOrder = async (req: UserAuthInfo, res: Response) => {
             return res
                 .status(200)
                 .json({ success: true, data: data.restaurants[0].orders });
+        }
+
+        if (role === "driver") {
+            const data = await getDriverOrderDB(userId);
+            return res.status(200).json({ success: true, data: data.orders });
         }
         return res.status(200).json({ success: true });
     } catch (err) {

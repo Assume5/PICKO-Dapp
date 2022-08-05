@@ -1,0 +1,88 @@
+.driver-account {
+  h2 {
+    color: $white;
+    text-align: center;
+  }
+
+  .driver-order-item {
+    color: $white;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    border: 1px solid $white;
+    border-radius: 5px;
+    padding: $padding2 $padding3;
+    margin: $padding5 0;
+
+    p {
+      padding: $padding2 0;
+    }
+  }
+
+  .driver-account-modal {
+    &.visible {
+      opacity: 1;
+      pointer-events: initial;
+    }
+
+    .modal-inner {
+      max-width: 50%;
+      max-height: 80%;
+      overflow-x: hidden;
+      background-color: $white;
+      border-radius: 20px;
+      padding: $padding4 $padding4;
+      padding-bottom: $padding5;
+      position: relative;
+      text-align: center;
+      width: 50%;
+
+      @include breakpoint-max(xl) {
+        max-width: 100%;
+      }
+
+      @include breakpoint-max(lg) {
+        width: 60%;
+      }
+
+      @include breakpoint-max(md) {
+        width: 70%;
+      }
+
+      @include breakpoint-max(sm) {
+        width: 90%;
+      }
+
+      svg {
+        margin-right: $padding3;
+      }
+
+      .vertical-line {
+        height: 50px;
+        width: 2px;
+        margin: $padding3 auto;
+        background-color: $black;
+      }
+
+      .item-container {
+        .item {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin: $padding3 0;
+          padding: $padding1 $padding3;
+          border: 1px solid $black;
+        }
+      }
+    }
+  }
+
+  step-two {
+    button {
+      width: 100%;
+      border-radius: 0;
+    }
+  }
+}

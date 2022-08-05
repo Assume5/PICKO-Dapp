@@ -14,7 +14,7 @@ export const DriverHeader = () => {
 
   useEffect(() => {
     userCtx.user.role === 'customer' && navigate('/');
-    userCtx.user.role === 'driver' && navigate('/driver');
+    userCtx.user.role === 'owner' && navigate('/owner');
   }, [userCtx]);
 
   useEffect(() => {

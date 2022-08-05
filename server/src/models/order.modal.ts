@@ -391,3 +391,42 @@ export const clearDriverCurrentOrderDB = async (id: string) => {
         },
     });
 };
+
+export const getDriverOrderDB = async (id: string) => {
+    return await prisma.driver.findUnique({
+        where: {
+            id,
+        },
+        select: {
+            orders: {
+                select: {
+                    restaurant: {
+                        select: {
+                            restaurant_name: true,
+                            address: true,
+                            city: true,
+                            state: true,
+                            zipcode: true,
+                        },
+                    },
+                    customer: {
+                        select: {
+                            first_name: true,
+                            last_name: true,
+                        },
+                    },
+                    driver_tip: true,
+                    restaurant_lat: true,
+                    restaurant_long: true,
+                    pickup_at: true,
+                    ready_at: true,
+                    compelete_at: true,
+                    status: true,
+                    details: true,
+                    id: true,
+                    total_items: true,
+                },
+            },
+        },
+    });
+};
