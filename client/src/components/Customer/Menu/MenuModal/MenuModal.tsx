@@ -110,6 +110,10 @@ export const MenuModal: React.FC<Props> = ({ showModal, setShowModal, menuItem, 
 
       cartCtx.setCart(cart);
       setShowModal(false);
+      const body = document.getElementsByTagName('body')[0];
+      if (body) {
+        body.style.overflow = 'auto';
+      }
     }
   };
 
@@ -227,6 +231,10 @@ export const MenuModal: React.FC<Props> = ({ showModal, setShowModal, menuItem, 
 
         cartCtx.setCart(cart);
         setShowModal(false);
+        const body = document.getElementsByTagName('body')[0];
+        if (body) {
+          body.style.overflow = 'auto';
+        }
       }
     }
     setonRemoveConfirm(false);

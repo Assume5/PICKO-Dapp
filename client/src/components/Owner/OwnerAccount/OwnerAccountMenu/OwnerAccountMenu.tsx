@@ -143,7 +143,7 @@ export const OwnerAccountMenu = () => {
                             <p>{item.description}</p>
                           </div>
                           <div className="price">
-                            <p>{item.price} ETH</p>
+                            <p>$ {item.price}</p>
                           </div>
                         </div>
                       </div>
