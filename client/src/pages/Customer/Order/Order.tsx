@@ -51,7 +51,7 @@ export const Order = () => {
     const socket = socketCtx.socket;
 
     socket.on('update-order-details', (args: orderSocketArgs) => {
-      if (!args.driverLat || !args.driverLong || args.id !== id) return;
+      if (args.id !== id) return;
       if (args.driverLat && args.driverLong) {
         setOrderDetails({
           ...orderDetails,
