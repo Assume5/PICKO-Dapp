@@ -12,7 +12,6 @@ interface Props {
 export const Map: React.FC<Props> = ({ client, driver, store, status }) => {
   const [center, setCenter] = useState<[number, number][]>();
   const [map, setMap] = useState<L.Map>();
-  const [once, setOnce] = useState(false);
   useEffect(() => {
     if (status === '0' || status === '1' || status === '-1' || status === '4') {
       if (store && client) {
@@ -25,9 +24,8 @@ export const Map: React.FC<Props> = ({ client, driver, store, status }) => {
       setCenter(center);
       map && map.fitBounds(center);
     } else {
-      if (client && driver && store && !once) {
+      if (client && driver) {
         const center = [driver, client];
-        setOnce(true);
         setCenter(center);
         map && map.fitBounds(center);
       }
