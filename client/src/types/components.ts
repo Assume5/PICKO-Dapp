@@ -275,6 +275,10 @@ export type RestaurantType = {
 export type RestaurantInformation = {
   status: string;
   restaurantName: string;
+  open_time: string;
+  close_time: string;
+  address: string;
+  category: string;
 };
 
 export type RestaurantMenuCategory = {

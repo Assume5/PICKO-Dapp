@@ -1,3 +1,5 @@
+import { faLocationArrow } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { RestaurantInformation } from '../../../types';
 
@@ -12,10 +14,16 @@ export const RestaurantDetails: React.FC<Props> = ({ data }) => {
         <div className="name">
           <h2>{data.restaurantName}</h2>
         </div>
-        <p>
-          Status: <strong>{data.status === 'close' ? 'Close' : 'Open'}</strong>
-        </p>
-        <button>{data.status === 'close' ? 'Start Accepting New Orders' : 'Stop Accepting New Orders'}</button>
+        <div className="description">
+          <p>
+            <span>Category:</span> {data.category}
+          </p>
+          <p>
+            <span>Open: </span> {data.open_time} - {data.close_time}
+          </p>
+        </div>
+        <FontAwesomeIcon icon={faLocationArrow} />
+        <p>{data.address}</p>
       </div>
     </div>
   );

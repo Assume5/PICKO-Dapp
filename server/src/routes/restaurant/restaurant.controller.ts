@@ -140,6 +140,7 @@ export const createRestaurant = async (req: RequestFiles, res: Response) => {
 export const getOneRestaurant = async (req: Request, res: Response) => {
     const id = req.params.id;
     const result = await getRestaurant(id);
+    console.log(result);
 
     res.status(200).json(result);
 };

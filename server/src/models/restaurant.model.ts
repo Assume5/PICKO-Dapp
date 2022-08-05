@@ -12,6 +12,10 @@ export const getRestaurant = async (id: string) => {
             lat: true,
             long: true,
             orders: true,
+            open_time: true,
+            close_time: true,
+            address: true,
+            category: true,
         },
     });
 };

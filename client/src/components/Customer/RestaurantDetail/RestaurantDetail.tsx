@@ -17,9 +17,6 @@ export const RestaurantDetail: React.FC<Props> = ({ details }) => {
           </div>
           <div className="description">
             <p>
-              <span>Status:</span> {details.status}
-            </p>
-            <p>
               <span>Category:</span> {details.category}
             </p>
             <p>

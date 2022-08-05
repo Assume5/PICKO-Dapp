@@ -34,6 +34,10 @@ export const OwnerHome = () => {
       setData({
         restaurantName: data.restaurant_name,
         status: data.status,
+        open_time: data.open_time,
+        close_time: data.close_time,
+        address: data.address,
+        category: data.category,
       });
       setLoaded(true);
     };
