@@ -76,7 +76,6 @@ export const CheckoutPrice: React.FC<Props> = ({ cartCtx, address }) => {
 
   const createOrder = async (payment_method: string) => {
     if (!cartCtx.cart) return;
-    console.log(cartCtx.cart);
 
     const { cartItems, deliveryAddress, restaurantID, restaurantName } = cartCtx.cart;
     const deliver_fee = 3;
@@ -123,7 +122,7 @@ export const CheckoutPrice: React.FC<Props> = ({ cartCtx, address }) => {
         socketCtx.socket &&
         cartCtx &&
         cartCtx.cart &&
-        socketCtx.socket.emit('customer-place-order', cartCtx.cart.restaurantID);
+        socketCtx.socket.emit('customer-place-order', { restaurantId: cartCtx.cart.restaurantID, order_number });
       cartCtx.setCart({ isCartEmpty: true });
       navigate(`/order/${order_number}`);
     }

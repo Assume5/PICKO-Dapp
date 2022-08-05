@@ -3,7 +3,7 @@ import { prisma } from "../services/db";
 export const getDriverStatus = async (userId: string) => {
     return await prisma.driver.findUnique({
         where: { id: userId },
-        select: { status: true },
+        select: { status: true, lat: true, long: true },
     });
 };
 
@@ -35,7 +35,6 @@ export const updateDriverLocationDB = async (
     lat: string,
     long: string
 ) => {
-    console.log(userId, lat, long);
     return await prisma.driver.update({
         where: {
             id: userId,
@@ -43,6 +42,35 @@ export const updateDriverLocationDB = async (
         data: {
             lat: lat.toString(),
             long: long.toString(),
+        },
+    });
+};
+
+export const getDriverCurrentOrder = async (driverId: string) => {
+    const currentOrder = await prisma.driver.findUnique({
+        where: {
+            id: driverId,
+        },
+        select: {
+            current_order: true,
+        },
+    });
+
+    if (currentOrder.current_order) return currentOrder.current_order;
+    return null;
+};
+
+export const getCustomerSocketCookieBaseOnOrderID = async (orderId: string) => {
+    return await prisma.order.findUnique({
+        where: {
+            id: orderId,
+        },
+        select: {
+            customer: {
+                select: {
+                    socket_cookie: true,
+                },
+            },
         },
     });
 };

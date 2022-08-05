@@ -9,6 +9,14 @@ type Props = {
 export const OrderDetail = ({ order }: Props) => {
   const [status, setStatus] = useState('');
   const [date, setDate] = useState('');
+  const progressBarClass: { [key: string]: string } = {
+    '0': 'step-1',
+    '1': 'step-2',
+    '2': 'step-3',
+    '3': 'step-4',
+    '4': 'step-5',
+    '-1': 'cancelled',
+  };
   useEffect(() => {
     if (order.status === '0') {
       setStatus('Waiting Restaurant Confirm');
@@ -29,7 +37,13 @@ export const OrderDetail = ({ order }: Props) => {
   return (
     <div className="order-detail">
       <h2 className="space-btw">Status: {status}</h2>
-      <div className="progress-bar"></div>
+      <div className={`progress-bar ${progressBarClass[order.status]}`}>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
       <p className="space-btw">
         Order from: <span>{order.restaurant.restaurant_name}</span>
       </p>

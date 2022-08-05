@@ -20,6 +20,98 @@
     text-align: right;
   }
 
+  .progress-bar {
+    display: flex;
+    justify-content: space-between;
+    gap: 0 $padding1;
+    margin: $padding3 0;
+
+    div {
+      width: 20%;
+      height: 5px;
+      background-color: $grey;
+      position: relative;
+
+      &::after {
+        content: '';
+        background-color: $success;
+        left: 0;
+        top: 0;
+        height: 100%;
+        position: absolute;
+      }
+    }
+
+    &.cancelled {
+      gap: 0;
+
+      div {
+        background-color: $error;
+      }
+    }
+
+    &.step-1 {
+      div {
+        &:nth-child(1) {
+          &::after {
+            animation: increaseWidth 1.5s ease-out infinite;
+          }
+        }
+      }
+    }
+
+    &.step-2 {
+      div {
+        &:nth-child(1) {
+          background-color: $success;
+        }
+
+        &:nth-child(2) {
+          &::after {
+            animation: increaseWidth 1.5s ease-out infinite;
+          }
+        }
+      }
+    }
+
+    &.step-3 {
+      div {
+        &:nth-child(1),
+        &:nth-child(2) {
+          background-color: $success;
+        }
+
+        &:nth-child(3) {
+          &::after {
+            animation: increaseWidth 1.5s ease-out infinite;
+          }
+        }
+      }
+    }
+
+    &.step-4 {
+      div {
+        &:nth-child(1),
+        &:nth-child(2),
+        &:nth-child(3) {
+          background-color: $success;
+        }
+
+        &:nth-child(4) {
+          &::after {
+            animation: increaseWidth 1.5s ease-out infinite;
+          }
+        }
+      }
+    }
+
+    &.step-5 {
+      div {
+        background-color: $success;
+      }
+    }
+  }
+
   hr {
     margin: $padding3 0;
   }

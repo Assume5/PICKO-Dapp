@@ -32,10 +32,11 @@ export const Order = () => {
 
       if (response.success) {
         const data: OrderDetails = response.data;
+
         setClientLocation([data.destination_lat, data.destination_long]);
         setRestaurantLocation([data.restaurant_lat, data.restaurant_long]);
-        if (data.driver_lat && data.driver_long) {
-          setDriverLocation([data.driver_lat, data.driver_long]);
+        if (data.driver && data.driver.lat && data.driver.long && data.status !== '4') {
+          setDriverLocation([+data.driver.lat, +data.driver.long]);
         }
         setOrderDetails(data);
       }
@@ -50,12 +51,26 @@ export const Order = () => {
     const socket = socketCtx.socket;
 
     socket.on('update-order-details', (args: orderSocketArgs) => {
-      console.log(args.status);
+      if (!args.driverLat || !args.driverLong || args.id !== id) return;
       if (args.driverLat && args.driverLong) {
-        setOrderDetails({ ...orderDetails, driver_lat: args.driverLat, driver_long: args.driverLong });
+        setOrderDetails({
+          ...orderDetails,
+          driver: { lat: args.driverLat, long: args.driverLong },
+          status: args.status,
+        });
+        setDriverLocation([+args.driverLat, +args.driverLong]);
+      } else {
+        setOrderDetails({ ...orderDetails, status: args.status });
       }
+    });
 
-      setOrderDetails({ ...orderDetails, status: args.status });
+    socket.on('update-location', (args: orderSocketArgs) => {
+      if (!args.driverLat || !args.driverLong || args.id !== id) return;
+      setOrderDetails({
+        ...orderDetails,
+        driver: { lat: args.driverLat, long: args.driverLong },
+      });
+      setDriverLocation([+args.driverLat, +args.driverLong]);
     });
 
     return () => {

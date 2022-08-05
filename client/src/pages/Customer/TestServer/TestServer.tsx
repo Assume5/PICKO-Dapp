@@ -30,7 +30,6 @@ export const TestServer = () => {
         lname,
       }),
     });
-    console.log(await res.json());
   };
 
   const testPut = async () => {
@@ -48,7 +47,6 @@ export const TestServer = () => {
         lname: lname.value,
       }),
     });
-    console.log(await res.json());
   };
 
   const testDelete = async () => {
@@ -60,7 +58,6 @@ export const TestServer = () => {
         'Content-Type': 'application/json',
       },
     });
-    console.log(await res.json());
   };
 
   const testLogin = async () => {

@@ -27,9 +27,15 @@ export const listenSocket = (
                 await disconnect(socket);
             });
 
-            socket.on("customer-place-order", async (id: string) => {
-                await newOrder(id, io);
-            });
+            socket.on(
+                "customer-place-order",
+                async (args: {
+                    restaurantId: string;
+                    order_number: string;
+                }) => {
+                    await newOrder(args.restaurantId, args.order_number, io);
+                }
+            );
         }
     });
 

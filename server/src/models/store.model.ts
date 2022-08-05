@@ -15,7 +15,7 @@ export const getNearByStoreFromDB = async (lat: number, long: number) => {
         POW(69.1 * (${long} - cast(long as double precision)) * COS(cast(lat as double precision) / 57.3), 2)) AS distance
         FROM restaurant WHERE SQRT(
         POW(69.1 * (cast(lat as double precision) - ${lat}), 2) +
-        POW(69.1 * (${long} - cast(long as double precision)) * COS(cast(lat as double precision) / 57.3), 2)) < 15 ORDER BY distance;`;
+        POW(69.1 * (${long} - cast(long as double precision)) * COS(cast(lat as double precision) / 57.3), 2)) < 10 ORDER BY distance;`;
 };
 
 export const increaseStoreViewCount = async (restaurantId: string) => {

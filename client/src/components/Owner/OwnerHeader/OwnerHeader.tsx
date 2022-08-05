@@ -5,6 +5,9 @@ import { useCheckLogin } from '../../../hooks/useCheckLogin';
 import { logout } from '../../../utils/functions';
 import { NewOrderModal } from '../NewOrderModal/NewOrderModal';
 import { SocketContext } from '../../../contexts/SocketContext';
+import { OwnerOrderContext } from '../../../contexts/OwnerOrderContext';
+import { OwnerOrderDetails } from '../../../types';
+import Cookies from 'js-cookie';
 
 export const OwnerHeader = () => {
   useCheckLogin();
@@ -13,7 +16,19 @@ export const OwnerHeader = () => {
   const userCtx = useContext(UserContext);
   const [newOrderModal, setNewOrderModal] = useState(false);
   const socketCtx = useContext(SocketContext);
+  const ordersCtx = useContext(OwnerOrderContext);
   const { id } = useParams();
+
+  useEffect(() => {
+    const event = () => {
+      Cookies.remove('order-modal-trigger');
+    };
+    addEventListener('beforeunload', event);
+
+    return () => {
+      removeEventListener('beforeunload', event);
+    };
+  }, []);
 
   useEffect(() => {
     userCtx.user.role === 'customer' && navigate('/');
@@ -22,17 +37,39 @@ export const OwnerHeader = () => {
 
   useEffect(() => {
     if (!socketCtx || !socketCtx.socket) return;
-
     const socket = socketCtx.socket;
-
-    socket.on('owner-new-order', (args) => {
+    socket.on('owner-new-order', (args: OwnerOrderDetails) => {
+      if (ordersCtx && ordersCtx.orders) {
+        ordersCtx.setOrders([args, ...ordersCtx.orders]);
+      } else {
+        ordersCtx.setOrders([args]);
+      }
       setNewOrderModal(true);
+    });
+
+    socket.on('owner-order-update', (args) => {
+      if (!ordersCtx.orders) return;
+      const orders = ordersCtx.orders;
+      const newState = orders.map((item) => {
+        if (item.id === args.id) {
+          return {
+            ...item,
+            status: args.status,
+            compelete_at: args.compelete_at,
+            confirm_at: args.confirm_at,
+            pickup_at: args.pickup_at,
+            ready_at: args.ready_at,
+          };
+        }
+        return item;
+      });
+      ordersCtx.setOrders(newState);
     });
 
     return () => {
       socket.off('owner-new-order');
     };
-  }, [socketCtx]);
+  }, [socketCtx, ordersCtx]);
 
   useEffect(() => {
     const listenScroll = () => {

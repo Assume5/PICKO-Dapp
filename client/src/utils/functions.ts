@@ -69,3 +69,20 @@ export const formatDate = (unFormatDate: string) => {
     monthNames[date.getMonth()]
   } ${date.getDate()}, ${date.getFullYear()} - ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
 };
+
+export const calculateDistance = (lat: number, long: number, destLat: number, destLong: number) => {
+  const lon1 = (long * Math.PI) / 180;
+  const lon2 = (destLong * Math.PI) / 180;
+  const lat1 = (lat * Math.PI) / 180;
+  const lat2 = (destLat * Math.PI) / 180;
+
+  const dlon = lon2 - lon1;
+  const dlat = lat2 - lat1;
+  const a = Math.pow(Math.sin(dlat / 2), 2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(dlon / 2), 2);
+
+  const c = 2 * Math.asin(Math.sqrt(a));
+
+  const r = 3956;
+
+  return c * r;
+};

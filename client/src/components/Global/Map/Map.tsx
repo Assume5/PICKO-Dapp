@@ -11,17 +11,26 @@ interface Props {
 
 export const Map: React.FC<Props> = ({ client, driver, store, status }) => {
   const [center, setCenter] = useState<[number, number][]>();
+  const [map, setMap] = useState<L.Map>();
   useEffect(() => {
-    if (status === '0' || status === '1') {
+    if (status === '0' || status === '1' || status === '-1' || status === '4') {
       if (store && client) {
+        const center = [store, client];
         setCenter([store, client]);
+        if (map) {
+          map.fitBounds(center);
+        }
       }
     } else {
       if (client && driver) {
-        setCenter([driver, client]);
+        const center = [driver, client];
+        setCenter(center);
+        if (map) {
+          map.fitBounds(center);
+        }
       }
     }
-  }, [store, client, driver, status]);
+  }, [store, client, driver, status, map]);
   const storeIcon = L.icon({
     iconUrl: '/imgs/restaurant-icon.svg',
     iconSize: [32, 32],
@@ -38,8 +47,13 @@ export const Map: React.FC<Props> = ({ client, driver, store, status }) => {
   if (!center) return null;
   return (
     <div className="leaflet-map" id="mapid">
-      {console.log(center)}
-      <MapContainer bounds={center} zoom={8} scrollWheelZoom={true} style={{ height: '100%' }}>
+      <MapContainer
+        bounds={center}
+        zoom={8}
+        scrollWheelZoom={true}
+        style={{ height: '100%' }}
+        whenCreated={(map) => setMap(map)}
+      >
         <TileLayer
           attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
           url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png"

@@ -27,7 +27,6 @@ export const PastOrders: React.FC<Props> = ({ orders }) => {
       }
 
       if (response.success) {
-        console.log(response.data);
         setPastOrders(response.data);
       }
     };

@@ -42,7 +42,6 @@ export const Map = () => {
       setStatus('Locating...');
       navigator.geolocation.watchPosition(
         (position) => {
-          console.log(position);
           setStatus(null);
           setLatLong([position.coords.latitude, position.coords.longitude]);
         },

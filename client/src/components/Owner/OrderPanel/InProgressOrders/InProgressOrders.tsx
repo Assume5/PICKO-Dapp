@@ -32,7 +32,7 @@ export const InProgressOrders: React.FC<Props> = ({ setOrderModal, orders, setDe
             <p className="customer-name">
               {item.customer.first_name} {item.customer.last_name[0]}.
             </p>
-            <p className="order-time">{formatDate(item.order_date).split(' - ')[1]}</p>
+            {item.confirm_at && <p className="order-time">{formatDate(item.confirm_at).split(' - ')[1]}</p>}
           </div>
         );
       })}

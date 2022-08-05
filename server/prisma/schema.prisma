@@ -204,6 +204,7 @@ model order {
   delivery_address String
   confirm_at    String?
   ready_at      String?
+  pickup_at     String?
   compelete_at  String?
   customer      customer        @relation(fields: [customer_id], references: [id])
   driver        driver?          @relation(fields: [driver_id], references: [id])

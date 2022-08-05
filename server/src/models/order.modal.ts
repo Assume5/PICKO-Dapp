@@ -1,5 +1,6 @@
 import { prisma } from "../services/db";
-import { order } from "../types";
+import { NearByDriver, order } from "../types";
+import { getTimeNow } from "../utils/function";
 import { deleteAllCartDB } from "./cart.modal";
 import { getRestaurant } from "./restaurant.model";
 
@@ -93,6 +94,10 @@ export const getOrderOwnerDB = async (id: string) => {
                             sub_total_eth: true,
                             delivery_address: true,
                             details: true,
+                            confirm_at: true,
+                            ready_at: true,
+                            pickup_at: true,
+                            compelete_at: true,
                             customer: {
                                 select: {
                                     first_name: true,
@@ -141,11 +146,248 @@ export const getOrderDetailsDB = async (orderId: string) => {
             sub_total_eth: true,
             delivery_address: true,
             details: true,
+            confirm_at: true,
+            pickup_at: true,
+            ready_at: true,
+            compelete_at: true,
             restaurant: {
                 select: {
                     restaurant_name: true,
                 },
             },
+            driver: {
+                select: {
+                    lat: true,
+                    long: true,
+                },
+            },
+        },
+    });
+};
+
+export const updateOrderStatusDB = async (
+    orderId: string,
+    status: string,
+    driverId: string | null
+) => {
+    const select = {
+        id: true,
+        customer: {
+            select: {
+                socket_cookie: true,
+                first_name: true,
+                last_name: true,
+            },
+        },
+        restaurant: {
+            select: {
+                restaurant_name: true,
+                address: true,
+                owner: {
+                    select: {
+                        socket_cookie: true,
+                    },
+                },
+            },
+        },
+        restaurant_lat: true,
+        restaurant_long: true,
+        destination_lat: true,
+        destination_long: true,
+        delivery_address: true,
+        driver_tip: true,
+        details: true,
+        total_items: true,
+        confirm_at: true,
+        pickup_at: true,
+        ready_at: true,
+        compelete_at: true,
+    };
+
+    let updateData: {
+        status: string;
+        driver_id?: string;
+        confirm_at?: string;
+        ready_at?: string;
+        pickup_at?: string;
+        compelete_at?: string;
+    };
+    if (driverId) {
+        updateData = { status, driver_id: driverId };
+    } else {
+        updateData = { status };
+    }
+
+    if (status === "1") {
+        updateData["confirm_at"] = getTimeNow();
+    } else if (status === "2") {
+        updateData["ready_at"] = getTimeNow();
+    } else if (status === "3") {
+        updateData["pickup_at"] = getTimeNow();
+    } else if (status === "4" || status === "-1") {
+        updateData["compelete_at"] = getTimeNow();
+    }
+    return await prisma.order.update({
+        where: {
+            id: orderId,
+        },
+        data: updateData,
+        select,
+    });
+};
+
+export const driverAcceptOrder = async (
+    orderId: string,
+    status: string,
+    driverId: string
+) => {
+    return await prisma.order.update({
+        where: {
+            id: orderId,
+        },
+        data: {
+            status,
+            driver_id: driverId,
+        },
+        select: {
+            customer: {
+                select: {
+                    socket_cookie: true,
+                },
+            },
+            restaurant_lat: true,
+            restaurant_long: true,
+            destination_lat: true,
+            destination_long: true,
+        },
+    });
+};
+
+export const getNearByDriverDB = async (
+    storeLat: number,
+    storeLong: number
+) => {
+    const res: NearByDriver[] = await prisma.$queryRaw`SELECT socket_cookie,  
+        status,
+        lat, 
+        long, SQRT(
+        POW(69.1 * (cast(lat as double precision) - ${storeLat}), 2) +
+        POW(69.1 * (${storeLong} - cast(long as double precision)) * COS(cast(lat as double precision) / 57.3), 2)) AS distance
+        FROM driver WHERE SQRT(
+        POW(69.1 * (cast(lat as double precision) - ${storeLat}), 2) +
+        POW(69.1 * (${storeLong} - cast(long as double precision)) * COS(cast(lat as double precision) / 57.3), 2)) < 10 AND status='1' ORDER BY distance;`;
+    return res;
+};
+
+export const getNearByOrderDB = async (
+    driverLat: number,
+    driverLong: number
+) => {
+    const res: { id: string }[] = await prisma.$queryRaw`SELECT id,  
+    status,
+    restaurant_lat, 
+    restaurant_long, SQRT(
+    POW(69.1 * (cast(restaurant_lat as double precision) - ${driverLat}), 2) +
+    POW(69.1 * (${driverLong} - cast(restaurant_long as double precision)) * COS(cast(restaurant_lat as double precision) / 57.3), 2)) AS distance
+    FROM public.order WHERE SQRT(
+    POW(69.1 * (cast(restaurant_lat as double precision) - ${driverLat}), 2) +
+    POW(69.1 * (${driverLong} - cast(restaurant_long as double precision)) * COS(cast(restaurant_lat as double precision) / 57.3), 2)) < 10 AND status='1' ORDER BY distance;`;
+    const data: string[] = [];
+    res.forEach((item) => {
+        data.push(item.id);
+    });
+
+    return await prisma.order.findMany({
+        where: {
+            id: {
+                in: data,
+            },
+        },
+        select: {
+            id: true,
+            customer: {
+                select: {
+                    socket_cookie: true,
+                    first_name: true,
+                    last_name: true,
+                },
+            },
+            restaurant: {
+                select: {
+                    restaurant_name: true,
+                    address: true,
+                },
+            },
+            restaurant_lat: true,
+            restaurant_long: true,
+            destination_lat: true,
+            destination_long: true,
+            delivery_address: true,
+            driver_tip: true,
+            details: true,
+            total_items: true,
+            confirm_at: true,
+            pickup_at: true,
+            ready_at: true,
+            compelete_at: true,
+        },
+    });
+};
+
+export const assignDriverOrder = async (id: string, orderId: string) => {
+    return await prisma.driver.update({
+        where: {
+            id,
+        },
+        data: {
+            current_order: orderId,
+        },
+    });
+};
+
+export const getDriverCurrentOrderDetailsDB = async (orderId: string) => {
+    return await prisma.order.findUnique({
+        where: {
+            id: orderId,
+        },
+        select: {
+            id: true,
+            customer: {
+                select: {
+                    socket_cookie: true,
+                    first_name: true,
+                    last_name: true,
+                },
+            },
+            restaurant: {
+                select: {
+                    restaurant_name: true,
+                    address: true,
+                },
+            },
+            restaurant_lat: true,
+            restaurant_long: true,
+            destination_lat: true,
+            destination_long: true,
+            delivery_address: true,
+            driver_tip: true,
+            details: true,
+            total_items: true,
+            confirm_at: true,
+            pickup_at: true,
+            ready_at: true,
+            compelete_at: true,
+        },
+    });
+};
+
+export const clearDriverCurrentOrderDB = async (id: string) => {
+    return await prisma.driver.update({
+        where: {
+            id,
+        },
+        data: {
+            current_order: null,
         },
     });
 };

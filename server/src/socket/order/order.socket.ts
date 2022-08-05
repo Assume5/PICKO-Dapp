@@ -3,28 +3,13 @@ import { DefaultEventsMap } from "socket.io/dist/typed-events";
 import { prisma } from "../../services/db";
 
 export const newOrder = async (
-    id: string,
+    restaurantId: string,
+    orderId: string,
     io: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>
 ) => {
-    // const res = await prisma.order.findUnique({
-    //     where: {
-    //         id: id,
-    //     },
-    //     select: {
-    //         restaurant: {
-    //             select: {
-    //                 owner: {
-    //                     select: {
-    //                         socket_cookie: true,
-    //                     },
-    //                 },
-    //             },
-    //         },
-    //     },
-    // });
     const res = await prisma.restaurant.findUnique({
         where: {
-            id: id,
+            id: restaurantId,
         },
         select: {
             owner: {
@@ -32,10 +17,40 @@ export const newOrder = async (
                     socket_cookie: true,
                 },
             },
+            orders: {
+                where: {
+                    id: orderId,
+                },
+                select: {
+                    id: true,
+                    order_date: true,
+                    total_items: true,
+                    status: true,
+                    sub_total: true,
+                    payment_method: true,
+                    sub_total_eth: true,
+                    delivery_address: true,
+                    details: true,
+                    customer: {
+                        select: {
+                            first_name: true,
+                            last_name: true,
+                            phone: true,
+                        },
+                    },
+                    driver: {
+                        select: {
+                            first_name: true,
+                            last_name: true,
+                            phone: true,
+                        },
+                    },
+                },
+            },
         },
     });
+
     if (res) {
-        // io.to(res.restaurant.owner.socket_cookie).emit("owner-new-order");
-        io.to(res.owner.socket_cookie).emit("owner-new-order");
+        io.to(res.owner.socket_cookie).emit("owner-new-order", res.orders[0]);
     }
 };

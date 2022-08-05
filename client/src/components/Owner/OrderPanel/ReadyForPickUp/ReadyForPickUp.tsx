@@ -14,7 +14,7 @@ export const ReadyForPickUp: React.FC<Props> = ({ setOrderModal, orders, setDeta
       <div className="new-order info-bar">
         <p className="order-number">Order Number</p>
         <p className="customer-name">Customer Name</p>
-        <p className="order-time">Ready at</p>
+        <p className="order-time">Pickup at</p>
       </div>
 
       {orders.map((item) => {
@@ -32,7 +32,7 @@ export const ReadyForPickUp: React.FC<Props> = ({ setOrderModal, orders, setDeta
             <p className="customer-name">
               {item.customer.first_name} {item.customer.last_name[0]}.
             </p>
-            <p className="order-time">{formatDate(item.order_date).split(' - ')[1]}</p>
+            <p className="order-time">{formatDate(item.pickup_at).split(' - ')[1]}</p>
           </div>
         );
       })}

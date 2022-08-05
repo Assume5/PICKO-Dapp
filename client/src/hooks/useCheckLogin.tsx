@@ -64,7 +64,6 @@ export const useCheckLogin = () => {
           });
 
           const response = await res.json();
-          console.log(response);
         }
       }
     };

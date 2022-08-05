@@ -38,11 +38,17 @@ export const OrderDetailModal: React.FC<Props> = ({ setOrderModal, details, orde
 
     const response = await res.json();
 
-    console.log(response);
     if (response.success) {
       const newState = orders.map((item) => {
         if (item.id === details.id) {
-          return { ...item, status: status };
+          return {
+            ...item,
+            status: status,
+            compelete_at: response.compelete_at,
+            confirm_at: response.confirm_at,
+            pickup_at: response.update_at,
+            ready_at: response.ready_at,
+          };
         }
         return item;
       });

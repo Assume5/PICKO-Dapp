@@ -137,6 +137,10 @@ export type OrderDetails = {
     restaurant_card_image: string;
     id: string;
   };
+  driver: {
+    lat: number | null;
+    long: number | null;
+  };
   restaurant_lat: number;
   restaurant_long: number;
   status: string;
@@ -148,6 +152,10 @@ export type OrderDetails = {
 export type OwnerOrderDetails = {
   id: string;
   order_date: string;
+  confirm_at: string;
+  ready_at: string;
+  pickup_at: string;
+  compelete_at: string;
   customer: {
     first_name: string;
     last_name: string;
@@ -166,7 +174,33 @@ export type OwnerOrderDetails = {
   total_items: number;
 };
 
+export type DriverOrder = {
+  id: string;
+  customer: {
+    socket_cookie: string;
+    first_name: string;
+    last_name: string;
+  };
+  restaurant: {
+    restaurant_name: string;
+    address: string;
+  };
+  restaurant_lat: number;
+  restaurant_long: number;
+  destination_lat: number;
+  destination_long: number;
+  delivery_address: string;
+  driver_tip: number;
+  total_items: number;
+  details: Details[];
+  confirm_at: string;
+  pickup_at: string;
+  ready_at: string;
+  compelete_at: string;
+};
+
 export type orderSocketArgs = {
+  id: string;
   status: string;
   driverLat?: number;
   driverLong?: number;

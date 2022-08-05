@@ -1,39 +1,41 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faLocationArrow } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
+import { DriverOrder } from '../../../types';
 
 interface Props {
-  onDeliveredClick: () => void;
+  onDeliveredClick: (orderId: string) => void;
+  currentOrder: DriverOrder | null;
 }
 
-export const DriverStepThree: React.FC<Props> = ({ onDeliveredClick }) => {
+export const DriverStepThree: React.FC<Props> = ({ onDeliveredClick, currentOrder }) => {
+  if (!currentOrder) return null;
+
   return (
     <div className="order-container step-two">
       <h3>
         <FontAwesomeIcon icon={faUser} />
-        Chenyi Zou
+        {currentOrder.customer.first_name} {currentOrder.customer.last_name}
       </h3>
       <h3>
         <FontAwesomeIcon icon={faLocationArrow} />
-        4363 Chestnut Ridge Rd
+        {currentOrder.delivery_address}
       </h3>
       <div className="vertical-line"></div>
-      <p>Total Items: 3</p>
+      <p>Total Items: {currentOrder.total_items}</p>
       <div className="item-container">
-        <div className="item">
-          <p>Quality: 1</p>
-          <p>Spicy Beef</p>
-        </div>
-        <div className="item">
-          <p>Quality: 1</p>
-          <p>Spicy Beef</p>
-        </div>
-        <div className="item">
-          <p>Quality: 1</p>
-          <p>Spicy Beef</p>
-        </div>
+        {currentOrder.details.map((item) => {
+          return (
+            <>
+              <div className="item" key={item.menu_id}>
+                <p>Quality: {item.count}</p>
+                <p>{item.menu_name}</p>
+              </div>
+            </>
+          );
+        })}
       </div>
-      <button onClick={() => onDeliveredClick()}>Delivered</button>
+      <button onClick={() => onDeliveredClick(currentOrder.id)}>Delivered</button>
     </div>
   );
 };

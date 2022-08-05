@@ -28,6 +28,6 @@ cartRouter.delete("/guest/:guestId/:menuId", removeGuestCart);
 cartRouter.delete("/:menuId", authenticateToken, removeCustomerCart);
 
 cartRouter.delete("/remove-all/guest/:guestId", removeAllGuestCart);
-cartRouter.delete("/remove-all", removeAllCustomerCart);
+cartRouter.delete("/remove-all", authenticateToken, removeAllCustomerCart);
 
 export default cartRouter;

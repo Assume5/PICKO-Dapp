@@ -107,3 +107,12 @@
     width: 25px;
   }
 }
+
+@keyframes increaseWidth {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}

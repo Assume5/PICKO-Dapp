@@ -4,7 +4,7 @@ import 'leaflet-routing-machine';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleUp, faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import L, { IconOptions } from 'leaflet';
-import { User } from '../../../types';
+import { DriverOrder, User } from '../../../types';
 import { serverUrl } from '../../../utils/constants';
 import { DriverStepZero } from '../DriverPhase/DriverStepZero';
 import { DriverStepOne } from '../DriverPhase/DriverStepOne';
@@ -19,9 +19,24 @@ interface contextType {
 
 interface Props {
   userCtx: contextType;
+  newOrder: boolean;
+  orders: DriverOrder[] | null;
+  setOrders: React.Dispatch<React.SetStateAction<DriverOrder[] | null>>;
+
+  currentOrder: DriverOrder | null;
+  setCurrentOrders: React.Dispatch<React.SetStateAction<DriverOrder | null>>;
+  setNewOrder: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const DriverMap: React.FC<Props> = ({ userCtx }) => {
+export const DriverMap: React.FC<Props> = ({
+  userCtx,
+  newOrder,
+  setNewOrder,
+  orders,
+  setOrders,
+  currentOrder,
+  setCurrentOrders,
+}) => {
   const [latLong, setLatLong] = useState<[number, number]>();
   const [destLatLong, setDestLatLong] = useState<[number, number] | null>(null);
   const [map, setMap] = useState<L.Map>();
@@ -34,6 +49,29 @@ export const DriverMap: React.FC<Props> = ({ userCtx }) => {
 
   const lightLayer = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png';
   const darkLayer = 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png';
+  useEffect(() => {
+
+    if (!currentOrder) return;
+
+    if (userCtx.user.driverStatus === '2') {
+      if (instance) {
+        map?.removeControl(instance);
+      }
+      const dest: [number, number] = [currentOrder.restaurant_lat, currentOrder.restaurant_long];
+      generateInstance(dest, '2');
+      map?.setZoom(20);
+      setDestLatLong(dest);
+    } else if (userCtx.user.driverStatus === '3') {
+      if (instance) {
+        map?.removeControl(instance);
+      }
+      const dest: [number, number] = [currentOrder.destination_lat, currentOrder.destination_long];
+      setDestLatLong(dest);
+      generateInstance(dest, '3');
+      map?.setZoom(20);
+      setDestLatLong(dest);
+    }
+  }, [currentOrder]);
 
   useEffect(() => {
     if (!localStorage.getItem('map-color')) {
@@ -54,13 +92,7 @@ export const DriverMap: React.FC<Props> = ({ userCtx }) => {
   }, [color]);
 
   const updateDriverLocation = async (lat: number, long: number) => {
-    if (
-      userCtx &&
-      userCtx.user.checked &&
-      userCtx.user.login &&
-      userCtx.user.role === 'driver' &&
-      userCtx.user.driverStatus !== '0'
-    ) {
+    if (userCtx && userCtx.user.checked && userCtx.user.login && userCtx.user.role === 'driver') {
       const res = await fetch(`${serverUrl}/user/driver/update-location`, {
         method: 'PUT',
         credentials: 'include',
@@ -73,6 +105,10 @@ export const DriverMap: React.FC<Props> = ({ userCtx }) => {
           long: long,
         }),
       });
+
+      const response = await res.json();
+
+      return response;
     }
   };
 
@@ -90,7 +126,6 @@ export const DriverMap: React.FC<Props> = ({ userCtx }) => {
           setMessageClass('');
           setLatLong([position.coords.latitude, position.coords.longitude]);
           await updateDriverLocation(position.coords.latitude, position.coords.longitude);
-          console.log(position);
         },
         () => {
           setStatus('Unable to retrieve your location');
@@ -202,6 +237,29 @@ export const DriverMap: React.FC<Props> = ({ userCtx }) => {
 
     if (response.success) {
       userCtx.setUser({ ...userCtx.user, driverStatus: status });
+      if (status === '1') {
+        if (!latLong) return;
+        await updateDriverLocation(latLong[0], latLong[1]);
+        const res = await fetch(`${serverUrl}/order/driver/nearby-order`, {
+          method: 'GET',
+          credentials: 'include',
+          mode: 'cors',
+        });
+
+        const response = await res.json();
+
+        if (response.error) {
+          console.error(response.error);
+        }
+
+        if (response.success) {
+          const data: DriverOrder[] = response.data;
+          if (data.length) {
+            setNewOrder(true);
+          }
+          setOrders(data.sort((a, b) => b.driver_tip - a.driver_tip));
+        }
+      }
     }
   };
   const generateInstance = (dest: [number, number], status: string) => {
@@ -275,46 +333,90 @@ export const DriverMap: React.FC<Props> = ({ userCtx }) => {
     }
   };
 
-  const onAcceptClick = async (dest: [number, number]) => {
+  const onAcceptClick = async (dest: [number, number], orderId: string, order: DriverOrder) => {
     if (!latLong) return;
-    if (instance) {
-      map?.removeControl(instance);
-    }
-    setDestLatLong(dest);
-    generateInstance(dest, '2');
 
-    map?.setZoom(20);
-    setDisplayOrder(false);
-    await updateStatus('2');
+    const res = await fetch(`${serverUrl}/order/${orderId}`, {
+      method: 'PUT',
+      credentials: 'include',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        status: '2',
+      }),
+    });
+
+    const response = await res.json();
+
+    if (response.success) {
+      if (instance) {
+        map?.removeControl(instance);
+      }
+      setDestLatLong(dest);
+      generateInstance(dest, '2');
+      map?.setZoom(20);
+      setDisplayOrder(false);
+      await updateStatus('2');
+      setCurrentOrders(order);
+    }
   };
 
-  const onPickUpClick = async (dest: [number, number]) => {
+  const onPickUpClick = async (dest: [number, number], orderId: string) => {
     if (!latLong) return;
 
-    if (instance) {
-      map?.removeControl(instance);
+    const res = await fetch(`${serverUrl}/order/${orderId}`, {
+      method: 'PUT',
+      credentials: 'include',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        status: '3',
+      }),
+    });
+    const response = await res.json();
+    if (response.success) {
+      if (instance) {
+        map?.removeControl(instance);
+      }
+
+      setDestLatLong(dest);
+      generateInstance(dest, '3');
+
+      map?.setZoom(20);
+      setDisplayOrder(false);
+      await updateStatus('3');
     }
-
-    setDestLatLong(dest);
-    generateInstance(dest, '3');
-
-    map?.setZoom(20);
-    setDisplayOrder(false);
-    await updateStatus('3');
   };
 
-  const onDeliveredClick = async () => {
+  const onDeliveredClick = async (orderId: string) => {
     if (!latLong) return;
+    const res = await fetch(`${serverUrl}/order/${orderId}`, {
+      method: 'PUT',
+      credentials: 'include',
+      mode: 'cors',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        status: '4',  
+      }),
+    });
+    const response = await res.json();
+    if (response.success) {
+      if (instance) {
+        map?.removeControl(instance);
+        setInstance(null);
+        setDestLatLong(null);
+      }
 
-    if (instance) {
-      map?.removeControl(instance);
-      setInstance(null);
-      setDestLatLong(null);
+      map?.setZoom(15);
+      setDisplayOrder(false);
+      await updateStatus('0');
     }
-
-    map?.setZoom(15);
-    setDisplayOrder(false);
-    await updateStatus('0');
   };
 
   if (!latLong)
@@ -323,6 +425,8 @@ export const DriverMap: React.FC<Props> = ({ userCtx }) => {
         <p className={messageClass ? messageClass : 'before-locating'}>{status}</p>
       </>
     );
+
+  if (!orders) return null;
 
   return (
     <div className={`leaflet-map driver-map ${color}`} id="mapid">
@@ -349,17 +453,16 @@ export const DriverMap: React.FC<Props> = ({ userCtx }) => {
           ></Marker>
         )}
       </MapContainer>
-      {userCtx.user.driverStatus === '2' ||
-        (userCtx.user.driverStatus === '3' && (
-          <button
-            className="open-google-map map-button"
-            onClick={() => {
-              destLatLong && window.open(`https://maps.google.com/?q=${destLatLong[0]},${destLatLong[1]}`, '_blank');
-            }}
-          >
-            Open in Google Map
-          </button>
-        ))}
+      {(userCtx.user.driverStatus === '2' || userCtx.user.driverStatus === '3') && (
+        <button
+          className="open-google-map map-button"
+          onClick={() => {
+            destLatLong && window.open(`https://maps.google.com/?q=${destLatLong[0]},${destLatLong[1]}`, '_blank');
+          }}
+        >
+          Open in Google Map
+        </button>
+      )}
       <button
         className="map-button layer-button"
         onClick={() => {
@@ -385,21 +488,48 @@ export const DriverMap: React.FC<Props> = ({ userCtx }) => {
             </div>
           )}
 
-          <div className={`bottom-status-container online ${displayOrder && 'active'}`}>
+          <div className={`bottom-status-container online ${(displayOrder || newOrder) && 'active'}`}>
             <p
               className="display-order"
               onClick={() => {
-                setDisplayOrder(!displayOrder);
+                if (newOrder) {
+                  setNewOrder(false);
+                  setDisplayOrder(false);
+                } else {
+                  setDisplayOrder(!displayOrder);
+                  setNewOrder(false);
+                }
               }}
             >
-              {<FontAwesomeIcon icon={displayOrder ? faAngleDown : faAngleUp} />}
-              {userCtx.user.driverStatus === '1' ? '  You are Online' : '  View Current Order'}
+              {<FontAwesomeIcon icon={displayOrder || newOrder ? faAngleDown : faAngleUp} />}
+              {userCtx.user.driverStatus === '1'
+                ? newOrder
+                  ? ' New Order'
+                  : ' You are Online'
+                : ' View Current Order'}
             </p>
             {userCtx.user.driverStatus === '1' && (
-              <DriverStepOne onOrderClickZoom={onOrderClickZoom} onAcceptClick={onAcceptClick} />
+              <>
+                {orders.length ? (
+                  <DriverStepOne
+                    onOrderClickZoom={onOrderClickZoom}
+                    onAcceptClick={onAcceptClick}
+                    orders={orders}
+                    latLong={latLong}
+                  />
+                ) : (
+                  <div className="order-container">
+                    <h3>No Available Orders at the Moment</h3>
+                  </div>
+                )}
+              </>
             )}
-            {userCtx.user.driverStatus === '2' && <DriverStepTwo onPickUpClick={onPickUpClick} />}
-            {userCtx.user.driverStatus === '3' && <DriverStepThree onDeliveredClick={onDeliveredClick} />}
+            {userCtx.user.driverStatus === '2' && (
+              <DriverStepTwo onPickUpClick={onPickUpClick} currentOrder={currentOrder} />
+            )}
+            {userCtx.user.driverStatus === '3' && (
+              <DriverStepThree onDeliveredClick={onDeliveredClick} currentOrder={currentOrder} />
+            )}
           </div>
         </>
       )}

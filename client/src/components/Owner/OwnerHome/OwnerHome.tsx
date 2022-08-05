@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import Cookies from 'js-cookie';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { OwnerOrderContext } from '../../../contexts/OwnerOrderContext';
 import { OwnerOrderDetails, RestaurantInformation } from '../../../types';
 import { serverUrl } from '../../../utils/constants';
 import { Menus } from '../Menus/Menus';
@@ -11,8 +13,8 @@ export const OwnerHome = () => {
   const [loaded, setLoaded] = useState(false);
   const { id } = useParams();
   const [data, setData] = useState<RestaurantInformation | null>(null);
-  const [orders, setOrders] = useState<OwnerOrderDetails[] | null>(null);
   const [newOrderModal, setNewOrderModal] = useState(false);
+  const orderCtx = useContext(OwnerOrderContext);
 
   const navigate = useNavigate();
 
@@ -36,40 +38,27 @@ export const OwnerHome = () => {
       setLoaded(true);
     };
 
-    const fetchOrders = async () => {
-      const res = await fetch(`${serverUrl}/order/owner`, {
-        method: 'GET',
-        mode: 'cors',
-        credentials: 'include',
-      });
-
-      const response = await res.json();
-      if (response.error) {
-        console.error(response.error);
-      }
-
-      if (response.success) {
-        const data: OwnerOrderDetails[] = response.data;
-        for (const i of data) {
-          if (i.status === '0') {
-            setNewOrderModal(true);
-            break;
-          }
-        }
-        setOrders(data);
-      }
-    };
-
     fetchData();
-    fetchOrders();
   }, []);
 
-  if (!loaded && !data) return <></>;
+  useEffect(() => {
+    if (!orderCtx.orders) return;
+    if (Cookies.get('order-modal-trigger')) return;
+    const data: OwnerOrderDetails[] = orderCtx.orders;
+    for (const i of data) {
+      if (i.status === '0') {
+        setNewOrderModal(true);
+        Cookies.set('order-modal-trigger', 'true');
+        break;
+      }
+    }
+  }, [orderCtx]);
 
+  if (!loaded || !data || !orderCtx.orders) return <></>;
   return (
     <>
-      <RestaurantDetails data={data!} />
-      {orders && <OrderPanel orders={orders} setOrders={setOrders} />}
+      <RestaurantDetails data={data} />
+      {orderCtx.orders && <OrderPanel orders={orderCtx} />}
       <NewOrderModal setNewOrderModal={setNewOrderModal} newOrderModal={newOrderModal} disableNav={true} />
     </>
   );

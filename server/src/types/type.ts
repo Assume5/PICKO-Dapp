@@ -44,3 +44,11 @@ export type order = {
     destination_lat: number;
     destination_long: number;
 };
+
+export type NearByDriver = {
+    socket_cookie: string;
+    lat: number;
+    long: number;
+    distance: number;
+    status: string;
+};

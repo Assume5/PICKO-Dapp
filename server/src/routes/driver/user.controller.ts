@@ -1,9 +1,13 @@
 import { UserAuthInfo } from "../../types/interface";
 import { Response } from "express";
 import {
+    getCustomerSocketCookieBaseOnOrderID,
+    getDriverCurrentOrder,
     updateDriverLocationDB,
     updateDriverStatusDB,
 } from "../../models/user.modal";
+import { DefaultEventsMap } from "socket.io/dist/typed-events";
+import { Server } from "socket.io";
 
 export const updateDriverStatus = async (req: UserAuthInfo, res: Response) => {
     const { status } = req.body;
@@ -33,7 +37,7 @@ export const updateDriverLocation = async (
     if (!req.user) {
         return res.status(401).json({ success: false, error: "Unauthorized" });
     }
-    
+
     if (!lat || !long) {
         return res
             .status(401)
@@ -42,6 +46,27 @@ export const updateDriverLocation = async (
 
     try {
         await updateDriverLocationDB(req.user.userId, lat, long);
+        const currentOrder = await getDriverCurrentOrder(req.user.userId);
+        console.log(currentOrder);
+        if (currentOrder) {
+            const socket: Server<
+                DefaultEventsMap,
+                DefaultEventsMap,
+                DefaultEventsMap,
+                any
+            > = req.app.get("socket");
+            const customerCookie = await getCustomerSocketCookieBaseOnOrderID(
+                currentOrder
+            );
+            socket
+                .to(customerCookie.customer.socket_cookie)
+                .emit("update-location", {
+                    id: currentOrder,
+                    driverLat: lat,
+                    driverLong: long,
+                });
+        }
+
         return res.status(200).json({ success: true });
     } catch (err) {
         return res.status(500).json({ success: false, error: err });
