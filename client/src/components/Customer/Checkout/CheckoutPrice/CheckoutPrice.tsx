@@ -124,7 +124,7 @@ export const CheckoutPrice: React.FC<Props> = ({ cartCtx, address }) => {
         cartCtx.cart &&
         socketCtx.socket.emit('customer-place-order', { restaurantId: cartCtx.cart.restaurantID, order_number });
       cartCtx.setCart({ isCartEmpty: true });
-      navigate(`/order/${order_number}`);
+      navigate(`/order/details/${order_number}`);
     }
   };
 
