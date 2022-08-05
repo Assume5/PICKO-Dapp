@@ -43,42 +43,42 @@ export const PastOrders: React.FC<Props> = ({ orders }) => {
 
   return (
     <>
-        {pastOrders.map((order) => {
-          return (
-            <div className="order-details" key={order.id}>
-              <div className="order-details-image">
-                <img
-                  onClick={() => onRedirectClick(order.restaurant.restaurant_name, order.restaurant.id)}
-                  src={order.restaurant.restaurant_card_image}
-                  alt=""
-                />
-              </div>
-              <div className="order-details-desc">
-                <h2 onClick={() => onRedirectClick(order.restaurant.restaurant_name, order.restaurant.id)}>
-                  {order.restaurant.restaurant_name}
-                </h2>
-                <h4>{formatDate(order.order_date)}</h4>
-                <p>
-                  Total {order.total_items} Items for $ {order.sub_total}
-                </p>
-                <p onClick={() => navigate(`/order/${order.id}`)} className="receipt">
-                  View Receipt
-                </p>
-                <div className="order-items">
-                  {order.details.map((item) => {
-                    return (
-                      <div className="order-item" key={item.menu_id}>
-                        <p className="item-quantity">{item.count}</p>
-                        <p>{item.menu_name}</p>
-                        <p className="price">${item.price.toFixed(2)}</p>
-                      </div>
-                    );
-                  })}
-                </div>
+      {pastOrders.map((order) => {
+        return (
+          <div className="order-details" key={order.id}>
+            <div className="order-details-image">
+              <img
+                onClick={() => onRedirectClick(order.restaurant.restaurant_name, order.restaurant.id)}
+                src={order.restaurant.restaurant_card_image}
+                alt=""
+              />
+            </div>
+            <div className="order-details-desc">
+              <h2 onClick={() => onRedirectClick(order.restaurant.restaurant_name, order.restaurant.id)}>
+                {order.restaurant.restaurant_name}
+              </h2>
+              <h4>{formatDate(order.order_date)}</h4>
+              <p>
+                Total {order.total_items} Items for $ {order.sub_total}
+              </p>
+              <p onClick={() => navigate(`/order/details/${order.id}`)} className="receipt">
+                View Receipt
+              </p>
+              <div className="order-items">
+                {order.details.map((item) => {
+                  return (
+                    <div className="order-item" key={item.menu_id}>
+                      <p className="item-quantity">{item.count}</p>
+                      <p>{item.menu_name}</p>
+                      <p className="price">${item.price.toFixed(2)}</p>
+                    </div>
+                  );
+                })}
               </div>
             </div>
+          </div>
+        );
+      })}
+           </div>
           );
         })}
-    </>
-  );
-};
