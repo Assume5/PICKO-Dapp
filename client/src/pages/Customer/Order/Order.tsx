@@ -75,6 +75,7 @@ export const Order = () => {
 
     return () => {
       socket.off('update-order-details');
+      socket.off('update-location');
     };
   }, [socketCtx, orderDetails, socketCtx.socket]);
 

@@ -12,25 +12,27 @@ interface Props {
 export const Map: React.FC<Props> = ({ client, driver, store, status }) => {
   const [center, setCenter] = useState<[number, number][]>();
   const [map, setMap] = useState<L.Map>();
+  const [once, setOnce] = useState(false);
   useEffect(() => {
-    if (status === '0' || status === '1' || status === '2' || status === '-1' || status === '4') {
+    if (status === '0' || status === '1' || status === '-1' || status === '4') {
       if (store && client) {
         const center = [store, client];
-        setCenter([store, client]);
-        if (map) {
-          map.fitBounds(center);
-        }
-      }
-    } else {
-      if (client && driver) {
-        const center = [driver, client];
         setCenter(center);
-        if (map) {
-          map.fitBounds(center);
-        }
+        map && map.fitBounds(center);
+      }
+    } else if (status === '2' && driver && client && store) {
+      const center = [store, client, driver];
+      setCenter(center);
+      map && map.fitBounds(center);
+    } else {
+      if (client && driver && store && !once) {
+        const center = [driver, client];
+        setOnce(true);
+        setCenter(center);
+        map && map.fitBounds(center);
       }
     }
-  }, [store, client, driver, status, map]);
+  }, [map, status, client, store, driver]);
   const storeIcon = L.icon({
     iconUrl: '/imgs/restaurant-icon.svg',
     iconSize: [32, 32],
