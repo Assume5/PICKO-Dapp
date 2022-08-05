@@ -13,7 +13,7 @@ export const Map: React.FC<Props> = ({ client, driver, store, status }) => {
   const [center, setCenter] = useState<[number, number][]>();
   const [map, setMap] = useState<L.Map>();
   useEffect(() => {
-    if (status === '0' || status === '1' || status === '-1' || status === '4') {
+    if (status === '0' || status === '1' || status === '2' || status === '-1' || status === '4') {
       if (store && client) {
         const center = [store, client];
         setCenter([store, client]);
