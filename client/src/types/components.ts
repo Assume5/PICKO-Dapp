@@ -5,10 +5,8 @@ import {
   RestaurantMenuItemType,
   StoreHeroImages,
   StoreMenuCategory,
-  StoreMenus,
   StoreSocialLinks,
 } from './componentsPart';
-import { MenuDict } from './index';
 
 export type User = {
   login: boolean;
@@ -34,14 +32,6 @@ export type Social = {
   instagram?: string;
 };
 
-export type MenuType = {
-  type: string; // filter or allInOne
-  menu: MenuDict;
-  allInOneImage?: {
-    [key: string]: String;
-  };
-} | null;
-
 export type RestaurantDetailType = {
   deliveryFee: number;
   minToDeliver: string;
@@ -52,48 +42,12 @@ export type RestaurantDetailType = {
   status: string;
 };
 
-export type Restaurant = {
-  [key: string]: {
-    address: string;
-    fee: number;
-    time: string;
-    category: string;
-    id: number;
-    reviewCount: number;
-    image: string;
-    mile: number;
-  };
-};
-
 export type Cart = {
   isCartEmpty: boolean;
   restaurantID?: string;
   restaurantName?: string;
   deliveryAddress?: string;
   cartItems?: CartItem[];
-};
-
-export type Orders = {
-  [key: string]: {
-    orderID: number;
-    storeID: number;
-    storeImage: string;
-    totalPrice: number;
-    totalItems: number;
-    orderDate: string;
-    orderItems: {
-      [key: string]: {
-        itemID: number;
-        quantity: number;
-        price: number;
-      };
-    };
-  };
-};
-
-type OwnerOrderItems = {
-  id: string;
-  order_date: string;
 };
 
 export type Details = {

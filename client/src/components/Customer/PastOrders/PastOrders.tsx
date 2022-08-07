@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { OrderDetails, Orders } from '@src/types';
+import { OrderDetails } from '@src/types';
 import { serverUrl } from '../../../utils/constants';
 import { formatDate } from '../../../utils/functions';
 
-interface Props {
-  orders: Orders;
-}
 
-export const PastOrders: React.FC<Props> = ({ orders }) => {
+
+export const PastOrders = () => {
   const navigate = useNavigate();
   const [pastOrders, setPastOrders] = useState<OrderDetails[]>();
 

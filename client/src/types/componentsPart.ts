@@ -1,12 +1,3 @@
-export type MenuItem =
-  | {
-      image: string;
-      description: string;
-      price: number;
-      id: number;
-    }
-  | boolean;
-
 export type RestaurantMenuItemType = {
   id: number;
   menu_name: string;
@@ -18,13 +9,6 @@ export type RestaurantMenuItemType = {
 
 export type MenuItemWithCategory = RestaurantMenuItemType & {
   category: OptionType;
-};
-
-export type MenuDict = {
-  [key: string]: {
-    [key: string]: MenuItem;
-    priority: boolean;
-  };
 };
 
 export type orderItems = {

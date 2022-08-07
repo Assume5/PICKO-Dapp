@@ -4,7 +4,6 @@ import { EatHero } from '@src/components/Customer/Hero/EatHero/EatHero';
 import { RestaurantList } from '@src/components/Customer/RestaurantList/RestaurantList';
 import { checkAddress, getCookie } from '@src/helpers';
 
-import { topRestaurants } from './FakeRestaurantData';
 import { CustomerHeader } from '../../../components/Customer/CustomerHeader/CustomerHeader';
 import { serverUrl } from '../../../utils/constants';
 
@@ -85,7 +84,7 @@ export const Eat = () => {
                 No Nearby Restaurant for Testing Please Use <strong>4363 Chestnut Ridge Road</strong>
               </p>
             )}
-            <EatHero topRestaurants={topRestaurants} data={data} />
+            <EatHero data={data} />
             <div className="eat-content">
               {data && categories && (
                 <>

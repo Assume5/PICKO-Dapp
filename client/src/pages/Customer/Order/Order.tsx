@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from 'react';
 import { OrderDetail } from '@src/components/Customer/OrderDetail/OrderDetail';
 import { Map } from '@src/components/Global/Map/Map';
 import { OrderDetails, orderSocketArgs, OrderStatus } from '@src/types';
-import { fakeOrderDetails } from './fakeOrder';
 import { CustomerHeader } from '../../../components/Customer/CustomerHeader/CustomerHeader';
 import { serverUrl } from '../../../utils/constants';
 import { useParams } from 'react-router-dom';

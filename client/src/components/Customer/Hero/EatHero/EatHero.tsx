@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect } from 'react';
-import { Restaurant, RestaurantType } from '@src/types';
+import { RestaurantType } from '@src/types';
 import { getCookie } from '@src/helpers';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLocationArrow } from '@fortawesome/free-solid-svg-icons';
@@ -7,11 +7,10 @@ import { EatHeroModal } from './EatHeroModal';
 import { useNavigate } from 'react-router-dom';
 
 interface Props {
-  topRestaurants: Restaurant;
   data: RestaurantType[];
 }
 
-export const EatHero: React.FC<Props> = ({ topRestaurants, data }) => {
+export const EatHero: React.FC<Props> = ({ data }) => {
   const [currentSlideData, setCurrentSlideData] = useState('');
   const [slideIndexData, setSlideIndexData] = useState(0);
   const [currentLocation, setCurrentLocation] = useState('');
@@ -47,7 +46,7 @@ export const EatHero: React.FC<Props> = ({ topRestaurants, data }) => {
 
       return () => clearTimeout(nextSlide);
     }
-  }, [slideIndexData, currentSlideData, topRestaurants, data]);
+  }, [slideIndexData, currentSlideData, data]);
 
   useLayoutEffect(() => {
     if (window.innerWidth < 768) {
