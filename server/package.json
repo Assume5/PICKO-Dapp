@@ -14,7 +14,7 @@
         "watch-cluster": "tsc -w & pm2 start processes.dev.json --watch",
         "stop": "pm2 delete processes.dev.json",
         "cluster": "npm run build && pm2 start processes.json --watch",
-        "init-db": "npx prisma migrate dev --name init",
+        "init-db": "npx prisma migrate dev --name init", 
         "deploy-db": "npx prisma migrate deploy"
     },
     "keywords": [],
